@@ -111,7 +111,7 @@ body{
 #title-screen .btn{z-index:2}
 
 /* ============ MAP ============ */
-#map-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;position:relative;margin-top:-66px}
+#map-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;position:relative;margin-top:-66px;padding-bottom:env(safe-area-inset-bottom)}
 #map-inner{position:relative;width:100%;height:5880px}
 .zone{position:absolute;left:0;right:0;pointer-events:none}
 #zone6{top:0;height:960px;background:linear-gradient(180deg,#8E5A1E 0%,#C4823A 35%,#9E5A7E 70%,#2E4A7E 100%)}
@@ -152,7 +152,7 @@ body{
 @keyframes spinny{to{filter:hue-rotate(360deg)}}
 
 /* ============ GAME ============ */
-#game-screen{padding-bottom:10px}
+#game-screen{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 #game-screen.w1{background:linear-gradient(180deg,#1B4C3E 0%,#153A52 55%,#1B1340 100%)}
 #game-screen.w2{background:linear-gradient(180deg,#2E5E9E 0%,#274277 55%,#1B1340 100%)}
 #game-screen.w3{background:linear-gradient(180deg,#6E2A58 0%,#4A1E52 55%,#1B1340 100%)}
@@ -220,6 +220,7 @@ body{
 
 /* ============ SLOTS ============ */
 #slot-screen{align-items:center;justify-content:flex-start;overflow-y:auto;
+  padding-bottom:env(safe-area-inset-bottom);
   background:radial-gradient(100% 50% at 50% 0%,#4A2A85 0%,transparent 60%),var(--bg)}
 #machine{
   margin:14px 18px 0;width:calc(100% - 36px);max-width:360px;border-radius:26px;padding:16px 14px 18px;
@@ -598,6 +599,7 @@ body.a11y-calm .conf{animation-duration:2.8s !important}
   </div>
 </div>
 
+<script src="billing.js"></script>
 <script>
 'use strict';
 /* =====================================================
@@ -2405,23 +2407,34 @@ loadState.__done=true; buildReels(); refreshHUD(); refreshSpinBtn();
 window.addEventListener('resize',()=>{ if($('#game-screen').classList.contains('active')&&!G.busy){ boardMetrics();
   for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){ const el=G.els[r]&&G.els[r][c]; if(el){ el.style.width=el.style.height=G.cell+'px'; el.style.transform=pos(r,c); } } } });
 </script>
-<script type="module">
-/* ---------- BILLING BOOT (module) ----------
-   Runs after the main script (module scripts are deferred). On iOS/Android
-   this configures RevenueCat, syncs the 'plus' entitlement into game state,
-   and fetches live localized prices for the paywall. On the plain web it
-   resolves to unavailable and the paywall stays in clearly-labeled demo mode. */
-import { initBilling, getPlusPrices, purchasePlus, restorePurchases, manageSubscription } from './billing.js';
+<script>
+/* ---------- REVENUECAT BOOT ----------
+   billing.js (loaded above) exposes window._billing — a standalone module that
+   reaches the RevenueCat Capacitor plugin via window.Capacitor at runtime.
+   On iOS/Android this configures RevenueCat, syncs the 'SootheQuest Pro'
+   entitlement into game state, and fetches live localized prices for the
+   paywall. On the plain web it resolves to unavailable and the paywall stays
+   in clearly-labeled demo mode. The status is adapted from the module's
+   'premium'-keyed shape onto the game's existing 'plus'-keyed state. */
+function _toPlus(st){
+  return {
+    plus: !!st.premium,
+    yearly: !!(st.premium && /yearly|annual/i.test(st.productIdentifier || '')),
+    willRenew: !!st.willRenew,
+    expirationDate: st.expirationDate,
+  };
+}
 (async () => {
   try {
-    const s = await initBilling((st) => window.applyEntitlement && window.applyEntitlement(st));
-    window.Billing.purchasePlus = purchasePlus;
-    window.Billing.restorePurchases = restorePurchases;
-    window.Billing.manageSubscription = manageSubscription;
+    const s = await _billing.init((st) => window.applyEntitlement && window.applyEntitlement(_toPlus(st)));
+    window.Billing.dispatchPlus = (r) => ({ ...r, plus: !!r.premium, yearly: !!(r.premium && /yearly|annual/i.test(r.productIdentifier || '')) });
+    window.Billing.purchasePlus = (kind) => _billing.purchasePlus(kind).then(window.Billing.dispatchPlus);
+    window.Billing.restorePurchases = () => _billing.restore().then(window.Billing.dispatchPlus);
+    window.Billing.manageSubscription = () => _billing.manage();
     window.Billing.available = !!s.available;
     if (s.available) {
-      window.applyEntitlement(s);
-      window.Billing.prices = await getPlusPrices();
+      window.applyEntitlement(_toPlus(s));
+      window.Billing.prices = await _billing.getPrices();
     }
   } catch (e) { console.warn('Billing unavailable:', e); }
 })();

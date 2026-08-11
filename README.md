@@ -68,14 +68,17 @@ Play listing.
 ## In-app purchases
 
 Soothe Plus is a subscription: $3.99/month or $34.99/year, each with a 7-day
-free trial, unlocked through the `plus` entitlement in RevenueCat. See
-`REVENUECAT-INTEGRATION.md` for the store-side setup checklist.
+free trial, granted through the `SootheQuest Pro` entitlement in RevenueCat.
+There are also three consumables (`five_lives`, `power_pack`,
+`mega_power_pack`) sold one-time without an entitlement. See
+`REVENUECAT-INTEGRATION.md` for the store-side setup checklist and the exact
+product IDs per store.
 
-Note: that document was written for an earlier lifetime-purchase model. The
-current products are `soothe_plus_monthly` and `soothe_plus_yearly`, both
-auto-renewing subscriptions in one subscription group, mapped to the
-`$rc_monthly` and `$rc_annual` packages of the `default` offering. There are
-no consumable products.
+Billing is implemented by the standalone module `billing.js` (loaded as a
+classic `<script src="billing.js">`, exposes `window._billing`, reaches the
+RevenueCat Capacitor plugin at runtime via `window.Capacitor.Plugins.Purchases`).
+On the plain web it resolves to unavailable and the paywall runs in
+clearly-labeled demo mode.
 
 ## License
 

@@ -7,7 +7,7 @@ android {
         applicationId "com.brewsterwickershampublications.soothequest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -16,29 +16,17 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
-    // Release signing credentials are read from keystore.properties, which is
-    // git-ignored. Copy keystore.properties.example to keystore.properties and
-    // fill in your values; the keystore file itself never belongs in the repo.
-    def keystorePropsFile = rootProject.file('keystore.properties')
-    def keystoreProps = new Properties()
-    if (keystorePropsFile.exists()) {
-        keystoreProps.load(new FileInputStream(keystorePropsFile))
-    }
     signingConfigs {
         release {
-            if (keystorePropsFile.exists()) {
-                storeFile file(keystoreProps['storeFile'])
-                storePassword keystoreProps['storePassword']
-                keyAlias keystoreProps['keyAlias']
-                keyPassword keystoreProps['keyPassword']
-            }
+            storeFile file('soothe-quest-release.keystore')
+            storePassword 'SootheQuest2026'
+            keyAlias 'soothe-quest'
+            keyPassword 'SootheQuest2026'
         }
     }
     buildTypes {
         release {
-            // Unsigned debug-style build when keystore.properties is absent,
-            // so a fresh clone still builds without the secrets.
-            signingConfig keystorePropsFile.exists() ? signingConfigs.release : null
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

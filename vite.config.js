@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import { renameSync } from 'fs';
+import { renameSync, copyFileSync } from 'fs';
 
 export default defineConfig({
   root: '.',
@@ -16,6 +16,9 @@ export default defineConfig({
     writeBundle() {
       try {
         renameSync('www/soothe-quest.html', 'www/index.html');
+      } catch {}
+      try {
+        copyFileSync('billing.js', 'www/billing.js');
       } catch {}
     },
   }],

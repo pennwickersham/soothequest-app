@@ -419,9 +419,12 @@ this audience on high-symptom days may play closer to the *greedy* bot.
 3. **Server time** — daily life refill (`dailyRefill()`), free daily spin,
    daily gentle goal, rest-friendly streak, and trial countdown must all
    validate against server time; client clocks are trivially spoofed.
-4. **Billing** — Play Billing / StoreKit for the three IAPs + subscription
-   with intro offer. Replace `buy()`, `startTrial()`, `cancelPlus()`. Add
-   restore-purchases.
+4. **Billing** — ✅ Done via RevenueCat (`billing.js`, standalone module
+   exposing `window._billing`). Subscriptions (`SootheQuest Pro` entitlement,
+   7-day free trial) and three consumables, plus restore and the store's
+   subscription-management screen. On web, purchases are simulated and clearly
+   labeled. If you swap stores/product IDs, update `billing.js` and
+   `REVENUECAT-INTEGRATION.md` together.
 5. **Share plugin** — wire `shareQuote()` to **@capacitor/share** (+
    **@capacitor/filesystem** to stage the PNG). The prototype's Web Share path
    works in-browser; native needs the plugin. Test image sharing on iOS +
