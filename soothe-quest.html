@@ -1806,6 +1806,21 @@ function toggleSave(id){
 
 /* ---------- MODALS ---------- */
 let planPick='yearly';
+/* Platform-aware copy: only ever name the store the user is actually on.
+   Web preview stays neutral; iOS never mentions Google Play, Android never
+   mentions the App Store. */
+const PLATFORM=(()=>{
+  try{
+    if(window.Capacitor&&window.Capacitor.getPlatform){
+      const p=window.Capacitor.getPlatform();
+      if(p==='ios') return 'ios';
+      if(p==='android') return 'android';
+    }
+  }catch(e){}
+  return /android/i.test(navigator.userAgent)?'android':'web';
+})();
+const STORE_NAME=PLATFORM==='ios'?'App Store':PLATFORM==='android'?'Google Play':'app store';
+const LEGAL_BASE='https://pennwickersham.github.io/SootheQuest/';
 function openModal(kind,data={}){
   const m=$('#modal'), v=$('#modal-veil'); v.classList.add('show');
   if(kind==='win'){
@@ -1876,8 +1891,13 @@ function openModal(kind,data={}){
     }else{
       const cta='🕊️ Start 7-day free trial';
       const sub=planPick==='yearly'
-        ? `Billed ${P.yearly}/year via App Store / Google Play after the free trial, unless cancelled.`
-        : `Billed ${P.monthly}/month via App Store / Google Play after the free trial, unless cancelled.`;
+        ? `Billed ${P.yearly}/year via ${STORE_NAME} after the free trial, unless cancelled.`
+        : `Billed ${P.monthly}/month via ${STORE_NAME} after the free trial, unless cancelled.`;
+      const legal=`<p style="margin-top:10px;font-size:11.5px;opacity:.95">
+        <a style="color:#9CF5D6;text-decoration:underline" href="#" onclick="window.open('${LEGAL_BASE}privacy-policy.html','_blank');return false;">Privacy Policy</a>
+        <span style="color:var(--dim)"> · </span>
+        <a style="color:#9CF5D6;text-decoration:underline" href="#" onclick="window.open('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/','_blank');return false;">Terms of Use (EULA)</a>
+      </p>`;
       m.innerHTML=`<h2>🕊️ Soothe Plus</h2>
         <p>Made for tough days: play as much as you need, gently.<br><b>Try free for 7 days.</b> Cancel anytime.</p>
         <div class="plist"><span>∞</span> Unlimited lives — losing never locks you out<br>
@@ -1890,8 +1910,9 @@ function openModal(kind,data={}){
         <div class="btnrow"><button class="btn plus" id="buy-plus-btn" onclick="buyPlus()">${cta}</button>
         <button class="btn alt sm" onclick="closeModal()">Not now</button></div>
         <p style="margin-top:12px;font-size:12px">${sub}</p>
+        ${legal}
         <div class="btnrow" style="margin-top:4px"><button class="btn alt sm" onclick="doRestore()">Restore purchases</button></div>
-        ${native?'':'<p style="margin-top:8px;font-size:11.5px;opacity:.8">Web preview — purchases are simulated here and never charged. Real billing runs in the iOS / Android app.</p>'}`;
+        ${native?'':'<p style="margin-top:8px;font-size:11.5px;opacity:.8">Web preview — purchases are simulated here and never charged. Real billing runs in the native app.</p>'}`;
     }
   }else if(kind==='skins'){
     let rows='';
@@ -2097,7 +2118,7 @@ async function doRestore(){
     else toast(r.error||'Restore failed — please try again.');
     return;
   }
-  toast('Restore works in the iOS / Android app.');
+  toast('Restore works in the app.');
 }
 function managePlus(){
   if(window.Billing&&window.Billing.available&&window.Billing.manageSubscription) window.Billing.manageSubscription();
