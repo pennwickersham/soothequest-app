@@ -379,6 +379,8 @@ body.a11y-calm .conf{animation-duration:2.8s !important}
 }
 .plan.sel{border-color:var(--gold);box-shadow:0 0 12px rgba(255,201,60,.4);background:rgba(255,201,60,.1)}
 .plan .badge{background:var(--mint);color:#063826;font-size:11px;font-weight:900;border-radius:999px;padding:3px 9px}
+.plan b{display:block}
+.plan .planlbl{color:var(--lav);font-weight:700;font-size:12px;margin-top:2px}
 .plan small{display:block;color:var(--dim);font-weight:700;font-size:12px}
 .skinrow{
   display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.28);
@@ -1891,8 +1893,8 @@ function openModal(kind,data={}){
     }else{
       const cta='🕊️ Start 7-day free trial';
       const sub=planPick==='yearly'
-        ? `Billed ${P.yearly}/year via ${STORE_NAME} after the free trial, unless cancelled.`
-        : `Billed ${P.monthly}/month via ${STORE_NAME} after the free trial, unless cancelled.`;
+        ? `Billed ${P.yearly}/year via ${STORE_NAME} after the 7-day free trial, unless cancelled.`
+        : `Billed ${P.monthly}/month via ${STORE_NAME} after the the 7-day free trial, unless cancelled.`;
       const legal=`<p style="margin-top:10px;font-size:11.5px;opacity:.95">
         <a style="color:#9CF5D6;text-decoration:underline" href="#" onclick="window.open('${LEGAL_BASE}privacy-policy.html','_blank');return false;">Privacy Policy</a>
         <span style="color:var(--dim)"> · </span>
@@ -1905,8 +1907,8 @@ function openModal(kind,data={}){
         <span>🔨</span> +1 bonus power-up with every win<br>
         <span>👑</span> Royal Jewels gem skin, exclusive<br>
         <span>🚫</span> No refill prompts, ever</div>
-        <div class="plan ${planPick==='yearly'?'sel':''}" onclick="pickPlan('yearly')"><span><b>Yearly</b><small>${P.yearly} / year — about $2.92/mo</small></span><span class="badge">SAVE 27%</span></div>
-        <div class="plan ${planPick==='monthly'?'sel':''}" onclick="pickPlan('monthly')"><span><b>Monthly</b><small>${P.monthly} / month</small></span></div>
+        <div class="plan ${planPick==='yearly'?'sel':''}" onclick="pickPlan('yearly')"><span><b>${P.yearly} / year</b><b class="planlbl">Yearly</b></span><span class="badge">SAVE 27%</span></div>
+        <div class="plan ${planPick==='monthly'?'sel':''}" onclick="pickPlan('monthly')"><span><b>${P.monthly} / month</b><b class="planlbl">Monthly</b></span></div>
         <div class="btnrow"><button class="btn plus" id="buy-plus-btn" onclick="buyPlus()">${cta}</button>
         <button class="btn alt sm" onclick="closeModal()">Not now</button></div>
         <p style="margin-top:12px;font-size:12px">${sub}</p>
