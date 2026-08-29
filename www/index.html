@@ -185,8 +185,8 @@ body{
 }
 .gem svg{width:90%;height:90%;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35));transition:transform .15s}
 .gem.sel svg{transform:scale(1.18);filter:drop-shadow(0 0 10px #fff) drop-shadow(0 3px 3px rgba(0,0,0,.35))}
-.gem.pop svg{animation:pop .28s forwards}
-@keyframes pop{0%{transform:scale(1.15)}100%{transform:scale(0);opacity:0}}
+.gem.pop svg{animation:pop .3s forwards}
+@keyframes pop{0%{transform:scale(1.22);filter:brightness(1.7) drop-shadow(0 0 8px #fff)}100%{transform:scale(0);opacity:0}}
 .gem.spawn svg{animation:spawn .25s}
 @keyframes spawn{0%{transform:scale(0)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
 .gem.wig svg{animation:wiggle .3s}
@@ -311,17 +311,37 @@ body{
 /* settings rows */
 .setrow{display:flex;align-items:center;gap:10px;text-align:left;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
 .setrow span{flex:1}.setrow b{display:block;color:#EAF4FF;font-size:15px}.setrow small{color:var(--lav);font-size:12px}
-/* accessibility: larger gems = fewer/bigger cells feel via scale on board gems */
-body.a11y-big #board .gem svg{transform:scale(1.06)}
-body.a11y-big .pw{transform:scale(1.08)}
-body.a11y-big #power-row{gap:18px}
-/* reduced stimulation: no battle flash, slower confetti */
+/* accessibility: larger gems — a real, visible bump */
+body.a11y-big #board .gem svg{transform:scale(1.16)}
+body.a11y-big .gem.sel svg{transform:scale(1.3)}
+body.a11y-big .pw{transform:scale(1.12)}
+body.a11y-big #power-row{gap:20px}
+/* larger text — applied across the whole app, not just modal quotes */
 body.a11y-bigtext .enc-quote{font-size:21px !important;line-height:1.45}
 body.a11y-bigtext .enc-cite{font-size:13.5px}
 body.a11y-bigtext #modal p{font-size:16.5px}
-body.a11y-bigtext #paytable div{font-size:14px}
-body.a11y-calm #battle-flash{display:none}
-body.a11y-calm .conf{animation-duration:2.8s !important}
+body.a11y-bigtext #modal h2{font-size:31px}
+body.a11y-bigtext #paytable div{font-size:15px}
+body.a11y-bigtext .pill{font-size:16px}
+body.a11y-bigtext #goal-text{font-size:16px}
+body.a11y-bigtext .btn{font-size:21px}
+body.a11y-bigtext .btn.sm{font-size:17px}
+body.a11y-bigtext .setrow b{font-size:17px}
+body.a11y-bigtext .setrow small{font-size:13.5px}
+body.a11y-bigtext #toast{font-size:16px}
+body.a11y-bigtext .node .lbl{font-size:13.5px !important}
+body.a11y-bigtext #daily-goal{font-size:14px}
+/* intensity sliders (Comfort & Access) */
+.setrow.col{flex-direction:column;align-items:stretch;gap:6px}
+.sliderrow{display:flex;align-items:center;gap:10px}
+.sliderrow input[type=range]{flex:1;height:34px;accent-color:var(--mint);cursor:pointer}
+.slider-val{min-width:34px;text-align:right;font-weight:900;color:var(--mint);font-size:14px}
+/* animation intensity at 0: decorative motion off entirely */
+body.fx-off .star,body.fx-off .firefly,body.fx-off .cloudy{animation:none !important;opacity:.15}
+body.fx-off .logo,body.fx-off #mascot,body.fx-off #tut-mascot,body.fx-off #enemy-face,body.fx-off .bulb{animation:none !important}
+body.fx-off .gem.special svg{animation:none !important;filter:drop-shadow(0 0 6px #fff)}
+body.fx-off .encourage{animation:none !important}
+body.fx-off #battle-flash{display:none}
 /* sanctuary row (map) */
 #sanctuary{display:flex;gap:8px;margin:8px 12px 0}
 .sanct{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;
@@ -340,8 +360,15 @@ body.a11y-calm .conf{animation-duration:2.8s !important}
   background:radial-gradient(circle at 38% 32%,rgba(159,246,214,.95),rgba(79,224,176,.55) 55%,rgba(79,224,176,.2));
   box-shadow:0 0 60px rgba(79,224,176,.4), inset 0 0 30px rgba(255,255,255,.25);
   transition:transform 3.9s cubic-bezier(.4,0,.4,1)}
-#br-circle.in{transform:scale(1.85)}
-#br-circle.out{transform:scale(1)}
+#br-title{position:absolute;top:calc(30px + env(safe-area-inset-top));left:0;right:0;text-align:center;
+  font-family:var(--disp);font-weight:600;font-size:14px;letter-spacing:2px;color:#8FB8A8;text-transform:uppercase}
+#br-quotewrap{display:none;flex-direction:column;align-items:center;gap:10px;max-width:330px;
+  padding:0 26px;text-align:center;animation:medglow 6s ease-in-out infinite}
+#br-quote{font-family:var(--disp);font-weight:500;font-size:22px;line-height:1.5;color:#FFF3D6;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+#br-quote-cite{font-size:12px;font-weight:800;letter-spacing:1px;color:var(--mint);text-transform:uppercase;opacity:.85}
+#br-prompt{margin-top:12px;font-size:14px;font-weight:700;color:#B9D8CC;opacity:.9;min-height:20px;transition:opacity .5s}
+@keyframes medglow{0%,100%{filter:drop-shadow(0 0 0 rgba(79,224,176,0))}50%{filter:drop-shadow(0 0 18px rgba(79,224,176,.35))}}
+body.a11y-bigtext #br-quote{font-size:25px}
 #br-phase{margin-top:46px;font-size:22px;font-weight:800;color:#DFF8EC;letter-spacing:.5px}
 #br-count{margin-top:6px;font-size:13px;color:#8FB8A8;font-weight:600}
 #br-exit{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
@@ -409,6 +436,27 @@ body.a11y-calm .conf{animation-duration:2.8s !important}
 #app.shake{animation:appshake .35s}
 .particle{position:absolute;border-radius:50%;pointer-events:none;z-index:8;animation:pfly .55s ease-out forwards}
 @keyframes pfly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}}
+/* special-gem detonation FX: shockwave rings, line-blast beams, rainbow pulse.
+   Size and duration scale with the Animation intensity slider (fx). */
+.fx-ring{position:absolute;pointer-events:none;z-index:11;border-radius:50%;
+  border:5px solid rgba(255,224,138,.95);
+  box-shadow:0 0 18px rgba(255,180,77,.85), inset 0 0 12px rgba(255,255,255,.6);
+  animation:fxring .6s ease-out forwards}
+@keyframes fxring{0%{transform:scale(.35);opacity:1}60%{opacity:.75}100%{transform:scale(var(--fxs,3));opacity:0}}
+.fx-glow{position:absolute;pointer-events:none;z-index:10;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,240,200,.95),rgba(255,150,80,.55) 45%,transparent 72%);
+  animation:fxglow .5s ease-out forwards}
+@keyframes fxglow{0%{transform:scale(.4);opacity:1}100%{transform:scale(2.7);opacity:0}}
+.fx-beam{position:absolute;pointer-events:none;z-index:11;border-radius:10px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.95) 18%,rgba(255,255,255,.95) 82%,transparent);
+  box-shadow:0 0 24px rgba(160,220,255,.9);
+  animation:fxbeam .55s ease-out forwards}
+.fx-beam.v{background:linear-gradient(180deg,transparent,rgba(255,255,255,.95) 18%,rgba(255,255,255,.95) 82%,transparent)}
+@keyframes fxbeam{0%{opacity:0;filter:brightness(2.2)}18%{opacity:1}100%{opacity:0;filter:brightness(1)}}
+.fx-rainbow{position:absolute;inset:0;pointer-events:none;z-index:11;border-radius:22px;
+  background:conic-gradient(from 0deg,#FF6B81,#FFC93C,#4FE0B0,#5AB6FF,#B57BFF,#FF6B81);
+  opacity:0;animation:fxrainbow .9s ease-out forwards;mix-blend-mode:screen}
+@keyframes fxrainbow{0%{opacity:0;transform:scale(.6)}30%{opacity:.6}100%{opacity:0;transform:scale(1.05)}}
 .combo-text{
   position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);z-index:12;pointer-events:none;
   font-family:var(--disp);font-weight:700;font-size:42px;white-space:nowrap;
@@ -429,7 +477,8 @@ body.a11y-calm .conf{animation-duration:2.8s !important}
 .node .starsrow{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:1px;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important}
+  /* the breathing circle's slow scale IS the exercise — never freeze it */
+  *:not(#br-circle),*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important}
 }
 .bottom-nav{display:flex;gap:10px;padding:10px 14px calc(12px + env(safe-area-inset-bottom));justify-content:center}
 </style>
@@ -478,6 +527,8 @@ body.a11y-calm .conf{animation-duration:2.8s !important}
         <div class="pill">⭐ <span id="stars-1">0</span></div>
       </div>
       <div class="hud-row tools">
+        <button class="iconbtn" id="btn-home" title="Main menu">🏠</button>
+        <button class="iconbtn" id="btn-settings-map" title="Comfort &amp; Access">⚙️</button>
         <button class="iconbtn" id="btn-journal" title="Comfort Journal">💚</button>
         <button class="iconbtn" id="btn-skins" title="Gem skins">🎨</button>
         <button class="iconbtn" id="btn-comfort" title="Soothe Plus / Comfort Mode">🕊️</button>
@@ -581,7 +632,13 @@ body.a11y-calm .conf{animation-duration:2.8s !important}
   <!-- MODAL -->
   <div id="modal-veil"><div id="modal"></div></div>
   <div id="breathe">
-    <div id="br-circle" class="out"></div>
+    <div id="br-title"></div>
+    <div id="br-circle"></div>
+    <div id="br-quotewrap">
+      <div id="br-quote"></div>
+      <div id="br-quote-cite"></div>
+      <div id="br-prompt"></div>
+    </div>
     <div id="br-phase">Breathe in…</div>
     <div id="br-count"></div>
     <button id="br-exit">Done — back to the quest</button>
@@ -642,7 +699,8 @@ const state={
   zenTotal:0,            // lifetime Zen Garden score -> garden growth stage
   ambient:null,          // current ambient soundscape ('rain'|'waves'|null)
   audio:{ music:true, fx:true },   // independent music / effects switches
-  a11y:{ bigGems:false, shapes:false, calm:false, tapOnly:false, haptics:true, bigText:false },   // accessibility toggles
+  a11y:{ bigGems:false, shapes:false, tapOnly:false, haptics:true, bigText:false, fx:100, color:100 },   // accessibility: toggles + intensity sliders (0-100)
+  breathIdx:0,           // rotates through the guided breathing patterns between levels
 };
 function dailyRefill(){ const today=new Date().toDateString();
   if(today!==state.lastRefillDay){ state.lastRefillDay=today; state.lives=Math.max(state.lives,state.maxFree); } }
@@ -662,7 +720,8 @@ function saveState(){
     saved:state.saved,failCounts:state.failCounts,
     dailyGoalDay:state.dailyGoalDay,dailyGoalDone:state.dailyGoalDone,
     dailyGoalTarget:state.dailyGoalTarget,zenTotal:state.zenTotal,
-    ambient:state.ambient,a11y:state.a11y,audio:state.audio
+    ambient:state.ambient,a11y:state.a11y,audio:state.audio,
+    breathIdx:state.breathIdx
   }));}catch(e){}
 }
 function loadState(){
@@ -673,7 +732,10 @@ function loadState(){
     if(s.unlocked) state.unlocked=new Set(s.unlocked);
     for(const k of Object.keys(s)){
       if(k==='completed'||k==='unlocked') continue;
-      if(k==='a11y'||k==='audio'){ Object.assign(state[k], s[k]||{}); continue; }   /* merge, keep new defaults */
+      if(k==='a11y'||k==='audio'){ Object.assign(state[k], s[k]||{});
+        /* migrate the old "Softer effects" toggle onto the intensity sliders */
+        if(k==='a11y'&&s.a11y&&s.a11y.calm&&s.a11y.fx==null){ state.a11y.fx=30; state.a11y.color=70; }
+        continue; }   /* merge, keep new defaults */
       if(s[k]!==undefined) state[k]=s[k];
     }
     dailyRefill();
@@ -1213,7 +1275,14 @@ function tapNode(n){
 }
 /* lives never block the daily gentle goal */
 function goalPlayFree(){ refreshDailyGoal(); return state.dailyGoalDone<state.dailyGoalTarget; }
-function pace(ms){ return state.a11y.calm?Math.round(ms*1.35):ms; }
+/* ---------- INTENSITY (Comfort & Access sliders) ----------
+   fx()     0..1 — scales every animation: particle counts, blast size and
+            dwell time, shakes, confetti. 1 = full celebration, 0 = still.
+   calmFx() true at low intensity — the old "Softer effects" behavior:
+            slower cascades, no battle flash, +15s on the battle clock. */
+function fx(){ const v=state.a11y.fx; return (v==null?100:v)/100; }
+function calmFx(){ return fx()<0.45; }
+function pace(ms){ return calmFx()?Math.round(ms*1.35):ms; }
 function completeNode(n){ state.completed.add(n.id); n.next.forEach(id=>state.unlocked.add(id)); saveState(); }
 
 /* ---------- SCREENS / HUD ---------- */
@@ -1241,11 +1310,11 @@ function refreshHUD(){
 }
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),1900); }
 function confetti(n){
-  if(state.a11y.calm) n=Math.ceil(n*0.3);
+  n=Math.round(n*fx()); if(n<=0) return;
   const cols=['#FF6B81','#FFC93C','#4FE0B0','#5AB6FF','#B57BFF','#fff'];
   for(let i=0;i<n;i++){ const c=document.createElement('div'); c.className='conf';
     c.style.left=rnd(100)+'%'; c.style.background=cols[rnd(cols.length)];
-    c.style.animationDuration=(1.6+Math.random()*1.6)+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
+    c.style.animationDuration=((1.6+Math.random()*1.6)*(calmFx()?1.6:1))+'s'; c.style.animationDelay=(Math.random()*.4)+'s';
     c.style.borderRadius=Math.random()>.5?'50%':'3px';
     $('#app').appendChild(c); setTimeout(()=>c.remove(),3600); }
 }
@@ -1266,11 +1335,11 @@ function startLevel(n,boost){
   $('#moves-pill').style.display=(battle||n.zen)?'none':'flex';
   $('#timer-pill').style.display=battle?'flex':'none';
   $('#enemy-row').style.display=battle?'flex':'none';
-  $('#battle-flash').classList.toggle('on',battle&&!state.a11y.calm);
+  $('#battle-flash').classList.toggle('on',battle&&fx()>=0.45);
   $('#pw-time').disabled=!battle;
   $('#timer-pill').classList.remove('low');
   Snd.calmScale=WORLD_SCALES[n.w];
-  if(battle){ G.time=n.goal.time+(state.plus?15:0)+(boost?10:0)+(state.a11y.calm?15:0); G.hp=n.goal.hp;   /* Softer effects also softens the clock */ $('#time-left').textContent=G.time;
+  if(battle){ G.time=n.goal.time+(state.plus?15:0)+(boost?10:0)+(calmFx()?15:0); G.hp=n.goal.hp;   /* low intensity also softens the clock */ $('#time-left').textContent=G.time;
     $('#enemy-face').textContent=n.face; $('#enemy-bar-fill').style.width='100%';
     $('#goal-text').textContent='Enemy'; $('#goal-fill').style.width='0%';
     clearInterval(G.timer); G.timer=setInterval(battleTick,1000);
@@ -1306,7 +1375,7 @@ function updateGoalUI(){
     const prev=zenStage(Math.max(0,total-1));
     $('#goal-text').innerHTML='<span class="zen-stage">'+st[1]+'</span> Garden: '+total;
     $('#goal-fill').style.width='100%';
-    if(st[0]!==prev[0]&&total>0){ confetti(state.a11y.calm?8:24); toast('Your garden grew '+st[1]); }
+    if(st[0]!==prev[0]&&total>0){ confetti(24); toast('Your garden grew '+st[1]); }
     return;
   }
   if(G.level.type==='battle'){
@@ -1420,6 +1489,7 @@ async function trySwap(r1,c1,r2,c2){
     if(sp1==='rain'&&sp2==='rain'){
       for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)if(G.grid[r][c]>=0)cells.add(r*SIZE+c);
       G.spec[r1][c1]=null; G.spec[r2][c2]=null;
+      rainFX();
       toast('🌈🌈 DOUBLE RAINBOW — full board clear!');
     }else if(sp1==='rain'||sp2==='rain'){
       /* rainbow surge: every gem of the partner color becomes that special, then all detonate */
@@ -1430,17 +1500,21 @@ async function trySwap(r1,c1,r2,c2){
       cells.add(rr*SIZE+rc); cells.add(orr*SIZE+occ);
       for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++)
         if(G.grid[r][c]===color&&!(r===orr&&c===occ)){ setSpec(r,c,kind); cells.add(r*SIZE+c); }
+      rainFX();
       toast(kind==='bomb'?'🌈💥 RAINBOW BOMBARDMENT!':'🌈⚡ RAINBOW STORM!');
       await sleep(450);   /* let the conversion flash read */
     }else if(isLine(sp1)&&isLine(sp2)){
       G.spec[r1][c1]=null; G.spec[r2][c2]=null;
       addRow(cells,r2); addCol(cells,c2);
+      beamFX(r2,'row'); beamFX(c2,'col');
       toast('⚡⚡ GIANT CROSS!');
     }else if((isLine(sp1)&&sp2==='bomb')||(sp1==='bomb'&&isLine(sp2))){
       G.spec[r1][c1]=null; G.spec[r2][c2]=null;
       for(let d=-1;d<=1;d++){
         if(r2+d>=0&&r2+d<SIZE)addRow(cells,r2+d);
         if(c2+d>=0&&c2+d<SIZE)addCol(cells,c2+d);
+        if(r2+d>=0&&r2+d<SIZE)beamFX(r2+d,'row');
+        if(c2+d>=0&&c2+d<SIZE)beamFX(c2+d,'col');
       }
       toast('⚡💥 MEGA CROSS!');
     }else{ /* bomb+bomb */
@@ -1449,9 +1523,11 @@ async function trySwap(r1,c1,r2,c2){
         const rr=r2+dr, cc=c2+dc;
         if(rr>=0&&rr<SIZE&&cc>=0&&cc<SIZE&&G.grid[rr][cc]>=0)cells.add(rr*SIZE+cc);
       }
+      ringFX(r2,c2,true);
       toast('💥💥 MEGA BLAST!');
     }
     shakeApp();
+    await sleep(Math.round(300*fx()));   /* let the combo FX land before the clear */
     await resolve(cells);
     G.busy=false; scheduleHint(); checkEnd(); return;
   }
@@ -1529,12 +1605,13 @@ function findRuns(){
 }
 function findMatches(){ return findRuns().cells; }
 /* chain-detonate any specials caught in a clear */
-function expandSpecials(cells){
+function expandSpecials(cells,dets){
   const out=new Set(cells), q=[...cells];
   while(q.length){
     const k=q.pop(), r=Math.floor(k/SIZE), c=k%SIZE;
     const sp=G.spec[r][c]; if(!sp)continue;
     G.spec[r][c]=null; G._det=true;
+    if(dets) dets.push({r,c,kind:sp});
     const add=(rr,cc)=>{ if(rr<0||rr>=SIZE||cc<0||cc>=SIZE)return;
       const kk=rr*SIZE+cc; if(!out.has(kk)&&G.grid[rr][cc]>=0){out.add(kk);q.push(kk);} };
     if(sp==='row') for(let cc=0;cc<SIZE;cc++)add(r,cc);
@@ -1550,27 +1627,75 @@ const COMBO_WORDS=['','','Nice!','Sweet!','Great!','Divine!','LEGENDARY!'];
 function comboText(chain){
   const w=COMBO_WORDS[Math.min(chain,6)]; if(!w)return;
   const d=document.createElement('div'); d.className='combo-text'; d.textContent=w;
-  $('#game-screen').appendChild(d); setTimeout(()=>d.remove(),950);
+  d.style.animationDuration=(0.9+0.5*fx())+'s';
+  $('#game-screen').appendChild(d); setTimeout(()=>d.remove(),1500);
 }
-function shakeApp(){ const a=$('#app'); a.classList.remove('shake'); void a.offsetWidth; a.classList.add('shake'); }
+function shakeApp(){ if(fx()<0.35) return; const a=$('#app'); a.classList.remove('shake'); void a.offsetWidth; a.classList.add('shake'); }
 function burst(r,c,type){
   const b=$('#board'), col=SKINS[state.skin].pal[type]?SKINS[state.skin].pal[type][1]:'#fff';
-  const nP=state.a11y.calm?2:6;
+  const nP=Math.round(6*fx()); if(nP<=0) return;
+  const dur=(0.4+0.45*fx());
   for(let i=0;i<nP;i++){
     const p=document.createElement('div'); p.className='particle';
     const sz=4+rnd(5); p.style.width=p.style.height=sz+'px'; p.style.background=col;
     p.style.left=(c*G.cell+G.cell/2)+'px'; p.style.top=(r*G.cell+G.cell/2)+'px';
-    const ang=Math.random()*6.283, dist=G.cell*(0.6+Math.random()*0.9);
+    const ang=Math.random()*6.283, dist=G.cell*(0.6+Math.random()*0.9)*(0.7+0.6*fx());
     p.style.setProperty('--dx',Math.cos(ang)*dist+'px'); p.style.setProperty('--dy',Math.sin(ang)*dist+'px');
-    b.appendChild(p); setTimeout(()=>p.remove(),600);
+    p.style.animationDuration=dur+'s';
+    b.appendChild(p); setTimeout(()=>p.remove(),1100);
   }
+}
+/* ---------- DETONATION FX ----------
+   Bomb -> shockwave ring + glow. Blaster -> a beam sweeping the row/column.
+   Rainbow -> a full-board color pulse. Everything scales with fx(): bigger
+   and slower at full intensity so the blast can actually be seen, smaller
+   and quicker as the slider comes down, and absent near zero. */
+function boardXY(r,c){ return [c*G.cell+G.cell/2, r*G.cell+G.cell/2]; }
+function ringFX(r,c,big){
+  const f=fx(); if(f<=0.05) return;
+  const b=$('#board'), xy=boardXY(r,c), sz=G.cell;
+  const ring=document.createElement('div'); ring.className='fx-ring';
+  ring.style.width=ring.style.height=sz+'px';
+  ring.style.left=(xy[0]-sz/2)+'px'; ring.style.top=(xy[1]-sz/2)+'px';
+  ring.style.setProperty('--fxs',((big?4.6:3)*(0.6+0.5*f)).toFixed(2));
+  ring.style.animationDuration=(0.4+0.55*f)+'s';
+  b.appendChild(ring); setTimeout(()=>ring.remove(),1300);
+  const gs=big?2.4:1.6;
+  const glow=document.createElement('div'); glow.className='fx-glow';
+  glow.style.width=glow.style.height=(sz*gs)+'px';
+  glow.style.left=(xy[0]-sz*gs/2)+'px'; glow.style.top=(xy[1]-sz*gs/2)+'px';
+  glow.style.animationDuration=(0.35+0.45*f)+'s';
+  b.appendChild(glow); setTimeout(()=>glow.remove(),1100);
+}
+function beamFX(idx,dir){
+  const f=fx(); if(f<=0.05) return;
+  const b=$('#board'), W=G.cell*SIZE;
+  const d=document.createElement('div'); d.className='fx-beam';
+  if(dir==='row'){ d.style.left='0px'; d.style.top=(idx*G.cell)+'px'; d.style.width=W+'px'; d.style.height=G.cell+'px'; }
+  else{ d.classList.add('v'); d.style.top='0px'; d.style.left=(idx*G.cell)+'px'; d.style.height=W+'px'; d.style.width=G.cell+'px'; }
+  d.style.animationDuration=(0.35+0.5*f)+'s';
+  b.appendChild(d); setTimeout(()=>d.remove(),1200);
+}
+function rainFX(){
+  const f=fx(); if(f<=0.05) return;
+  const d=document.createElement('div'); d.className='fx-rainbow';
+  d.style.animationDuration=(0.6+0.6*f)+'s';
+  $('#board').appendChild(d); setTimeout(()=>d.remove(),1600);
+}
+function blastFX(r,c,kind){
+  if(kind==='bomb') ringFX(r,c,false);
+  else if(kind==='row') beamFX(r,'row');
+  else if(kind==='col') beamFX(c,'col');
+  else if(kind==='rain') rainFX();
 }
 async function resolve(first){
   let runs=(first instanceof Set)?{cells:first,spawns:[]}:first;
   let chain=0;
   while(runs.cells.size>0){
     chain++;
-    const clear=expandSpecials(runs.cells);
+    const dets=[];
+    const clear=expandSpecials(runs.cells,dets);
+    for(const d of dets) blastFX(d.r,d.c,d.kind);   /* shockwaves, beams, rainbow pulse */
     for(const s of runs.spawns) clear.delete(s.r*SIZE+s.c);   /* spawned specials survive */
     /* obstacles: ice absorbs one hit and shields its gem; stones crack from adjacent clears */
     let broke=0;
@@ -1594,7 +1719,8 @@ async function resolve(first){
     }
     for(const s of runs.spawns){ if(G.grid[s.r][s.c]>=0){ setSpec(s.r,s.c,s.kind); Snd.chime(); } }
     updateGoalUI();
-    await sleep(pace(240));
+    /* full-intensity detonations get a longer beat so the blast can be seen */
+    await sleep(pace(240)+(dets.length?Math.round(320*fx()):0));
     dropAndFill();
     await sleep(pace(280));
     G.lastSwap=null;
@@ -1838,6 +1964,11 @@ function openModal(kind,data={}){
         <div class="enc-cite">— ${e.cite}</div>
         <button class="btn alt sm enc-share" onclick="shareQuote('${e.id}')">↗ Share this</button>
       </div>
+      <p style="margin:0 0 8px;font-size:13px">Optional — a 30-second reset before you carry on:</p>
+      <div class="btnrow" style="margin-bottom:10px">
+        <button class="btn grn sm" onclick="startBreathe(30,nextBreathIdx())">🫁 Guided breathing · 30s</button>
+        <button class="btn alt sm" onclick="startQuoteMeditation('${e.id}',25)">🧘 Sit with this quote · 25s</button>
+      </div>
       <div class="btnrow"><button class="btn" id="win-continue" disabled onclick="closeModal();show('#map-screen');buildMap();Snd.startMusic('calm')">Take a breath…</button>
       <button class="btn alt sm" onclick="closeModal();show('#slot-screen');refreshSpinBtn();Snd.startMusic('calm')">🏮 Make a wish</button></div>`;
     /* hold the Continue button briefly so the message is read, not skipped */
@@ -1967,7 +2098,7 @@ function openModal(kind,data={}){
     const amb=state.ambient;
     m.innerHTML=`<h2>🌬️ Calm Corner</h2>
       <p>A quiet spot inside the quest. No goals here.</p>
-      <button class="btn grn" onclick="closeModal();startBreathe()">🫁 A minute of guided breathing</button>
+      <button class="btn grn" onclick="closeModal();startBreathe(0,nextBreathIdx())">🫁 Guided breathing — a new pattern each visit</button>
       <p style="margin:14px 0 4px;font-size:13px"><b>Ambient sounds</b> — play softly under everything</p>
       <div class="ambrow">
         <button class="amb ${amb==='rain'?'on':''}" onclick="Snd.ensure();Snd.startAmbient('rain');openModal('calm')">☔ Rain</button>
@@ -1995,7 +2126,8 @@ function openModal(kind,data={}){
       <div class="btnrow">
       <button class="btn grn" onclick="resumeGame()">▶ Resume</button>
       <button class="btn alt sm" onclick="closeModal();retryLevel(false)">↻ Restart level</button>
-      <button class="btn alt sm" onclick="closeModal();exitLevel()">🗺 Back to map</button></div>`;
+      <button class="btn alt sm" onclick="closeModal();exitLevel()">🗺 Back to map</button>
+      <button class="btn alt sm" onclick="closeModal();exitToTitle()">🏠 Main menu</button></div>`;
   }else if(kind==='settings'){
     const tog=(on)=>on?'ON':'OFF';
     m.innerHTML=`<h2>⚙️ Comfort &amp; Access</h2>
@@ -2004,11 +2136,13 @@ function openModal(kind,data={}){
         <button class="btn ${state.a11y.bigGems?'grn':'alt'} sm" onclick="toggleA11y('bigGems')">${tog(state.a11y.bigGems)}</button></div>
       <div class="setrow"><span><b>Shape symbols</b><small>Adds a symbol per color — colorblind-friendly</small></span>
         <button class="btn ${state.a11y.shapes?'grn':'alt'} sm" onclick="toggleA11y('shapes')">${tog(state.a11y.shapes)}</button></div>
-      <div class="setrow"><span><b>Softer effects</b><small>Fewer particles, slower cascades, no screen flash</small></span>
-        <button class="btn ${state.a11y.calm?'grn':'alt'} sm" onclick="toggleA11y('calm')">${tog(state.a11y.calm)}</button></div>
+      <div class="setrow col"><span><b>Animation intensity</b><small>Slide down for softer effects — fewer particles, smaller blasts, no screen flash. Low settings also add +15 gentle seconds to battles. 0 = still.</small></span>
+        <div class="sliderrow"><input type="range" min="0" max="100" step="5" value="${state.a11y.fx==null?100:state.a11y.fx}" oninput="setFx(this.value)"><span class="slider-val" id="fx-val">${state.a11y.fx==null?100:state.a11y.fx}</span></div></div>
+      <div class="setrow col"><span><b>Color intensity</b><small>Slide down for calmer, softer colors across the whole game</small></span>
+        <div class="sliderrow"><input type="range" min="0" max="100" step="5" value="${state.a11y.color==null?100:state.a11y.color}" oninput="setColor(this.value)"><span class="slider-val" id="col-val">${state.a11y.color==null?100:state.a11y.color}</span></div></div>
       <div class="setrow"><span><b>Tap-only controls</b><small>Steady-hands mode: tap a gem, then a neighbor — no dragging</small></span>
         <button class="btn ${state.a11y.tapOnly?'grn':'alt'} sm" onclick="toggleA11y('tapOnly')">${tog(state.a11y.tapOnly)}</button></div>
-      <div class="setrow"><span><b>Larger text</b><small>Bigger quotes and messages</small></span>
+      <div class="setrow"><span><b>Larger text</b><small>Bigger text across the whole game</small></span>
         <button class="btn ${state.a11y.bigText?'grn':'alt'} sm" onclick="toggleA11y('bigText')">${tog(state.a11y.bigText)}</button></div>
       <div class="setrow"><span><b>Gentle vibrations</b><small>Soft pulses guide the breathing exercise</small></span>
         <button class="btn ${state.a11y.haptics?'grn':'alt'} sm" onclick="toggleA11y('haptics')">${tog(state.a11y.haptics)}</button></div>
@@ -2027,11 +2161,20 @@ function openModal(kind,data={}){
 function toggleA11y(k){ state.a11y[k]=!state.a11y[k]; saveState(); applyA11y(); openModal('settings');
   if(k==='haptics'&&state.a11y.haptics) buzz('LIGHT');   /* a little hello so the setting is felt */ }
 function toggleAudio(k){ state.audio[k]=!state.audio[k]; saveState(); Snd.ensure(); Snd.applyAudio(); openModal('settings'); }
+/* sliders update live — no modal rebuild, so the thumb never jumps out of your hand */
+function setFx(v){ state.a11y.fx=+v; saveState(); applyA11y();
+  const e=$('#fx-val'); if(e)e.textContent=v;
+  if(G.level&&!G.over) $('#battle-flash').classList.toggle('on',G.level.type==='battle'&&fx()>=0.45); }
+function setColor(v){ state.a11y.color=+v; saveState(); applyA11y();
+  const e=$('#col-val'); if(e)e.textContent=v; }
 function applyA11y(){
   document.body.classList.toggle('a11y-big',state.a11y.bigGems);
   document.body.classList.toggle('a11y-shapes',state.a11y.shapes);
-  document.body.classList.toggle('a11y-calm',state.a11y.calm);
   document.body.classList.toggle('a11y-bigtext',state.a11y.bigText);
+  document.body.classList.toggle('fx-off',fx()<=0.05);
+  /* color intensity: 100 = vivid, lower = desaturated and gently dimmed */
+  const cl=(state.a11y.color==null?100:state.a11y.color)/100;
+  $('#app').style.filter=cl>=0.99?'':('saturate('+(.35+.65*cl).toFixed(2)+') brightness('+(.92+.08*cl).toFixed(2)+') contrast('+(.95+.05*cl).toFixed(2)+')');
   if(G.grid&&G.grid.length) for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){ const el=G.els&&G.els[r]&&G.els[r][c]; if(el&&G.grid[r][c]>=0) syncEl(r,c); }
 }
 function syncSaveBtn(id){ const b=$('#enc-save'); if(b) b.textContent=isSaved(id)?'💚':'🤍'; }
@@ -2311,24 +2454,88 @@ function buzz(style){
   try{ if(navigator.vibrate) navigator.vibrate(style==='MEDIUM'?30:15); }catch(e){}
 }
 
-/* ---------- BREATHING EXERCISE (box breathing 4-4-4-4) ---------- */
-let brT=null, brRound=0;
-const BR_PHASES=[['Breathe in…','in'],['Hold…','in'],['Breathe out…','out'],['Hold…','out']];
-function startBreathe(){ Snd.ensure(); $('#breathe').classList.add('show'); brRound=0; brStep(0); }
+/* ---------- BREATHING & MICRO-MEDITATION ----------
+   Several evidence-informed patterns rotate between levels so the reset never
+   goes stale. Untimed from the Calm Corner; ~30s timed from the win screen.
+   Every session is optional and can be left at any moment. */
+const BREATH_PATTERNS=[
+  {name:'Box breathing', sub:'in 4 · hold 4 · out 4 · hold 4',
+   phases:[['Breathe in…','in',4],['Hold…','hold',4],['Breathe out…','out',4],['Hold…','hold',4]]},
+  {name:'4·7·8 relaxing breath', sub:'in 4 · hold 7 · out 8',
+   phases:[['Breathe in through your nose…','in',4],['Hold, softly…','hold',7],['Breathe out slowly…','out',8]]},
+  {name:'Paced breathing', sub:'in 5 · out 5 — steady and even',
+   phases:[['Breathe in…','in',5],['Breathe out…','out',5]]},
+  {name:'Long exhale', sub:'in 4 · out 6 — let the out-breath do the work',
+   phases:[['Breathe in…','in',4],['Breathe out, long and slow…','out',6]]},
+  {name:'Calming sigh', sub:'two sips in · one long sigh out',
+   phases:[['Breathe in…','in',3],['Sip in a little more…','in2',1.5],['Sigh it all out…','out',6]]},
+];
+function nextBreathIdx(){ const i=(state.breathIdx||0)%BREATH_PATTERNS.length;
+  state.breathIdx=(i+1)%BREATH_PATTERNS.length; saveState(); return i; }
+let brT=null, brIv=null, brRound=0, brPat=null, brTimed=false, brEndAt=0;
+function brOpen(title){
+  Snd.ensure(); clearTimeout(brT); clearInterval(brIv);
+  $('#breathe').classList.add('show');
+  $('#br-title').textContent=title||'';
+  $('#br-phase').textContent=''; $('#br-count').textContent='';
+  $('#br-quotewrap').style.display='none';
+  const c=$('#br-circle'); c.style.display='block';
+  c.style.transitionDuration='0.001s'; c.style.transform='scale(1)';
+}
+function startBreathe(timedSecs,patIdx){
+  brPat=BREATH_PATTERNS[(patIdx==null?0:patIdx)%BREATH_PATTERNS.length];
+  brTimed=!!timedSecs; brEndAt=brTimed?Date.now()+timedSecs*1000:0; brRound=0;
+  brOpen(brPat.name);
+  brStep(0);
+}
 function brStep(i){
-  const ph=BR_PHASES[i%4];
-  if(i%4===0) brRound++;
+  const n=brPat.phases.length, ph=brPat.phases[i%n];
+  if(i%n===0){
+    if(brTimed&&Date.now()>=brEndAt) return brFinish('Well done 🌿','Carry that ease into the next level.');
+    brRound++;
+  }
   $('#br-phase').textContent=ph[0];
-  $('#br-count').textContent='Round '+brRound+' · box breathing · in 4 — hold 4 — out 4 — hold 4';
-  const c=$('#br-circle');
-  c.classList.remove('in','out'); void c.offsetWidth; c.classList.add(ph[1]);
+  $('#br-count').textContent=(brTimed?Math.max(0,Math.ceil((brEndAt-Date.now())/1000))+'s left':('Round '+brRound))+' · '+brPat.sub;
+  const c=$('#br-circle'), dir=ph[1], secs=ph[2];
+  c.style.transitionDuration=(dir==='hold'?0.001:secs*0.97)+'s';
+  if(dir==='in') c.style.transform='scale(1.85)';
+  else if(dir==='in2') c.style.transform='scale(2.05)';
+  else if(dir==='out') c.style.transform='scale(1)';
   /* a pulse marks each new phase — inhale a touch firmer than exhale — so the
      exercise can be followed with eyes closed */
-  if(i%4===0) buzz('MEDIUM'); else if(i%4===2) buzz('LIGHT');
-  if(!state.muted&&i%4!==1&&i%4!==3) Snd.tone(ph[1]==='in'?392:330,.6,'sine',.05);
-  brT=setTimeout(()=>brStep(i+1),4000);
+  if(dir==='in'||dir==='in2') buzz('MEDIUM'); else if(dir==='out') buzz('LIGHT');
+  if(!state.muted&&dir!=='hold') Snd.tone(dir==='out'?330:392,.6,'sine',.05);
+  brT=setTimeout(()=>brStep(i+1),secs*1000);
 }
-function stopBreathe(){ clearTimeout(brT); $('#breathe').classList.remove('show'); }
+function brFinish(head,sub){
+  clearTimeout(brT); clearInterval(brIv);
+  $('#br-phase').textContent=head; $('#br-count').textContent=sub||'';
+  buzz('LIGHT'); if(!state.muted) Snd.chime();
+  brT=setTimeout(stopBreathe,1700);
+}
+function stopBreathe(){ clearTimeout(brT); clearInterval(brIv); $('#breathe').classList.remove('show'); }
+/* meditate on the encouragement itself: the quote sits centre-stage for ~25s
+   with slow prompts underneath — skippable at any moment */
+const MED_PROMPTS=['Read the words slowly, twice.','Notice your breath — no need to change it.','Where do these words land for you today?','Let them settle. Nothing to solve.'];
+function startQuoteMeditation(id,secs){
+  const e=encById(id); if(!e)return;
+  secs=secs||25;
+  brOpen('A moment with this thought');
+  $('#br-circle').style.display='none';
+  const w=$('#br-quotewrap'); w.style.display='flex';
+  $('#br-quote').textContent='\u201C'+e.text+'\u201D';
+  $('#br-quote-cite').textContent='\u2014 '+e.cite;
+  const pr=$('#br-prompt'); let pi=0; pr.style.opacity=1; pr.textContent=MED_PROMPTS[0];
+  const end=Date.now()+secs*1000; let lastSwap=Date.now();
+  buzz('LIGHT');
+  brIv=setInterval(()=>{
+    const left=Math.max(0,Math.ceil((end-Date.now())/1000));
+    $('#br-count').textContent=left+'s · no goals here — just sit with it';
+    if(Date.now()-lastSwap>=8000){ lastSwap=Date.now(); pi=(pi+1)%MED_PROMPTS.length;
+      pr.style.opacity=0; setTimeout(()=>{ pr.textContent=MED_PROMPTS[pi]; pr.style.opacity=1; },450); }
+    if(left<=0) brFinish('Well done 🌿','That thought is yours to keep — save it to your Comfort Journal any time.');
+  },250);
+}
 
 /* ---------- ZEN GARDEN + TINY WINS (the sanctuary: no lives, no fail) ---------- */
 function furthestWorld(){
@@ -2365,6 +2572,14 @@ function exitLevel(){
   $('#battle-flash').classList.remove('on');
   Snd.startMusic('calm'); show('#map-screen'); buildMap(); refreshHUD();
 }
+/* leave a level straight to the title screen (from the pause menu) */
+function exitToTitle(){
+  if(G.level&&G.level.zen){ state.zenTotal+=G.score; }   /* the garden remembers */
+  clearInterval(G.timer); G.over=true; pausedBattle=false;
+  saveState();
+  $('#battle-flash').classList.remove('on');
+  Snd.stopMusic(); show('#title-screen'); refreshHUD();
+}
 /* ---------- SESSION CHECK-IN (gentle stretch reminder) ----------
    Most games maximize session length. This one respects pacing: after ~25
    minutes of continuous play it offers a soft break — never a hard stop.
@@ -2392,6 +2607,8 @@ document.addEventListener('visibilitychange',()=>{
   if(document.hidden&&G.level&&!G.over&&G.level.type==='battle'&&G.timer) pauseGame();
 });
 $('#btn-slots-nav').onclick=()=>{ show('#slot-screen'); refreshHUD(); refreshSpinBtn(); };
+$('#btn-home').onclick=()=>{ Snd.stopMusic(); show('#title-screen'); };
+$('#btn-settings-map').onclick=()=>openModal('settings');
 $('#btn-slots-back').onclick=()=>{ show('#map-screen'); buildMap(); };
 $('#btn-spin').onclick=spin;
 $('#btn-comfort').onclick=()=>openModal('plus');
@@ -2424,7 +2641,12 @@ for(let i=0;i<8;i++){ const f=document.createElement('div'); f.className='firefl
 const hadSave=!!localStorage.getItem(STORAGE_KEY);
 loadState();
 /* first run: if the device asks for reduced motion, start with Softer effects on */
-if(!hadSave){ try{ if(matchMedia('(prefers-reduced-motion: reduce)').matches) state.a11y.calm=true; }catch(e){} }
+if(!hadSave){ try{ if(matchMedia('(prefers-reduced-motion: reduce)').matches){ state.a11y.fx=15; state.a11y.color=80; } }catch(e){} }
+/* re-apply after the save loads — applyA11y() above only ran with defaults,
+   which is why saved accessibility settings never took effect on restart */
+applyA11y();
+$('#btn-mute').textContent=state.muted?'🔇':'🔊';
+$('#btn-sound-title').textContent=state.muted?'🔇 Sound: Off':'🔊 Sound: On';
 $('#backup-file').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) importBackupFile(f); e.target.value=''; };
 loadState.__done=true; buildReels(); refreshHUD(); refreshSpinBtn();
 window.addEventListener('resize',()=>{ if($('#game-screen').classList.contains('active')&&!G.busy){ boardMetrics();
