@@ -4,6 +4,7 @@
 
    Modes:
      node level-validator.js [runs]        campaign + rift regression sweep
+     node level-validator.js [runs] all    every campaign challenge/battle node
      node level-validator.js seeds [runs]  obstacle-seed pipeline: generate
                                            candidate seeds, simulate each,
                                            print the VALIDATED_SEEDS array
@@ -31,7 +32,7 @@ js=js.split('/* ---------- WIRING ---------- */')[0];
 js=js.replace('const sleep=ms=>new Promise(r=>setTimeout(r,ms));',
               'const sleep=()=>Promise.resolve();');
 
-const stubEl=()=>({style:{},classList:{add(){},remove(){},toggle(){},contains(){return false}},
+const stubEl=()=>({style:{setProperty(){},removeProperty(){}},classList:{add(){},remove(){},toggle(){},contains(){return false}},
   dataset:{},innerHTML:'',textContent:'',appendChild(){},remove(){},addEventListener(){},
   setAttribute(){},onclick:null,children:[],offsetWidth:0,clientWidth:400,clientHeight:400,
   querySelector:()=>null,_ice:null});
@@ -46,6 +47,8 @@ const harness=`
 for(const k of Object.keys(Snd)) if(typeof Snd[k]==='function') Snd[k]=()=>{};
 toast=()=>{}; confetti=()=>{}; comboText=()=>{}; shakeApp=()=>{};
 floatScore=()=>{}; burst=()=>{}; scheduleHint=()=>{}; hitEnemy=()=>{};
+for(const f of ['ringFX','blastFX','flashCell','shockwave','sparkle','glowCell','rumble','haptic','tutStep'])
+  if(typeof globalThis[f]==='function'||typeof eval('typeof '+f)==='string'){ try{ eval(f+'=()=>{}'); }catch(e){} }
 openModal=()=>{}; refreshHUD=()=>{}; buildMap=()=>{};
 let lastWin=null;
 const realEnd=endLevel;
@@ -161,18 +164,24 @@ if('${MODE}'==='seeds'){
   console.log('const VALIDATED_SEEDS='+JSON.stringify(kept)+';');
 }else{
   /* ============ REGRESSION SWEEP ============ */
-  const ids=['n1','n4','n6','n12','n16','n17','n23','n26','n31','n35','n40','n44','n49','n53'];
-  const sample=ids.map(id=>nodeById(id));
-  state.riftLevel=0; sample.push(genRiftLevel());
-  state.riftLevel=5; sample.push(genRiftLevel());
-  state.riftLevel=9; sample.push(genRiftLevel());
+  const ALL=process.argv.includes('all');
+  const ids=ALL?NODES.filter(n=>n.type==='challenge'||n.type==='battle').map(n=>n.id)
+    :['n1','n4','n6','n12','n16','n17','n23','n26','n31','n35','n40','n44','n49','n53',
+      /* worlds 7–9 */ 'n54','n55','n57','n60','n61','n63','n65','n66','n68','n69','n72','n74','n76','n77','n78','n79','n81','n84','n85','n86','n88','n89'];
+  const only=(process.env.IDS||'').split(',').filter(Boolean);   /* IDS=n54,n55 node level-validator.js 20 */
+  const sample=(only.length?only:ids).map(id=>nodeById(id));
+  if(!only.length){
+    state.riftLevel=0; sample.push(genRiftLevel());
+    state.riftLevel=5; sample.push(genRiftLevel());
+    state.riftLevel=9; sample.push(genRiftLevel());
+  }
   console.log('SOOTHE QUEST LEVEL VALIDATOR — '+${RUNS}+' runs per level per bot');
   console.log('band: smart-bot win rate '+(${BAND[0]}*100)+'-'+(${BAND[1]}*100)+'%  (casual comfort)');
   console.log('');
   console.log(pad('level',26)+pad('type',10)+pad('goal',16)+pad('greedy',9)+pad('smart',9)+pad('med.score',11)+'verdict');
   console.log('-'.repeat(92));
   for(const lv of sample){
-    const g=await validate(lv,false);
+    const g=process.env.SMART_ONLY?{wr:0}:await validate(lv,false);   /* SMART_ONLY=1 halves runtime */
     const s=await validate(lv,true);
     const goal=lv.type==='battle'?(lv.goal.hp+'hp/'+lv.goal.time+'s')
       :(lv.goal.obstacles?('blocks/'+lv.goal.moves+'mv'):(lv.goal.score+'/'+lv.goal.moves+'mv'));

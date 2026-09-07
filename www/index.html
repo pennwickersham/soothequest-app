@@ -112,14 +112,17 @@ body{
 
 /* ============ MAP ============ */
 #map-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;position:relative;margin-top:-66px;padding-bottom:env(safe-area-inset-bottom)}
-#map-inner{position:relative;width:100%;height:5880px}
+#map-inner{position:relative;width:100%;height:9480px}
 .zone{position:absolute;left:0;right:0;pointer-events:none}
-#zone6{top:0;height:960px;background:linear-gradient(180deg,#8E5A1E 0%,#C4823A 35%,#9E5A7E 70%,#2E4A7E 100%)}
-#zone5{top:960px;height:960px;background:linear-gradient(180deg,#2E4A7E 0%,#3E6EA8 45%,#5E92C4 75%,#0D2A52 100%)}
-#zone4{top:1920px;height:960px;background:linear-gradient(180deg,#0D2A52 0%,#123E63 45%,#134E5E 80%,#2A2058 100%)}
-#zone3{top:2880px;height:1160px;background:linear-gradient(180deg,#2A2058 0%,#5C2160 40%,#7A2E52 78%,#4A2258 100%)}
-#zone2{top:4040px;height:920px;background:linear-gradient(180deg,#4A2258 0%,#274277 35%,#2E5E9E 75%,#1E4A6E 100%)}
-#zone1{top:4960px;height:920px;background:linear-gradient(180deg,#1E4A6E 0%,#1E5C4E 45%,#2E7D5B 100%)}
+#zone9{top:0;height:1200px;background:linear-gradient(180deg,#0B0A2E 0%,#1E1660 40%,#4A2C7E 75%,#8E5A1E 100%)}
+#zone8{top:1200px;height:1200px;background:linear-gradient(180deg,#2A1A12 0%,#4A2A18 35%,#5E3A5A 70%,#2E3A4E 100%)}
+#zone7{top:2400px;height:1200px;background:linear-gradient(180deg,#2E3A4E 0%,#1F6E86 35%,#3AA7A2 70%,#8E5A1E 100%)}
+#zone6{top:3600px;height:960px;background:linear-gradient(180deg,#8E5A1E 0%,#C4823A 35%,#9E5A7E 70%,#2E4A7E 100%)}
+#zone5{top:4560px;height:960px;background:linear-gradient(180deg,#2E4A7E 0%,#3E6EA8 45%,#5E92C4 75%,#0D2A52 100%)}
+#zone4{top:5520px;height:960px;background:linear-gradient(180deg,#0D2A52 0%,#123E63 45%,#134E5E 80%,#2A2058 100%)}
+#zone3{top:6480px;height:1160px;background:linear-gradient(180deg,#2A2058 0%,#5C2160 40%,#7A2E52 78%,#4A2258 100%)}
+#zone2{top:7640px;height:920px;background:linear-gradient(180deg,#4A2258 0%,#274277 35%,#2E5E9E 75%,#1E4A6E 100%)}
+#zone1{top:8560px;height:920px;background:linear-gradient(180deg,#1E4A6E 0%,#1E5C4E 45%,#2E7D5B 100%)}
 #map-deco,#map-svg{position:absolute;inset:0;width:100%;height:100%}
 .worldtag{
   position:absolute;left:50%;transform:translateX(-50%);z-index:3;pointer-events:none;
@@ -159,6 +162,9 @@ body{
 #game-screen.w4{background:linear-gradient(180deg,#134E5E 0%,#123E63 55%,#1B1340 100%)}
 #game-screen.w5{background:linear-gradient(180deg,#3E6EA8 0%,#2E4A7E 55%,#1B1340 100%)}
 #game-screen.w6{background:linear-gradient(180deg,#B0722A 0%,#7A3E6E 55%,#1B1340 100%)}
+#game-screen.w7{background:linear-gradient(180deg,#1F6E86 0%,#245A7E 55%,#1B1340 100%)}
+#game-screen.w8{background:linear-gradient(180deg,#4A2A18 0%,#3A2440 55%,#1B1340 100%)}
+#game-screen.w9{background:linear-gradient(180deg,#1E1660 0%,#2A1E5C 55%,#1B1340 100%)}
 #goal-bar{padding:4px 16px 8px;display:flex;align-items:center;gap:12px}
 #goal-text{font-weight:800;font-size:14px;color:#EDE6FF;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .meter{flex:1;height:16px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden;border:1.5px solid rgba(185,167,242,.35)}
@@ -543,7 +549,7 @@ body.a11y-bigtext #br-quote{font-size:25px}
       <button class="sanct" id="btn-calmcorner"><span class="ic">🌬️</span>Calm Corner</button>
     </div>
     <div id="map-scroll"><div id="map-inner">
-      <div class="zone" id="zone6"></div><div class="zone" id="zone5"></div><div class="zone" id="zone4"></div><div class="zone" id="zone3"></div><div class="zone" id="zone2"></div><div class="zone" id="zone1"></div>
+      <div class="zone" id="zone9"></div><div class="zone" id="zone8"></div><div class="zone" id="zone7"></div><div class="zone" id="zone6"></div><div class="zone" id="zone5"></div><div class="zone" id="zone4"></div><div class="zone" id="zone3"></div><div class="zone" id="zone2"></div><div class="zone" id="zone1"></div>
       <svg id="map-deco" preserveAspectRatio="none"></svg>
       <svg id="map-svg" preserveAspectRatio="none"></svg>
       <div id="nodes"></div>
@@ -738,6 +744,9 @@ function loadState(){
         continue; }   /* merge, keep new defaults */
       if(s[k]!==undefined) state[k]=s[k];
     }
+    /* v2 content: three new worlds were added after the Sun Sovereign. Anyone who
+       already cleared it gets the first Tidewhisper node opened; the Rift stays open. */
+    if(state.completed.has('n53')&&!state.unlocked.has('n54')) state.unlocked.add('n54');
     dailyRefill();
   }catch(e){}
 }
@@ -886,7 +895,10 @@ const WORLD_SCALES={
  3:[220,262,294,330,392,440,494],
  4:[330,392,440,494,587,659,784],
  5:[262,311,349,415,466,523,622],
- 6:[294,370,440,494,554,659,740]
+ 6:[294,370,440,494,554,659,740],
+ 7:[247,294,330,370,440,494,587],
+ 8:[196,233,262,294,349,392,466],
+ 9:[330,370,415,494,554,659,740]
 };
 
 /* ---------- GEM ART: shapes + swappable skins ---------- */
@@ -990,6 +1002,7 @@ const TUTORIAL=[
   {id:'rainbow',title:'The Rainbow gem 🌈', body:'Five in a row makes a Rainbow gem. Swap it onto any color to clear every gem of that color!'},
   {id:'combo',  title:'Combine your specials ✨', body:'Swap two special gems together for huge combos — giant crosses, mega blasts, and rainbow storms.'},
   {id:'powerups',title:'Power-ups & the Lantern 🏮', body:'Stuck? Use the hammer, shuffle, or +time buttons below. Earn more at the Wishing Lantern.'},
+  {id:'obstacles',title:'Ice & stone 🧊', body:'Some gems are frozen — match one to crack the ice. Stone blocks can\'t move; clear gems right next to them to break them. Break every block to win. No rush.'},
 ];
 function tutStep(id){
   if(!state.tut) state.tut={};
@@ -1039,74 +1052,122 @@ function crackStone(r,c){ const el=G.els[r][c];
   G.els[r][c]=null; G.grid[r][c]=-1;
 }
 
-/* ---------- WORLDS & LEVELS (35 nodes, 4 worlds) ---------- */
+/* ---------- WORLDS & LEVELS (92 nodes, 9 worlds) ----------
+   Map is a vertical scroll: World 1 at the bottom (y≈9400), World 9 at the top (y≈0).
+   Node kinds: challenge (score in N moves), challenge+obstacle (break every ice/stone
+   block in N moves; layout from seed/diff, seeds must come from VALIDATED_SEEDS),
+   battle (deal hp in time seconds), reward (free Power Bloom), rift (endless).
+   After adding or retuning levels run: node level-validator.js 40           */
 const NODES=[
  /* World 1 — Willow Meadow (bottom, green) */
- {id:'n1', w:1, type:'challenge', x:50, y:5800, lbl:'Lily Pond',    goal:{score:800, moves:22}, next:['n2']},
- {id:'n2', w:1, type:'reward',    x:24, y:5692, lbl:'Power Bloom',   boon:1, next:['n3']},
- {id:'n3', w:1, type:'challenge', x:62, y:5584, lbl:'Fern Hollow',  goal:{score:1100,moves:22}, next:['n4']},
- {id:'n4', w:1, type:'battle',    x:30, y:5476, lbl:'Moss Golem',   goal:{hp:800, time:60}, face:'🪨', next:['n5a','n5b']},
- {id:'n5a',w:1, type:'challenge', x:72, y:5368, lbl:'Star Meadow',  goal:{score:1400,moves:20}, next:['n6']},
- {id:'n5b',w:1, type:'reward',    x:18, y:5368, lbl:'Power Bloom',   boon:1, next:['n6']},
- {id:'n6', w:1, type:'challenge', x:46, y:5260, lbl:'Willow Gate',  goal:{score:1600,moves:20}, next:['n7']},
- {id:'n7', w:1, type:'battle',    x:26, y:5148, lbl:'Thorn Sprite', goal:{hp:1000,time:60}, face:'🌵', next:['n8']},
- {id:'n8', w:1, type:'reward',    x:68, y:5036, lbl:'Power Bloom',   boon:1, next:['n9']},
+ {id:'n1', w:1, type:'challenge', x:50, y:9400, lbl:'Lily Pond',    goal:{score:800, moves:22}, next:['n2']},
+ {id:'n2', w:1, type:'reward',    x:24, y:9292, lbl:'Power Bloom',   boon:1, next:['n3']},
+ {id:'n3', w:1, type:'challenge', x:62, y:9184, lbl:'Fern Hollow',  goal:{score:1100,moves:22}, next:['n4']},
+ {id:'n4', w:1, type:'battle',    x:30, y:9076, lbl:'Moss Golem',   goal:{hp:800, time:60}, face:'🪨', next:['n5a','n5b']},
+ {id:'n5a',w:1, type:'challenge', x:72, y:8968, lbl:'Star Meadow',  goal:{score:1400,moves:20}, next:['n6']},
+ {id:'n5b',w:1, type:'reward',    x:18, y:8968, lbl:'Power Bloom',   boon:1, next:['n6']},
+ {id:'n6', w:1, type:'challenge', x:46, y:8860, lbl:'Willow Gate',  goal:{score:1600,moves:20}, next:['n7']},
+ {id:'n7', w:1, type:'battle',    x:26, y:8748, lbl:'Thorn Sprite', goal:{hp:1000,time:60}, face:'🌵', next:['n8']},
+ {id:'n8', w:1, type:'reward',    x:68, y:8636, lbl:'Power Bloom',   boon:1, next:['n9']},
  /* World 2 — Cloudline Isles */
- {id:'n9', w:2, type:'challenge', x:44, y:4900, lbl:'Cloud Steps',  goal:{score:1800,moves:20}, next:['n10']},
- {id:'n10',w:2, type:'battle',    x:24, y:4790, lbl:'Storm Imp',    goal:{hp:1200,time:62}, face:'👾', next:['n11a','n11b']},
- {id:'n11a',w:2,type:'challenge', x:66, y:4680, lbl:'Mist Bridge',  goal:{score:2000,moves:19}, next:['n12']},
- {id:'n11b',w:2,type:'reward',    x:16, y:4680, lbl:'Power Bloom',   boon:1, next:['n12']},
- {id:'n12',w:2, type:'challenge', x:46, y:4570, lbl:'Zephyr Falls', goal:{score:2200,moves:19}, next:['n13']},
- {id:'n13',w:2, type:'reward',    x:76, y:4460, lbl:'Power Bloom',   boon:1, next:['n14']},
- {id:'n14',w:2, type:'battle',    x:30, y:4352, lbl:'Thunder Roc',  goal:{hp:1400,time:62}, face:'🦅', next:['n15']},
- {id:'n15',w:2, type:'challenge', x:62, y:4244, lbl:'Aurora Isle',  goal:{score:2400,moves:18}, next:['n16']},
- {id:'n16',w:2, type:'battle',    x:40, y:4130, lbl:'Fog Wyrm',     goal:{hp:1500,time:64}, face:'🐍', next:['n17']},
+ {id:'n9', w:2, type:'challenge', x:44, y:8500, lbl:'Cloud Steps',  goal:{score:1800,moves:20}, next:['n10']},
+ {id:'n10',w:2, type:'battle',    x:24, y:8390, lbl:'Storm Imp',    goal:{hp:1200,time:62}, face:'👾', next:['n11a','n11b']},
+ {id:'n11a',w:2,type:'challenge', x:66, y:8280, lbl:'Mist Bridge',  goal:{score:2000,moves:19}, next:['n12']},
+ {id:'n11b',w:2,type:'reward',    x:16, y:8280, lbl:'Power Bloom',   boon:1, next:['n12']},
+ {id:'n12',w:2, type:'challenge', x:46, y:8170, lbl:'Zephyr Falls', goal:{score:2200,moves:19}, next:['n13']},
+ {id:'n13',w:2, type:'reward',    x:76, y:8060, lbl:'Power Bloom',   boon:1, next:['n14']},
+ {id:'n14',w:2, type:'battle',    x:30, y:7952, lbl:'Thunder Roc',  goal:{hp:1400,time:62}, face:'🦅', next:['n15']},
+ {id:'n15',w:2, type:'challenge', x:62, y:7844, lbl:'Aurora Isle',  goal:{score:2400,moves:18}, next:['n16']},
+ {id:'n16',w:2, type:'battle',    x:40, y:7730, lbl:'Fog Wyrm',     goal:{hp:1500,time:64}, face:'🐍', next:['n17']},
  /* World 3 — Ember Lantern Peaks */
- {id:'n17',w:3, type:'challenge', x:56, y:4000, lbl:'Ember Path',   goal:{score:2600,moves:18}, next:['n18']},
- {id:'n18',w:3, type:'reward',    x:24, y:3892, lbl:'Power Bloom',   boon:1, next:['n19']},
- {id:'n19',w:3, type:'battle',    x:66, y:3784, lbl:'Cinder Bat',   goal:{hp:1600,time:64}, face:'🦇', next:['n20a','n20b']},
- {id:'n20a',w:3,type:'challenge', x:28, y:3676, lbl:'Ash Garden',   goal:{score:2800,moves:17}, next:['n21']},
- {id:'n20b',w:3,type:'reward',    x:78, y:3676, lbl:'Power Bloom',   boon:1, next:['n21']},
- {id:'n21',w:3, type:'challenge', x:50, y:3568, lbl:'Lantern Row',  goal:{score:2650,moves:17}, next:['n22']},
- {id:'n22',w:3, type:'battle',    x:24, y:3456, lbl:'Magma Pup',    goal:{hp:1800,time:66}, face:'🐲', next:['n23']},
- {id:'n23',w:3, type:'challenge', x:66, y:3344, lbl:'Glasspeak',    goal:{score:2550,moves:16}, next:['n24']},
- {id:'n24',w:3, type:'reward',    x:38, y:3232, lbl:'Power Bloom',   boon:1, next:['n25']},
- {id:'n25',w:3, type:'challenge', x:58, y:3120, lbl:'Summit Steps', goal:{score:2750,moves:16}, next:['n26']},
- {id:'n26',w:3, type:'battle',    x:50, y:2990, lbl:'Lantern King', goal:{hp:2200,time:72}, face:'🏮', next:['n27']},
+ {id:'n17',w:3, type:'challenge', x:56, y:7600, lbl:'Ember Path',   goal:{score:2600,moves:18}, next:['n18']},
+ {id:'n18',w:3, type:'reward',    x:24, y:7492, lbl:'Power Bloom',   boon:1, next:['n19']},
+ {id:'n19',w:3, type:'battle',    x:66, y:7384, lbl:'Cinder Bat',   goal:{hp:1600,time:64}, face:'🦇', next:['n20a','n20b']},
+ {id:'n20a',w:3,type:'challenge', x:28, y:7276, lbl:'Ash Garden',   goal:{score:2800,moves:17}, next:['n21']},
+ {id:'n20b',w:3,type:'reward',    x:78, y:7276, lbl:'Power Bloom',   boon:1, next:['n21']},
+ {id:'n21',w:3, type:'challenge', x:50, y:7168, lbl:'Lantern Row',  goal:{score:2650,moves:17}, next:['n22']},
+ {id:'n22',w:3, type:'battle',    x:24, y:7056, lbl:'Magma Pup',    goal:{hp:1800,time:66}, face:'🐲', next:['n23']},
+ {id:'n23',w:3, type:'challenge', x:66, y:6944, lbl:'Glasspeak',    goal:{score:2550,moves:16}, next:['n24']},
+ {id:'n24',w:3, type:'reward',    x:38, y:6832, lbl:'Power Bloom',   boon:1, next:['n25']},
+ {id:'n25',w:3, type:'challenge', x:58, y:6720, lbl:'Summit Steps', goal:{score:2750,moves:16}, next:['n26']},
+ {id:'n26',w:3, type:'battle',    x:50, y:6590, lbl:'Lantern King', goal:{hp:2200,time:72}, face:'🏮', next:['n27']},
  /* World 4 — Moonwell Depths */
- {id:'n27',w:4, type:'challenge', x:46, y:2820, lbl:'Tide Gate',     goal:{score:2900,moves:18}, next:['n28']},
- {id:'n28',w:4, type:'reward',    x:74, y:2715, lbl:'Power Bloom',    boon:2, next:['n29']},
- {id:'n29',w:4, type:'battle',    x:30, y:2610, lbl:'Glow Jelly',    goal:{hp:2000,time:68}, face:'🪼', next:['n30a','n30b']},
- {id:'n30a',w:4,type:'challenge', x:68, y:2505, lbl:'Kelp Spiral',   goal:{score:2950,moves:18}, next:['n31']},
- {id:'n30b',w:4,type:'reward',    x:20, y:2505, lbl:'Power Bloom',    boon:2, next:['n31']},
- {id:'n31',w:4, type:'challenge', x:46, y:2400, lbl:'Moonwell',      goal:{score:2900,moves:18}, next:['n32']},
- {id:'n32',w:4, type:'battle',    x:72, y:2295, lbl:'Ink Siren',     goal:{hp:2300,time:70}, face:'🦑', next:['n33']},
- {id:'n33',w:4, type:'challenge', x:28, y:2190, lbl:'Pearl Steps',   goal:{score:3050,moves:18}, next:['n34']},
- {id:'n34',w:4, type:'reward',    x:60, y:2090, lbl:'Power Bloom',    boon:2, next:['n35']},
- {id:'n35',w:4, type:'battle',    x:46, y:1990, lbl:'Dream Whale',   goal:{hp:2700,time:75}, face:'🐋', next:['n36']},
+ {id:'n27',w:4, type:'challenge', x:46, y:6420, lbl:'Tide Gate',     goal:{score:2900,moves:18}, next:['n28']},
+ {id:'n28',w:4, type:'reward',    x:74, y:6315, lbl:'Power Bloom',    boon:2, next:['n29']},
+ {id:'n29',w:4, type:'battle',    x:30, y:6210, lbl:'Glow Jelly',    goal:{hp:2000,time:68}, face:'🪼', next:['n30a','n30b']},
+ {id:'n30a',w:4,type:'challenge', x:68, y:6105, lbl:'Kelp Spiral',   goal:{score:2950,moves:18}, next:['n31']},
+ {id:'n30b',w:4,type:'reward',    x:20, y:6105, lbl:'Power Bloom',    boon:2, next:['n31']},
+ {id:'n31',w:4, type:'challenge', x:46, y:6000, lbl:'Moonwell',      goal:{score:2900,moves:18}, next:['n32']},
+ {id:'n32',w:4, type:'battle',    x:72, y:5895, lbl:'Ink Siren',     goal:{hp:2300,time:70}, face:'🦑', next:['n33']},
+ {id:'n33',w:4, type:'challenge', x:28, y:5790, lbl:'Pearl Steps',   goal:{score:3050,moves:18}, next:['n34']},
+ {id:'n34',w:4, type:'reward',    x:60, y:5690, lbl:'Power Bloom',    boon:2, next:['n35']},
+ {id:'n35',w:4, type:'battle',    x:46, y:5590, lbl:'Dream Whale',   goal:{hp:2700,time:75}, face:'🐋', next:['n36']},
  /* World 5 — Frostveil Tundra */
- {id:'n36',w:5, type:'challenge', x:50, y:1860, lbl:'Snowdrift Way', goal:{score:3100,moves:19}, next:['n37']},
- {id:'n37',w:5, type:'reward',    x:22, y:1758, lbl:'Power Bloom',    boon:2, next:['n38']},
- {id:'n38',w:5, type:'battle',    x:64, y:1656, lbl:'Frost Fox',     goal:{hp:2500,time:70}, face:'🦊', next:['n39a','n39b']},
- {id:'n39a',w:5,type:'challenge', x:30, y:1554, lbl:'Icicle Grove',  goal:{score:3200,moves:19}, next:['n40']},
- {id:'n39b',w:5,type:'reward',    x:76, y:1554, lbl:'Power Bloom',    boon:2, next:['n40']},
- {id:'n40',w:5, type:'challenge', x:50, y:1452, lbl:'Frozen Lake',   goal:{score:3150,moves:19}, next:['n41']},
- {id:'n41',w:5, type:'battle',    x:26, y:1350, lbl:'Blizzard Owl',  goal:{hp:2800,time:72}, face:'🦉', next:['n42']},
- {id:'n42',w:5, type:'challenge', x:68, y:1248, lbl:'Aurora Ridge',  goal:{score:3300,moves:19}, next:['n43']},
- {id:'n43',w:5, type:'reward',    x:40, y:1146, lbl:'Power Bloom',    boon:2, next:['n44']},
- {id:'n44',w:5, type:'battle',    x:54, y:1040, lbl:'Glacier Titan', goal:{hp:2900,time:75}, face:'🧊', next:['n45']},
+ {id:'n36',w:5, type:'challenge', x:50, y:5460, lbl:'Snowdrift Way', goal:{score:3100,moves:19}, next:['n37']},
+ {id:'n37',w:5, type:'reward',    x:22, y:5358, lbl:'Power Bloom',    boon:2, next:['n38']},
+ {id:'n38',w:5, type:'battle',    x:64, y:5256, lbl:'Frost Fox',     goal:{hp:2500,time:70}, face:'🦊', next:['n39a','n39b']},
+ {id:'n39a',w:5,type:'challenge', x:30, y:5154, lbl:'Icicle Grove',  goal:{score:3200,moves:19}, next:['n40']},
+ {id:'n39b',w:5,type:'reward',    x:76, y:5154, lbl:'Power Bloom',    boon:2, next:['n40']},
+ {id:'n40',w:5, type:'challenge', x:50, y:5052, lbl:'Frozen Lake',   goal:{score:3150,moves:19}, next:['n41']},
+ {id:'n41',w:5, type:'battle',    x:26, y:4950, lbl:'Blizzard Owl',  goal:{hp:2800,time:72}, face:'🦉', next:['n42']},
+ {id:'n42',w:5, type:'challenge', x:68, y:4848, lbl:'Aurora Ridge',  goal:{score:3300,moves:19}, next:['n43']},
+ {id:'n43',w:5, type:'reward',    x:40, y:4746, lbl:'Power Bloom',    boon:2, next:['n44']},
+ {id:'n44',w:5, type:'battle',    x:54, y:4640, lbl:'Glacier Titan', goal:{hp:2900,time:75}, face:'🧊', next:['n45']},
  /* World 6 — Sunspire Sanctum (finale) */
- {id:'n45',w:6, type:'challenge', x:46, y:900, lbl:'Dawn Steps',     goal:{score:3400,moves:20}, next:['n46']},
- {id:'n46',w:6, type:'reward',    x:74, y:798, lbl:'Power Bloom',     boon:2, next:['n47']},
- {id:'n47',w:6, type:'battle',    x:28, y:696, lbl:'Solar Sprite',   goal:{hp:3200,time:74}, face:'✨', next:['n48a','n48b']},
- {id:'n48a',w:6,type:'challenge', x:66, y:594, lbl:'Radiant Hall',   goal:{score:3450,moves:20}, next:['n49']},
- {id:'n48b',w:6,type:'reward',    x:18, y:594, lbl:'Power Bloom',     boon:2, next:['n49']},
- {id:'n49',w:6, type:'challenge', x:46, y:492, lbl:'Prism Court',    goal:{score:3250,moves:20}, next:['n50']},
- {id:'n50',w:6, type:'battle',    x:72, y:390, lbl:'Comet Drake',    goal:{hp:3500,time:76}, face:'☄️', next:['n51']},
- {id:'n51',w:6, type:'challenge', x:28, y:288, lbl:'Halo Walk',      goal:{score:3550,moves:20}, next:['n52']},
- {id:'n52',w:6, type:'reward',    x:58, y:190, lbl:'Power Bloom',     boon:2, next:['n53']},
- {id:'n53',w:6, type:'battle',    x:46, y:80,  lbl:'Sun Sovereign',  goal:{hp:3100,time:80}, face:'🌞', next:['rift']},
- {id:'rift',w:6,type:'rift',      x:80, y:60,  lbl:'Endless Rift',   next:[]},
+ {id:'n45',w:6, type:'challenge', x:46, y:4500, lbl:'Dawn Steps',     goal:{score:3400,moves:20}, next:['n46']},
+ {id:'n46',w:6, type:'reward',    x:74, y:4398, lbl:'Power Bloom',     boon:2, next:['n47']},
+ {id:'n47',w:6, type:'battle',    x:28, y:4296, lbl:'Solar Sprite',   goal:{hp:3200,time:74}, face:'✨', next:['n48a','n48b']},
+ {id:'n48a',w:6,type:'challenge', x:66, y:4194, lbl:'Radiant Hall',   goal:{score:3450,moves:20}, next:['n49']},
+ {id:'n48b',w:6,type:'reward',    x:18, y:4194, lbl:'Power Bloom',     boon:2, next:['n49']},
+ {id:'n49',w:6, type:'challenge', x:46, y:4092, lbl:'Prism Court',    goal:{score:3250,moves:20}, next:['n50']},
+ {id:'n50',w:6, type:'battle',    x:72, y:3990, lbl:'Comet Drake',    goal:{hp:3500,time:76}, face:'☄️', next:['n51']},
+ {id:'n51',w:6, type:'challenge', x:28, y:3888, lbl:'Halo Walk',      goal:{score:3550,moves:20}, next:['n52']},
+ {id:'n52',w:6, type:'reward',    x:58, y:3790, lbl:'Power Bloom',     boon:2, next:['n53']},
+ {id:'n53',w:6, type:'battle',    x:46, y:3680,  lbl:'Sun Sovereign',  goal:{hp:3100,time:80}, face:'🌞', next:['n54']},
+ /* World 7 — Tidewhisper Shores (2400–3600). Introduces ice & stone "clearing"
+    levels to the campaign; seeds come from VALIDATED_SEEDS (bot win rate 55–90%). */
+ {id:'n54', w:7, type:'challenge', x:50, y:3520, lbl:'Driftwood Cove',    goal:{score:3500,moves:20}, next:['n55']},
+ {id:'n55', w:7, type:'challenge', x:24, y:3430, lbl:'Tidepool Steps',    obstacle:true, seed:209, diff:2, goal:{obstacles:true,moves:24}, next:['n56']},
+ {id:'n56', w:7, type:'reward',    x:70, y:3340, lbl:'Power Bloom',       boon:2, next:['n57']},
+ {id:'n57', w:7, type:'battle',    x:36, y:3250, lbl:'Reef Crab',         goal:{hp:3000,time:76}, face:'🦀', next:['n58a','n58b']},
+ {id:'n58a',w:7, type:'challenge', x:72, y:3160, lbl:'Sea Glass Bay',     goal:{score:3600,moves:21}, next:['n59']},
+ {id:'n58b',w:7, type:'reward',    x:18, y:3160, lbl:'Power Bloom',       boon:2, next:['n59']},
+ {id:'n59', w:7, type:'challenge', x:46, y:3070, lbl:'Barnacle Rocks',    obstacle:true, seed:205, diff:2, goal:{obstacles:true,moves:24}, next:['n60']},
+ {id:'n60', w:7, type:'challenge', x:74, y:2980, lbl:'Gull Point',        goal:{score:3650,moves:22}, next:['n61']},
+ {id:'n61', w:7, type:'battle',    x:30, y:2890, lbl:'Shell Knight',      goal:{hp:3200,time:80}, face:'🐚', next:['n62']},
+ {id:'n62', w:7, type:'reward',    x:64, y:2800, lbl:'Power Bloom',       boon:2, next:['n63']},
+ {id:'n63', w:7, type:'challenge', x:28, y:2710, lbl:'Kelp Lagoon',       obstacle:true, seed:409, diff:4, goal:{obstacles:true,moves:26}, next:['n64']},
+ {id:'n64', w:7, type:'challenge', x:66, y:2620, lbl:'Lighthouse Stair',  goal:{score:3700,moves:22}, next:['n65']},
+ {id:'n65', w:7, type:'battle',    x:46, y:2480, lbl:'Tide Elder',        goal:{hp:3200,time:84}, face:'🐢', next:['n66']},
+ /* World 8 — Hollow Root Caverns (1200–2400) */
+ {id:'n66', w:8, type:'challenge', x:52, y:2320, lbl:'Root Stair',        goal:{score:3750,moves:22}, next:['n67']},
+ {id:'n67', w:8, type:'reward',    x:22, y:2230, lbl:'Power Bloom',       boon:2, next:['n68']},
+ {id:'n68', w:8, type:'challenge', x:66, y:2140, lbl:'Crystal Pocket',    obstacle:true, seed:408, diff:4, goal:{obstacles:true,moves:26}, next:['n69']},
+ {id:'n69', w:8, type:'battle',    x:32, y:2050, lbl:'Glow Grub',         goal:{hp:2900,time:78}, face:'🐛', next:['n70a','n70b']},
+ {id:'n70a',w:8, type:'challenge', x:74, y:1960, lbl:'Echo Chamber',      goal:{score:3800,moves:22}, next:['n71']},
+ {id:'n70b',w:8, type:'reward',    x:18, y:1960, lbl:'Power Bloom',       boon:2, next:['n71']},
+ {id:'n71', w:8, type:'challenge', x:46, y:1870, lbl:'Stalactite Hall',   obstacle:true, seed:402, diff:4, goal:{obstacles:true,moves:26}, next:['n72']},
+ {id:'n72', w:8, type:'battle',    x:26, y:1780, lbl:'Cave Skink',        goal:{hp:3100,time:82}, face:'🦎', next:['n73']},
+ {id:'n73', w:8, type:'challenge', x:68, y:1690, lbl:'Mushroom Grotto',   goal:{score:3850,moves:23}, next:['n74']},
+ {id:'n74', w:8, type:'challenge', x:36, y:1600, lbl:'Amber Vein',        obstacle:true, seed:602, diff:6, goal:{obstacles:true,moves:28}, next:['n75']},
+ {id:'n75', w:8, type:'reward',    x:72, y:1510, lbl:'Power Bloom',       boon:2, next:['n76']},
+ {id:'n76', w:8, type:'challenge', x:40, y:1420, lbl:'Deep Spring',       goal:{score:3900,moves:23}, next:['n77']},
+ {id:'n77', w:8, type:'battle',    x:34, y:1280, lbl:'Root Wyrm',         goal:{hp:3600,time:88}, face:'🐉', next:['n78']},
+ /* World 9 — Starfall Summit (0–1200, finale) */
+ {id:'n78', w:9, type:'challenge', x:46, y:1110, lbl:'Meteor Meadow',     goal:{score:3950,moves:23}, next:['n79']},
+ {id:'n79', w:9, type:'challenge', x:74, y:1020, lbl:'Stardust Field',    obstacle:true, seed:607, diff:6, goal:{obstacles:true,moves:28}, next:['n80']},
+ {id:'n80', w:9, type:'reward',    x:24, y:930,  lbl:'Power Bloom',       boon:2, next:['n81']},
+ {id:'n81', w:9, type:'battle',    x:60, y:840,  lbl:'Moon Moth',         goal:{hp:3100,time:82}, face:'🦋', next:['n82a','n82b']},
+ {id:'n82a',w:9, type:'challenge', x:26, y:750,  lbl:'Nebula Bridge',     goal:{score:4000,moves:25}, next:['n83']},
+ {id:'n82b',w:9, type:'reward',    x:78, y:750,  lbl:'Power Bloom',       boon:2, next:['n83']},
+ {id:'n83', w:9, type:'challenge', x:50, y:660,  lbl:'Comet Trail',       obstacle:true, seed:612, diff:6, goal:{obstacles:true,moves:28}, next:['n84']},
+ {id:'n84', w:9, type:'challenge', x:22, y:570,  lbl:'Constellation Walk',goal:{score:4050,moves:25}, next:['n85']},
+ {id:'n85', w:9, type:'battle',    x:68, y:480,  lbl:'Comet Finch',       goal:{hp:3500,time:86}, face:'🐦', next:['n86']},
+ {id:'n86', w:9, type:'challenge', x:34, y:390,  lbl:'Crater Garden',     obstacle:true, seed:803, diff:8, goal:{obstacles:true,moves:30}, next:['n87']},
+ {id:'n87', w:9, type:'reward',    x:70, y:300,  lbl:'Power Bloom',       boon:2, next:['n88']},
+ {id:'n88', w:9, type:'challenge', x:40, y:200,  lbl:'Zenith Steps',      goal:{score:4100,moves:25}, next:['n89']},
+ {id:'n89', w:9, type:'battle',    x:46, y:60,   lbl:'Star Weaver',       goal:{hp:3800,time:92}, face:'🌟', next:['rift']},
+ {id:'rift',w:9, type:'rift',      x:82, y:50,   lbl:'Endless Rift',      next:[]},
 ];
 const nodeById=id=>NODES.find(n=>n.id===id);
 
@@ -1135,7 +1196,7 @@ const VALIDATED_SEEDS=[{"seed":201,"diff":2,"moves":22,"wr":55},{"seed":202,"dif
 
 function genRiftLevel(){
   const k=state.riftLevel;                       /* difficulty index */
-  const w=1+(k%6);                               /* cycle world themes/music */
+  const w=1+(k%9);                               /* cycle world themes/music */
   const name=RIFT_ADJ[rnd(RIFT_ADJ.length)]+' '+RIFT_NOUN[rnd(RIFT_NOUN.length)];
   /* validator-calibrated: 5-color boards score ~190/mv, 6-color deal ~85 dmg/mv.
      Targets start at ~0.76x capacity and creep past 1.0x — endless modes are
@@ -1177,6 +1238,42 @@ function mapDecor(W){
       rays+=`<line x1="${x+Math.cos(a)*(rad+8)}" y1="${y+Math.sin(a)*(rad+8)}" x2="${x+Math.cos(a)*(rad+26)}" y2="${y+Math.sin(a)*(rad+26)}" stroke="#FFD24A" stroke-width="6" stroke-linecap="round" opacity=".85"/>`; }
     p.push(`<g>${rays}<circle cx="${x}" cy="${y}" r="${rad}" fill="#FFE08A"/><circle cx="${x-rad*.25}" cy="${y-rad*.25}" r="${rad*.32}" fill="#FFF3C4"/></g>`); };
 
+  const wave=(y,amp,stroke,op)=>p.push(`<path d="M0 ${y} q ${W*.125} ${-amp} ${W*.25} 0 t ${W*.25} 0 t ${W*.25} 0 t ${W*.25} 0" fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round" opacity="${op}"/>`);
+  const shell=(x,y,s,fill)=>p.push(`<g opacity=".9"><path d="M${x-14*s} ${y} A14 14 0 0 1 ${x+14*s} ${y} L${x} ${y+8*s} Z" fill="${fill}"/><path d="M${x-9*s} ${y-3*s} L${x} ${y+7*s} M${x} ${y-14*s} L${x} ${y+7*s} M${x+9*s} ${y-3*s} L${x} ${y+7*s}" stroke="#FFF6E8" stroke-width="${1.6*s}" opacity=".7"/></g>`);
+  const palm=(x,y,s)=>p.push(`<g opacity=".9"><path d="M${x} ${y} q${8*s} ${-30*s} ${4*s} ${-60*s}" stroke="#6B4A2A" stroke-width="${5*s}" fill="none" stroke-linecap="round"/><g fill="#2E9E7B"><ellipse cx="${x+4*s}" cy="${y-60*s}" rx="${22*s}" ry="${7*s}" transform="rotate(-25 ${x+4*s} ${y-60*s})"/><ellipse cx="${x+4*s}" cy="${y-60*s}" rx="${22*s}" ry="${7*s}" transform="rotate(30 ${x+4*s} ${y-60*s})"/><ellipse cx="${x+4*s}" cy="${y-62*s}" rx="${20*s}" ry="${6*s}" transform="rotate(-75 ${x+4*s} ${y-62*s})"/><ellipse cx="${x+4*s}" cy="${y-62*s}" rx="${20*s}" ry="${6*s}" transform="rotate(80 ${x+4*s} ${y-62*s})"/></g></g>`);
+  const lighthouse=(x,y)=>p.push(`<g opacity=".95"><path d="M${x-11} ${y} L${x-8} ${y-70} L${x+8} ${y-70} L${x+11} ${y} Z" fill="#FFF3E0"/><rect x="${x-10}" y="${y-40}" width="20" height="9" fill="#FF6B81"/><rect x="${x-10}" y="${y-20}" width="20" height="9" fill="#FF6B81"/><rect x="${x-9}" y="${y-84}" width="18" height="14" rx="3" fill="#FFE08A"/><path d="M${x} ${y-77} L${x-70} ${y-100} L${x-70} ${y-54} Z" fill="#FFE9A8" opacity=".25"/></g>`);
+  const stalac=(x,y,w,h,fill)=>p.push(`<path d="M${x-w} ${y} L${x} ${y+h} L${x+w} ${y} Z" fill="${fill}" opacity=".9"/>`);
+  const root=(x,y,h,fill)=>p.push(`<path d="M${x} ${y} q-14 ${h*.3} -2 ${h*.55} q14 ${h*.25} -4 ${h}" stroke="${fill}" stroke-width="5" fill="none" stroke-linecap="round" opacity=".75"/>`);
+  const glow=(x,y,r,fill)=>p.push(`<circle cx="${x}" cy="${y}" r="${r*2.2}" fill="${fill}" opacity=".15"/><circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" opacity=".85"/>`);
+  const star=(x,y,s,op)=>p.push(`<path d="M${x} ${y-6*s} L${x+1.8*s} ${y-1.8*s} L${x+6*s} ${y} L${x+1.8*s} ${y+1.8*s} L${x} ${y+6*s} L${x-1.8*s} ${y+1.8*s} L${x-6*s} ${y} L${x-1.8*s} ${y-1.8*s} Z" fill="#FFF6D8" opacity="${op}"/>`);
+  const comet=(x,y,len,ang)=>{ const a=ang*Math.PI/180; p.push(`<line x1="${x}" y1="${y}" x2="${x-Math.cos(a)*len}" y2="${y-Math.sin(a)*len}" stroke="#FFE9A8" stroke-width="3" stroke-linecap="round" opacity=".55"/><circle cx="${x}" cy="${y}" r="5" fill="#FFF6D8"/>`); };
+  const planet=(x,y,r,fill,ring)=>p.push(`<g opacity=".9"><circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/><ellipse cx="${x}" cy="${y}" rx="${r*1.7}" ry="${r*.45}" fill="none" stroke="${ring}" stroke-width="4" transform="rotate(-18 ${x} ${y})"/></g>`);
+
+  /* World 9 — Starfall Summit (0–1200) */
+  for(let i=0;i<34;i++){ const r=mulberry32(900+i); star(r()*W, 30+r()*1000, .5+r()*1.1, .35+r()*.6); }
+  comet(W*.72,120,110,35); comet(W*.22,330,90,25); comet(W*.6,640,130,40); comet(W*.3,880,80,30);
+  planet(W*.86,240,26,'#C08BFF','#FFD1F3'); planet(W*.14,560,18,'#7AC4FF','#EAF4FF');
+  peak(W*.16,980,72,240,'#4A2C7E'); peak(W*.84,930,86,290,'#3A2470'); peak(W*.5,1040,58,180,'#4A2C7E');
+  crystal(W*.1,1160,1.3,'#FFE08A'); crystal(W*.9,1140,1.1,'#FFD1F3'); crystal(W*.46,1180,1,'#9CDCFF');
+  hill(1190,45,'#2A1A12',.85);
+  /* World 8 — Hollow Root Caverns (1200–2400) */
+  stalac(W*.08,1200,16,70,'#3A2A20'); stalac(W*.24,1200,12,48,'#3A2A20'); stalac(W*.5,1200,20,90,'#3A2A20'); stalac(W*.72,1200,14,60,'#3A2A20'); stalac(W*.9,1200,17,80,'#3A2A20');
+  root(W*.04,1200,420,'#5A3A22'); root(W*.96,1200,520,'#5A3A22'); root(W*.5,1290,300,'#5A3A22');
+  crystal(W*.14,1560,1.5,'#FFB84D'); crystal(W*.88,1480,1.2,'#B57BFF'); crystal(W*.1,1880,1.1,'#7AFFE0'); crystal(W*.9,1980,1.6,'#FFB84D'); crystal(W*.3,2280,1.2,'#B57BFF');
+  shroom(W*.2,1700,'#7AC4FF'); shroom(W*.8,1660,'#7AFFE0'); shroom(W*.12,2120,'#FF6B81'); shroom(W*.86,2260,'#7AC4FF'); shroom(W*.6,2350,'#B57BFF');
+  glow(W*.34,1420,6,'#7AFFE0'); glow(W*.7,1520,5,'#FFE08A'); glow(W*.2,1980,7,'#7AC4FF'); glow(W*.78,2080,6,'#7AFFE0'); glow(W*.44,2200,5,'#FFE08A');
+  hill(2390,40,'#2E3A4E',.85);
+  /* World 7 — Tidewhisper Shores (2400–3600) */
+  cloud(W*.18,2470,1,.35); cloud(W*.8,2520,1.1,.3);
+  lighthouse(W*.84,2660);
+  wave(2760,10,'#BFF3F0',.45); wave(2960,12,'#BFF3F0',.35); wave(3180,10,'#BFF3F0',.4); wave(3380,12,'#BFF3F0',.35);
+  palm(W*.1,2900,1.1); palm(W*.9,3080,1.3); palm(W*.14,3480,1.2);
+  shell(W*.3,3060,1.1,'#FFD1F3'); shell(W*.72,3300,1,'#FFE9A8'); shell(W*.86,3520,1.2,'#FF9AA8'); shell(W*.4,3560,.9,'#FFD1F3');
+  bubble(W*.6,2840,6); bubble(W*.63,2800,3.5); bubble(W*.24,3240,5); bubble(W*.5,3420,6);
+  hill(3590,55,'#8E5A1E',.8);
+
+  /* Worlds 1–6 keep their original coordinates, shifted down under the new worlds */
+  p.push(`<g transform="translate(0 3600)">`);
   /* World 6 — Sunspire Sanctum (0–960) */
   sun(W*.5,150,58);
   crystal(W*.14,320,1.4,'#FFE08A'); crystal(W*.86,260,1.1,'#FFD1F3'); crystal(W*.1,620,1.2,'#FFC93C');
@@ -1210,13 +1307,14 @@ function mapDecor(W){
   tree(W*.12,5740,1.2,'#2E7D5B'); tree(W*.9,5620,1.4,'#1E5C4E'); tree(W*.08,5420,1,'#2E7D5B');
   tree(W*.88,5300,1.3,'#2E7D5B'); tree(W*.14,5100,1.1,'#1E5C4E');
   shroom(W*.3,5640,'#FF6B81'); shroom(W*.78,5490,'#B57BFF'); shroom(W*.55,5180,'#FF6B81'); shroom(W*.82,5080,'#FFC93C');
+  p.push('</g>');
   return p.join('');
 }
 
 function buildMap(){
   const inner=$('#map-inner'), svg=$('#map-svg'), deco=$('#map-deco'), wrap=$('#nodes');
   wrap.innerHTML=''; svg.innerHTML='';
-  const W=inner.clientWidth||390, H=5880;
+  const W=inner.clientWidth||390, H=9480;
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
   deco.setAttribute('viewBox',`0 0 ${W} ${H}`);
   deco.innerHTML=mapDecor(W);
@@ -1244,12 +1342,12 @@ function buildMap(){
     }
     if(done)el.classList.add('done'); else if(open)el.classList.add('current'); else el.classList.add('locked');
     el.style.left=n.x+'%'; el.style.top=n.y+'px';
-    el.innerHTML=`<span class="lbl">${n.lbl}</span>${done?'✔️':(n.type==='battle'?'⚔️':n.type==='reward'?'🎁':'🧩')}`;
+    el.innerHTML=`<span class="lbl">${n.lbl}</span>${done?'✔️':(n.type==='battle'?'⚔️':n.type==='reward'?'🎁':n.obstacle?'🧊':'🧩')}`;
     if(done&&n.type!=='reward'&&state.stars[n.id]) el.innerHTML+=`<span class="starsrow">${'⭐'.repeat(state.stars[n.id])}</span>`;
     el.onclick=()=>tapNode(n);
     wrap.appendChild(el);
   }
-  const tags=[[5865,'🌿 WILLOW MEADOW'],[4945,'☁️ CLOUDLINE ISLES'],[4025,'🏮 EMBER LANTERN PEAKS'],[2865,'🌙 MOONWELL DEPTHS'],[1905,'❄️ FROSTVEIL TUNDRA'],[945,'🌞 SUNSPIRE SANCTUM']];
+  const tags=[[9465,'🌿 WILLOW MEADOW'],[8545,'☁️ CLOUDLINE ISLES'],[7625,'🏮 EMBER LANTERN PEAKS'],[6465,'🌙 MOONWELL DEPTHS'],[5505,'❄️ FROSTVEIL TUNDRA'],[4545,'🌞 SUNSPIRE SANCTUM'],[3585,'🐚 TIDEWHISPER SHORES'],[2385,'🍄 HOLLOW ROOT CAVERNS'],[1185,'🌠 STARFALL SUMMIT']];
   for(const [y,txt] of tags){ const t=document.createElement('div'); t.className='worldtag'; t.style.top=(y-14)+'px'; t.textContent=txt; wrap.appendChild(t); }
   const cur=NODES.filter(n=>state.unlocked.has(n.id)&&!state.completed.has(n.id))[0]||NODES[NODES.length-1];
   Snd.calmScale=WORLD_SCALES[cur.w];
@@ -1257,7 +1355,7 @@ function buildMap(){
 }
 function tapNode(n){
   if(n.type==='rift'){
-    if(!state.unlocked.has(n.id)){ Snd.bad(); return toast('Locked — defeat the Sun Sovereign first'); }
+    if(!state.unlocked.has(n.id)){ Snd.bad(); return toast('Locked — defeat the Star Weaver first'); }
     if(!state.plus && state.lives<=0 && !goalPlayFree()){ Snd.bad(); return openModal('nolives'); }
     return startLevel(genRiftLevel());
   }
@@ -1359,6 +1457,7 @@ function startLevel(n,boost){
   /* first-time coaching: intro swap on level 1, powerups reminder shortly after */
   if(n.id==='n1'){ setTimeout(()=>tutStep('swap'),1900); }
   if(n.id==='n3'){ setTimeout(()=>tutStep('powerups'),1900); }
+  if(n.obstacle&&!n.rift){ setTimeout(()=>tutStep('obstacles'),1900); }
 }
 function battleTick(){
   if(G.over)return;
