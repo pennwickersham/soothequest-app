@@ -705,7 +705,7 @@ const state={
   zenTotal:0,            // lifetime Zen Garden score -> garden growth stage
   ambient:null,          // current ambient soundscape ('rain'|'waves'|null)
   audio:{ music:true, fx:true },   // independent music / effects switches
-  a11y:{ bigGems:false, shapes:false, tapOnly:false, haptics:true, bigText:false, fx:100, color:100 },   // accessibility: toggles + intensity sliders (0-100)
+  a11y:{ bigGems:false, shapes:false, tapOnly:false, haptics:true, bigText:false, gentleClock:false, fx:100, color:100 },   // accessibility: toggles + intensity sliders (0-100)
   breathIdx:0,           // rotates through the guided breathing patterns between levels
 };
 function dailyRefill(){ const today=new Date().toDateString();
@@ -1380,6 +1380,12 @@ function goalPlayFree(){ refreshDailyGoal(); return state.dailyGoalDone<state.da
             slower cascades, no battle flash, +15s on the battle clock. */
 function fx(){ const v=state.a11y.fx; return (v==null?100:v)/100; }
 function calmFx(){ return fx()<0.45; }
+/* ---------- GENTLE BATTLE CLOCK ----------
+   +15s on every boss battle. It is now an explicit toggle in Comfort & Access,
+   so a player who wants the full celebration can still have a softer clock.
+   Low animation intensity keeps implying it, so nobody who relied on the old
+   side effect loses it — and the two never stack into +30. */
+function gentleClock(){ return !!state.a11y.gentleClock || calmFx(); }
 function pace(ms){ return calmFx()?Math.round(ms*1.35):ms; }
 function completeNode(n){ state.completed.add(n.id); n.next.forEach(id=>state.unlocked.add(id)); saveState(); }
 
@@ -1437,7 +1443,7 @@ function startLevel(n,boost){
   $('#pw-time').disabled=!battle;
   $('#timer-pill').classList.remove('low');
   Snd.calmScale=WORLD_SCALES[n.w];
-  if(battle){ G.time=n.goal.time+(state.plus?15:0)+(boost?10:0)+(calmFx()?15:0); G.hp=n.goal.hp;   /* low intensity also softens the clock */ $('#time-left').textContent=G.time;
+  if(battle){ G.time=n.goal.time+(state.plus?15:0)+(boost?10:0)+(gentleClock()?15:0); G.hp=n.goal.hp;   /* gentle clock: explicit toggle, or implied by low intensity */ $('#time-left').textContent=G.time;
     $('#enemy-face').textContent=n.face; $('#enemy-bar-fill').style.width='100%';
     $('#goal-text').textContent='Enemy'; $('#goal-fill').style.width='0%';
     clearInterval(G.timer); G.timer=setInterval(battleTick,1000);
@@ -2235,7 +2241,9 @@ function openModal(kind,data={}){
         <button class="btn ${state.a11y.bigGems?'grn':'alt'} sm" onclick="toggleA11y('bigGems')">${tog(state.a11y.bigGems)}</button></div>
       <div class="setrow"><span><b>Shape symbols</b><small>Adds a symbol per color — colorblind-friendly</small></span>
         <button class="btn ${state.a11y.shapes?'grn':'alt'} sm" onclick="toggleA11y('shapes')">${tog(state.a11y.shapes)}</button></div>
-      <div class="setrow col"><span><b>Animation intensity</b><small>Slide down for softer effects — fewer particles, smaller blasts, no screen flash. Low settings also add +15 gentle seconds to battles. 0 = still.</small></span>
+      <div class="setrow"><span><b>Gentle battle clock</b><small>Adds 15 seconds to every boss battle. Keep the sparkle and still take your time — the challenge stays, the rush goes.</small></span>
+        <button class="btn ${state.a11y.gentleClock?'grn':'alt'} sm" onclick="toggleA11y('gentleClock')">${tog(state.a11y.gentleClock)}</button></div>
+      <div class="setrow col"><span><b>Animation intensity</b><small>Slide down for softer effects — fewer particles, smaller blasts, no screen flash. Low settings also switch the gentle battle clock on. 0 = still.</small></span>
         <div class="sliderrow"><input type="range" min="0" max="100" step="5" value="${state.a11y.fx==null?100:state.a11y.fx}" oninput="setFx(this.value)"><span class="slider-val" id="fx-val">${state.a11y.fx==null?100:state.a11y.fx}</span></div></div>
       <div class="setrow col"><span><b>Color intensity</b><small>Slide down for calmer, softer colors across the whole game</small></span>
         <div class="sliderrow"><input type="range" min="0" max="100" step="5" value="${state.a11y.color==null?100:state.a11y.color}" oninput="setColor(this.value)"><span class="slider-val" id="col-val">${state.a11y.color==null?100:state.a11y.color}</span></div></div>
@@ -2258,7 +2266,11 @@ function openModal(kind,data={}){
   }
 }
 function toggleA11y(k){ state.a11y[k]=!state.a11y[k]; saveState(); applyA11y(); openModal('settings');
-  if(k==='haptics'&&state.a11y.haptics) buzz('LIGHT');   /* a little hello so the setting is felt */ }
+  if(k==='haptics'&&state.a11y.haptics) buzz('LIGHT');   /* a little hello so the setting is felt */
+  if(k==='gentleClock') toast(state.a11y.gentleClock
+    ? '⏳ Boss battles now start with 15 extra seconds.'
+    : (calmFx() ? '⏳ Still gentle — low animation intensity keeps the extra seconds.'
+               : '⏳ Boss battles back to their standard clock.')); }
 function toggleAudio(k){ state.audio[k]=!state.audio[k]; saveState(); Snd.ensure(); Snd.applyAudio(); openModal('settings'); }
 /* sliders update live — no modal rebuild, so the thumb never jumps out of your hand */
 function setFx(v){ state.a11y.fx=+v; saveState(); applyA11y();
