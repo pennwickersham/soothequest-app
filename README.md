@@ -23,7 +23,22 @@ These are product rules, not features to be optimized away later:
 - **Data stays on the device.** No accounts, no servers, no analytics.
   Backups are files the player exports and keeps.
 
-## Stack
+## What's in the game
+
+- **Campaign** — 11 worlds on one scrolling map, from Willow Meadow up to
+  Windchime Heights, with score, boss-battle, ice-and-stone, and gather goals
+  (collect gems of the colors shown). The Endless Rift opens after the Star
+  Weaver.
+- **Today's Trials** — three small tasks generated on the device from the date,
+  plus a seeded *Trial of the Day* level that never costs a life. Rewards are
+  small consumables. Nothing carries over and resting costs nothing; one trial
+  can be swapped each day.
+- **Quiet Games** — Memory Garden, Firefly Echo, and Lantern Lights: tap-only
+  minigames with no lives, no timers, and no way to lose. The first finish of
+  each per day pays a small gift.
+- **Sanctuary** — Zen Garden, Tiny Wins, and the Calm Corner (guided breathing,
+  ambient sound, Comfort Journal).
+
 
 Single-file HTML game (`soothe-quest.html`) bundled by Vite into `www/`,
 wrapped by Capacitor for iOS and Android.

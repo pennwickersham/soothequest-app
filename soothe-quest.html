@@ -111,18 +111,20 @@ body{
 #title-screen .btn{z-index:2}
 
 /* ============ MAP ============ */
-#map-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;position:relative;margin-top:-66px;padding-bottom:env(safe-area-inset-bottom)}
-#map-inner{position:relative;width:100%;height:9480px}
+#map-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;position:relative;margin-top:8px;padding-bottom:env(safe-area-inset-bottom)}
+#map-inner{position:relative;width:100%;height:11880px}
 .zone{position:absolute;left:0;right:0;pointer-events:none}
-#zone9{top:0;height:1200px;background:linear-gradient(180deg,#0B0A2E 0%,#1E1660 40%,#4A2C7E 75%,#8E5A1E 100%)}
-#zone8{top:1200px;height:1200px;background:linear-gradient(180deg,#2A1A12 0%,#4A2A18 35%,#5E3A5A 70%,#2E3A4E 100%)}
-#zone7{top:2400px;height:1200px;background:linear-gradient(180deg,#2E3A4E 0%,#1F6E86 35%,#3AA7A2 70%,#8E5A1E 100%)}
-#zone6{top:3600px;height:960px;background:linear-gradient(180deg,#8E5A1E 0%,#C4823A 35%,#9E5A7E 70%,#2E4A7E 100%)}
-#zone5{top:4560px;height:960px;background:linear-gradient(180deg,#2E4A7E 0%,#3E6EA8 45%,#5E92C4 75%,#0D2A52 100%)}
-#zone4{top:5520px;height:960px;background:linear-gradient(180deg,#0D2A52 0%,#123E63 45%,#134E5E 80%,#2A2058 100%)}
-#zone3{top:6480px;height:1160px;background:linear-gradient(180deg,#2A2058 0%,#5C2160 40%,#7A2E52 78%,#4A2258 100%)}
-#zone2{top:7640px;height:920px;background:linear-gradient(180deg,#4A2258 0%,#274277 35%,#2E5E9E 75%,#1E4A6E 100%)}
-#zone1{top:8560px;height:920px;background:linear-gradient(180deg,#1E4A6E 0%,#1E5C4E 45%,#2E7D5B 100%)}
+#zone11{top:0;height:1200px;background:linear-gradient(180deg,#FFB3A7 0%,#C98BD6 28%,#6E7FD6 62%,#3E5FA8 100%)}
+#zone10{top:1200px;height:1200px;background:linear-gradient(180deg,#3E5FA8 0%,#8E5E9E 30%,#D07A9A 62%,#5E2E6E 88%,#0B0A2E 100%)}
+#zone9{top:2400px;height:1200px;background:linear-gradient(180deg,#0B0A2E 0%,#1E1660 40%,#4A2C7E 75%,#8E5A1E 100%)}
+#zone8{top:3600px;height:1200px;background:linear-gradient(180deg,#2A1A12 0%,#4A2A18 35%,#5E3A5A 70%,#2E3A4E 100%)}
+#zone7{top:4800px;height:1200px;background:linear-gradient(180deg,#2E3A4E 0%,#1F6E86 35%,#3AA7A2 70%,#8E5A1E 100%)}
+#zone6{top:6000px;height:960px;background:linear-gradient(180deg,#8E5A1E 0%,#C4823A 35%,#9E5A7E 70%,#2E4A7E 100%)}
+#zone5{top:6960px;height:960px;background:linear-gradient(180deg,#2E4A7E 0%,#3E6EA8 45%,#5E92C4 75%,#0D2A52 100%)}
+#zone4{top:7920px;height:960px;background:linear-gradient(180deg,#0D2A52 0%,#123E63 45%,#134E5E 80%,#2A2058 100%)}
+#zone3{top:8880px;height:1160px;background:linear-gradient(180deg,#2A2058 0%,#5C2160 40%,#7A2E52 78%,#4A2258 100%)}
+#zone2{top:10040px;height:920px;background:linear-gradient(180deg,#4A2258 0%,#274277 35%,#2E5E9E 75%,#1E4A6E 100%)}
+#zone1{top:10960px;height:920px;background:linear-gradient(180deg,#1E4A6E 0%,#1E5C4E 45%,#2E7D5B 100%)}
 #map-deco,#map-svg{position:absolute;inset:0;width:100%;height:100%}
 .worldtag{
   position:absolute;left:50%;transform:translateX(-50%);z-index:3;pointer-events:none;
@@ -165,6 +167,8 @@ body{
 #game-screen.w7{background:linear-gradient(180deg,#1F6E86 0%,#245A7E 55%,#1B1340 100%)}
 #game-screen.w8{background:linear-gradient(180deg,#4A2A18 0%,#3A2440 55%,#1B1340 100%)}
 #game-screen.w9{background:linear-gradient(180deg,#1E1660 0%,#2A1E5C 55%,#1B1340 100%)}
+#game-screen.w10{background:linear-gradient(180deg,#9E4E7E 0%,#5E2E6E 55%,#1B1340 100%)}
+#game-screen.w11{background:linear-gradient(180deg,#6E7FD6 0%,#3E4FA0 55%,#1B1340 100%)}
 #goal-bar{padding:4px 16px 8px;display:flex;align-items:center;gap:12px}
 #goal-text{font-weight:800;font-size:14px;color:#EDE6FF;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .meter{flex:1;height:16px;background:rgba(0,0,0,.4);border-radius:999px;overflow:hidden;border:1.5px solid rgba(185,167,242,.35)}
@@ -348,6 +352,67 @@ body.fx-off .logo,body.fx-off #mascot,body.fx-off #tut-mascot,body.fx-off #enemy
 body.fx-off .gem.special svg{animation:none !important;filter:drop-shadow(0 0 6px #fff)}
 body.fx-off .encourage{animation:none !important}
 body.fx-off #battle-flash{display:none}
+/* daily trials bar (map) */
+#trial-bar{display:flex;align-items:center;gap:8px;margin:8px 12px 0;padding:8px 12px;border-radius:12px;cursor:pointer;
+  border:1px solid rgba(255,201,60,.45);background:linear-gradient(90deg,rgba(255,201,60,.16),rgba(181,123,255,.12));
+  color:#FFE9A8;font-family:inherit;font-weight:800;font-size:12.5px;text-align:left}
+#trial-bar:active{transform:scale(.98)}
+#trial-bar .tb-ic{font-size:17px}
+#tb-text{flex:1}
+#tb-dots{letter-spacing:2px;font-size:12px}
+#trial-bar.ready{animation:pulse 1.6s infinite}
+body.a11y-bigtext #trial-bar{font-size:14px}
+/* trials panel */
+.trow{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 8px;margin:0 0 8px;border-radius:14px;
+  background:rgba(0,0,0,.22);border:1.5px solid rgba(185,167,242,.28)}
+.trow.done{border-color:rgba(79,224,176,.6);background:rgba(79,224,176,.1)}
+.trow .t-ic{font-size:22px;width:28px;text-align:center}
+.trow .t-body{flex:1;min-width:0}
+.trow .t-body b{display:block;color:#EAF4FF;font-size:14px;line-height:1.3}
+.trow .t-body small{color:var(--dim);font-weight:700;font-size:11.5px}
+.trow .t-bar{height:6px;background:rgba(255,255,255,.12);border-radius:4px;margin-top:5px;overflow:hidden}
+.trow .t-bar div{height:100%;background:linear-gradient(90deg,var(--gold),var(--mint));border-radius:4px}
+.trow .t-swap{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#DDE;border-radius:9px;padding:6px 8px;font-size:11.5px;font-weight:800;cursor:pointer;font-family:inherit}
+.trow .gchip svg{width:18px;height:18px}
+.daily-card{border-color:rgba(255,201,60,.55);background:linear-gradient(180deg,rgba(255,201,60,.14),rgba(0,0,0,.2))}
+body.a11y-bigtext .trow .t-body b{font-size:16px}
+/* quiet games */
+#hud-m{display:flex;align-items:center;gap:8px;padding:calc(8px + env(safe-area-inset-top)) 10px 4px;z-index:5}
+#hud-m .iconbtn{width:37px;height:37px;font-size:17px;border-radius:10px}
+#mini-title{flex:1;text-align:center;font-family:var(--disp);font-weight:700;font-size:22px;color:#FFE9A8}
+#mini-how{padding:4px 22px 0;text-align:center;color:var(--lav);font-weight:700;font-size:13.5px;line-height:1.45;z-index:2}
+#mini-area{flex:1;display:flex;align-items:center;justify-content:center;padding:10px 14px;z-index:2;min-height:0}
+#mini-status{text-align:center;font-weight:800;color:#EDE6FF;font-size:14px;min-height:20px;z-index:2}
+#mini-actions{z-index:2;flex-wrap:wrap}
+body.a11y-bigtext #mini-how{font-size:15.5px}
+body.a11y-bigtext #mini-status{font-size:16px}
+.mem-grid,.ll-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:min(100%,360px);aspect-ratio:1}
+.mem-tile{border:none;border-radius:16px;cursor:pointer;font-size:34px;position:relative;
+  background:linear-gradient(180deg,#5D4BA8,#3A2C77);box-shadow:0 4px 0 rgba(0,0,0,.35);transition:transform .25s,background .25s}
+.mem-tile::before{content:'✿';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.25);font-size:26px}
+.mem-tile .mem-face{opacity:0;transition:opacity .2s}
+.mem-tile.up{background:linear-gradient(180deg,#EDE6FF,#CBB8F5);transform:scale(1.04)}
+.mem-tile.up::before{content:''}
+.mem-tile.up .mem-face{opacity:1}
+.mem-tile.found{background:linear-gradient(180deg,#9CF5D6,#4FE0B0);box-shadow:0 0 14px rgba(79,224,176,.6)}
+.echo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;width:min(100%,320px);aspect-ratio:1}
+.echo-pad{border:3px solid var(--pad);border-radius:28px;cursor:pointer;font-size:40px;
+  background:rgba(10,6,30,.45);box-shadow:0 5px 0 rgba(0,0,0,.35);transition:background .2s,box-shadow .2s,transform .1s}
+.echo-pad:active{transform:translateY(3px)}
+.echo-pad.glow{background:var(--pad);box-shadow:0 0 34px var(--pad),0 5px 0 rgba(0,0,0,.35)}
+.ll-cell{border:none;border-radius:16px;cursor:pointer;font-size:32px;background:rgba(10,6,30,.55);
+  box-shadow:0 4px 0 rgba(0,0,0,.35);transition:background .2s,box-shadow .2s}
+.ll-cell span{filter:grayscale(1) brightness(.45);transition:filter .2s}
+.ll-cell.on{background:radial-gradient(circle,rgba(255,201,60,.55),rgba(255,140,60,.2));box-shadow:0 0 18px rgba(255,201,60,.5),0 4px 0 rgba(0,0,0,.35)}
+.ll-cell.on span{filter:none}
+.ll-cell.hint{outline:3px dashed var(--mint);outline-offset:-5px}
+.gamecard{display:flex;align-items:center;gap:12px;text-align:left;padding:12px;margin:0 0 10px;border-radius:16px;cursor:pointer;width:100%;
+  background:rgba(0,0,0,.22);border:1.5px solid rgba(124,224,190,.4);color:inherit;font-family:inherit}
+.gamecard .g-ic{font-size:32px}
+.gamecard b{display:block;color:#EAF4FF;font-size:15.5px}
+.gamecard small{color:var(--lav);font-weight:700;font-size:12px;line-height:1.35;display:block}
+.gamecard .g-gift{font-size:11.5px;color:var(--mint);font-weight:800;margin-top:3px}
+body.fx-off #trial-bar.ready{animation:none}
 /* sanctuary row (map) */
 #sanctuary{display:flex;gap:8px;margin:8px 12px 0}
 .sanct{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;
@@ -357,6 +422,10 @@ body.fx-off #battle-flash{display:none}
 .sanct .ic{font-size:20px}
 .sanct:active{transform:scale(.97)}
 #goal-text .zen-stage{font-size:17px;margin-right:4px}
+.gchip{display:inline-flex;align-items:center;gap:2px;margin-right:4px;font-variant-numeric:tabular-nums}
+.gchip svg{width:20px;height:20px;vertical-align:middle}
+.gchip.done{color:var(--mint)}
+#li-goal .gchip svg{width:22px;height:22px}
 #btn-pause{margin-left:4px}
 /* breathing overlay */
 #breathe{position:fixed;inset:0;z-index:600;display:none;flex-direction:column;align-items:center;
@@ -393,6 +462,8 @@ body.a11y-bigtext #br-quote{font-size:25px}
   .pw{transform:scale(.88)}
   #enemy-row{padding:2px 10px}
   .logo{font-size:44px}
+  .mem-grid,.ll-grid,.echo-grid{width:min(100%,58vh)}
+  #mini-how{display:none}
 }
 #modal .stars{font-size:38px;letter-spacing:4px;margin-bottom:6px}
 #modal .btnrow{display:flex;flex-direction:column;gap:10px;align-items:stretch}
@@ -543,13 +614,15 @@ body.a11y-bigtext #br-quote{font-size:25px}
       </div>
     </div>
     <div id="daily-goal"><span id="dg-text"></span><div class="dg-bar"><div id="dg-fill"></div></div></div>
+    <button id="trial-bar"><span class="tb-ic">📜</span><span id="tb-text">Today's Trials</span><span id="tb-dots"></span></button>
     <div id="sanctuary">
       <button class="sanct" id="btn-zen"><span class="ic">🪴</span>Zen Garden</button>
       <button class="sanct" id="btn-tiny"><span class="ic">✨</span>Tiny Win</button>
+      <button class="sanct" id="btn-games"><span class="ic">🎲</span>Quiet Games</button>
       <button class="sanct" id="btn-calmcorner"><span class="ic">🌬️</span>Calm Corner</button>
     </div>
     <div id="map-scroll"><div id="map-inner">
-      <div class="zone" id="zone9"></div><div class="zone" id="zone8"></div><div class="zone" id="zone7"></div><div class="zone" id="zone6"></div><div class="zone" id="zone5"></div><div class="zone" id="zone4"></div><div class="zone" id="zone3"></div><div class="zone" id="zone2"></div><div class="zone" id="zone1"></div>
+      <div class="zone" id="zone11"></div><div class="zone" id="zone10"></div><div class="zone" id="zone9"></div><div class="zone" id="zone8"></div><div class="zone" id="zone7"></div><div class="zone" id="zone6"></div><div class="zone" id="zone5"></div><div class="zone" id="zone4"></div><div class="zone" id="zone3"></div><div class="zone" id="zone2"></div><div class="zone" id="zone1"></div>
       <svg id="map-deco" preserveAspectRatio="none"></svg>
       <svg id="map-svg" preserveAspectRatio="none"></svg>
       <div id="nodes"></div>
@@ -635,6 +708,19 @@ body.a11y-bigtext #br-quote{font-size:25px}
     </div>
   </div>
 
+  <!-- QUIET GAMES (minigames) -->
+  <div class="screen" id="mini-screen">
+    <div id="hud-m">
+      <button class="iconbtn" id="btn-mini-back" title="Back to map">🗺</button>
+      <div id="mini-title"></div>
+      <button class="iconbtn" id="btn-mini-list" title="Other Quiet Games">🎲</button>
+    </div>
+    <div id="mini-how"></div>
+    <div id="mini-area"></div>
+    <div id="mini-status"></div>
+    <div class="bottom-nav" id="mini-actions"></div>
+  </div>
+
   <!-- MODAL -->
   <div id="modal-veil"><div id="modal"></div></div>
   <div id="breathe">
@@ -707,6 +793,11 @@ const state={
   audio:{ music:true, fx:true },   // independent music / effects switches
   a11y:{ bigGems:false, shapes:false, tapOnly:false, haptics:true, bigText:false, gentleClock:false, fx:100, color:100 },   // accessibility: toggles + intensity sliders (0-100)
   breathIdx:0,           // rotates through the guided breathing patterns between levels
+  trials:null,           // today's autogenerated trials {day, list, swapped, chest}
+  trialDays:0,           // lifetime count of days all trials were finished (never a streak)
+  dailyClearDay:null,    // date the Trial of the Day was first cleared (bonus once per day)
+  dailyLv:null,          // today's cached Trial of the Day level
+  minis:null,            // Quiet Games {day, done:{game:true}, best:{game:n}}
 };
 function dailyRefill(){ const today=new Date().toDateString();
   if(today!==state.lastRefillDay){ state.lastRefillDay=today; state.lives=Math.max(state.lives,state.maxFree); } }
@@ -727,7 +818,9 @@ function saveState(){
     dailyGoalDay:state.dailyGoalDay,dailyGoalDone:state.dailyGoalDone,
     dailyGoalTarget:state.dailyGoalTarget,zenTotal:state.zenTotal,
     ambient:state.ambient,a11y:state.a11y,audio:state.audio,
-    breathIdx:state.breathIdx
+    breathIdx:state.breathIdx,
+    trials:state.trials,trialDays:state.trialDays,dailyClearDay:state.dailyClearDay,
+    dailyLv:state.dailyLv,minis:state.minis
   }));}catch(e){}
 }
 function loadState(){
@@ -747,6 +840,8 @@ function loadState(){
     /* v2 content: three new worlds were added after the Sun Sovereign. Anyone who
        already cleared it gets the first Tidewhisper node opened; the Rift stays open. */
     if(state.completed.has('n53')&&!state.unlocked.has('n54')) state.unlocked.add('n54');
+    /* v3 content: Petalfall Terraces + Windchime Heights sit above the Star Weaver. */
+    if(state.completed.has('n89')&&!state.unlocked.has('n90')) state.unlocked.add('n90');
     dailyRefill();
   }catch(e){}
 }
@@ -898,7 +993,9 @@ const WORLD_SCALES={
  6:[294,370,440,494,554,659,740],
  7:[247,294,330,370,440,494,587],
  8:[196,233,262,294,349,392,466],
- 9:[330,370,415,494,554,659,740]
+ 9:[330,370,415,494,554,659,740],
+ 10:[262,294,349,392,440,523,587],
+ 11:[294,330,392,440,494,587,659]
 };
 
 /* ---------- GEM ART: shapes + swappable skins ---------- */
@@ -1002,6 +1099,7 @@ const TUTORIAL=[
   {id:'rainbow',title:'The Rainbow gem 🌈', body:'Five in a row makes a Rainbow gem. Swap it onto any color to clear every gem of that color!'},
   {id:'combo',  title:'Combine your specials ✨', body:'Swap two special gems together for huge combos — giant crosses, mega blasts, and rainbow storms.'},
   {id:'powerups',title:'Power-ups & the Lantern 🏮', body:'Stuck? Use the hammer, shuffle, or +time buttons below. Earn more at the Wishing Lantern.'},
+  {id:'gather',  title:'Gather the colors 🧺', body:'Collect the gems shown at the top of the board. Each number counts down as you match that color. Specials help — a Rainbow gem gathers a whole color at once.'},
   {id:'obstacles',title:'Ice & stone 🧊', body:'Some gems are frozen — match one to crack the ice. Stone blocks can\'t move; clear gems right next to them to break them. Break every block to win. No rush.'},
 ];
 function tutStep(id){
@@ -1052,122 +1150,153 @@ function crackStone(r,c){ const el=G.els[r][c];
   G.els[r][c]=null; G.grid[r][c]=-1;
 }
 
-/* ---------- WORLDS & LEVELS (92 nodes, 9 worlds) ----------
-   Map is a vertical scroll: World 1 at the bottom (y≈9400), World 9 at the top (y≈0).
+/* ---------- WORLDS & LEVELS (125 nodes, 11 worlds) ----------
+   Map is a vertical scroll: World 1 at the bottom (y≈11800), World 11 at the top (y≈0).
    Node kinds: challenge (score in N moves), challenge+obstacle (break every ice/stone
    block in N moves; layout from seed/diff, seeds must come from VALIDATED_SEEDS),
-   battle (deal hp in time seconds), reward (free Power Bloom), rift (endless).
+   challenge+gather (collect N gems of given colors in M moves — goal.gather is a
+   list of [colorIndex, count]), battle (deal hp in time seconds), reward (free
+   Power Bloom), rift (endless).
    After adding or retuning levels run: node level-validator.js 40           */
 const NODES=[
  /* World 1 — Willow Meadow (bottom, green) */
- {id:'n1', w:1, type:'challenge', x:50, y:9400, lbl:'Lily Pond',    goal:{score:800, moves:22}, next:['n2']},
- {id:'n2', w:1, type:'reward',    x:24, y:9292, lbl:'Power Bloom',   boon:1, next:['n3']},
- {id:'n3', w:1, type:'challenge', x:62, y:9184, lbl:'Fern Hollow',  goal:{score:1100,moves:22}, next:['n4']},
- {id:'n4', w:1, type:'battle',    x:30, y:9076, lbl:'Moss Golem',   goal:{hp:800, time:60}, face:'🪨', next:['n5a','n5b']},
- {id:'n5a',w:1, type:'challenge', x:72, y:8968, lbl:'Star Meadow',  goal:{score:1400,moves:20}, next:['n6']},
- {id:'n5b',w:1, type:'reward',    x:18, y:8968, lbl:'Power Bloom',   boon:1, next:['n6']},
- {id:'n6', w:1, type:'challenge', x:46, y:8860, lbl:'Willow Gate',  goal:{score:1600,moves:20}, next:['n7']},
- {id:'n7', w:1, type:'battle',    x:26, y:8748, lbl:'Thorn Sprite', goal:{hp:1000,time:60}, face:'🌵', next:['n8']},
- {id:'n8', w:1, type:'reward',    x:68, y:8636, lbl:'Power Bloom',   boon:1, next:['n9']},
+ {id:'n1', w:1, type:'challenge', x:50, y:11800, lbl:'Lily Pond',    goal:{score:800, moves:22}, next:['n2']},
+ {id:'n2', w:1, type:'reward',    x:24, y:11692, lbl:'Power Bloom',   boon:1, next:['n3']},
+ {id:'n3', w:1, type:'challenge', x:62, y:11584, lbl:'Fern Hollow',  goal:{score:1100,moves:22}, next:['n4']},
+ {id:'n4', w:1, type:'battle',    x:30, y:11476, lbl:'Moss Golem',   goal:{hp:800, time:60}, face:'🪨', next:['n5a','n5b']},
+ {id:'n5a',w:1, type:'challenge', x:72, y:11368, lbl:'Star Meadow',  goal:{score:1400,moves:20}, next:['n6']},
+ {id:'n5b',w:1, type:'reward',    x:18, y:11368, lbl:'Power Bloom',   boon:1, next:['n6']},
+ {id:'n6', w:1, type:'challenge', x:46, y:11260, lbl:'Willow Gate',  goal:{score:1600,moves:20}, next:['n7']},
+ {id:'n7', w:1, type:'battle',    x:26, y:11148, lbl:'Thorn Sprite', goal:{hp:1000,time:60}, face:'🌵', next:['n8']},
+ {id:'n8', w:1, type:'reward',    x:68, y:11036, lbl:'Power Bloom',   boon:1, next:['n9']},
  /* World 2 — Cloudline Isles */
- {id:'n9', w:2, type:'challenge', x:44, y:8500, lbl:'Cloud Steps',  goal:{score:1800,moves:20}, next:['n10']},
- {id:'n10',w:2, type:'battle',    x:24, y:8390, lbl:'Storm Imp',    goal:{hp:1200,time:62}, face:'👾', next:['n11a','n11b']},
- {id:'n11a',w:2,type:'challenge', x:66, y:8280, lbl:'Mist Bridge',  goal:{score:2000,moves:19}, next:['n12']},
- {id:'n11b',w:2,type:'reward',    x:16, y:8280, lbl:'Power Bloom',   boon:1, next:['n12']},
- {id:'n12',w:2, type:'challenge', x:46, y:8170, lbl:'Zephyr Falls', goal:{score:2200,moves:19}, next:['n13']},
- {id:'n13',w:2, type:'reward',    x:76, y:8060, lbl:'Power Bloom',   boon:1, next:['n14']},
- {id:'n14',w:2, type:'battle',    x:30, y:7952, lbl:'Thunder Roc',  goal:{hp:1400,time:62}, face:'🦅', next:['n15']},
- {id:'n15',w:2, type:'challenge', x:62, y:7844, lbl:'Aurora Isle',  goal:{score:2400,moves:18}, next:['n16']},
- {id:'n16',w:2, type:'battle',    x:40, y:7730, lbl:'Fog Wyrm',     goal:{hp:1500,time:64}, face:'🐍', next:['n17']},
+ {id:'n9', w:2, type:'challenge', x:44, y:10900, lbl:'Cloud Steps',  goal:{score:1800,moves:20}, next:['n10']},
+ {id:'n10',w:2, type:'battle',    x:24, y:10790, lbl:'Storm Imp',    goal:{hp:1200,time:62}, face:'👾', next:['n11a','n11b']},
+ {id:'n11a',w:2,type:'challenge', x:66, y:10680, lbl:'Mist Bridge',  goal:{score:2000,moves:19}, next:['n12']},
+ {id:'n11b',w:2,type:'reward',    x:16, y:10680, lbl:'Power Bloom',   boon:1, next:['n12']},
+ {id:'n12',w:2, type:'challenge', x:46, y:10570, lbl:'Zephyr Falls', goal:{score:2200,moves:19}, next:['n13']},
+ {id:'n13',w:2, type:'reward',    x:76, y:10460, lbl:'Power Bloom',   boon:1, next:['n14']},
+ {id:'n14',w:2, type:'battle',    x:30, y:10352, lbl:'Thunder Roc',  goal:{hp:1400,time:62}, face:'🦅', next:['n15']},
+ {id:'n15',w:2, type:'challenge', x:62, y:10244, lbl:'Aurora Isle',  goal:{score:2400,moves:18}, next:['n16']},
+ {id:'n16',w:2, type:'battle',    x:40, y:10130, lbl:'Fog Wyrm',     goal:{hp:1500,time:64}, face:'🐍', next:['n17']},
  /* World 3 — Ember Lantern Peaks */
- {id:'n17',w:3, type:'challenge', x:56, y:7600, lbl:'Ember Path',   goal:{score:2600,moves:18}, next:['n18']},
- {id:'n18',w:3, type:'reward',    x:24, y:7492, lbl:'Power Bloom',   boon:1, next:['n19']},
- {id:'n19',w:3, type:'battle',    x:66, y:7384, lbl:'Cinder Bat',   goal:{hp:1600,time:64}, face:'🦇', next:['n20a','n20b']},
- {id:'n20a',w:3,type:'challenge', x:28, y:7276, lbl:'Ash Garden',   goal:{score:2800,moves:17}, next:['n21']},
- {id:'n20b',w:3,type:'reward',    x:78, y:7276, lbl:'Power Bloom',   boon:1, next:['n21']},
- {id:'n21',w:3, type:'challenge', x:50, y:7168, lbl:'Lantern Row',  goal:{score:2650,moves:17}, next:['n22']},
- {id:'n22',w:3, type:'battle',    x:24, y:7056, lbl:'Magma Pup',    goal:{hp:1800,time:66}, face:'🐲', next:['n23']},
- {id:'n23',w:3, type:'challenge', x:66, y:6944, lbl:'Glasspeak',    goal:{score:2550,moves:16}, next:['n24']},
- {id:'n24',w:3, type:'reward',    x:38, y:6832, lbl:'Power Bloom',   boon:1, next:['n25']},
- {id:'n25',w:3, type:'challenge', x:58, y:6720, lbl:'Summit Steps', goal:{score:2750,moves:16}, next:['n26']},
- {id:'n26',w:3, type:'battle',    x:50, y:6590, lbl:'Lantern King', goal:{hp:2200,time:72}, face:'🏮', next:['n27']},
+ {id:'n17',w:3, type:'challenge', x:56, y:10000, lbl:'Ember Path',   goal:{score:2600,moves:18}, next:['n18']},
+ {id:'n18',w:3, type:'reward',    x:24, y:9892, lbl:'Power Bloom',   boon:1, next:['n19']},
+ {id:'n19',w:3, type:'battle',    x:66, y:9784, lbl:'Cinder Bat',   goal:{hp:1600,time:64}, face:'🦇', next:['n20a','n20b']},
+ {id:'n20a',w:3,type:'challenge', x:28, y:9676, lbl:'Ash Garden',   goal:{score:2800,moves:17}, next:['n21']},
+ {id:'n20b',w:3,type:'reward',    x:78, y:9676, lbl:'Power Bloom',   boon:1, next:['n21']},
+ {id:'n21',w:3, type:'challenge', x:50, y:9568, lbl:'Lantern Row',  goal:{score:2650,moves:17}, next:['n22']},
+ {id:'n22',w:3, type:'battle',    x:24, y:9456, lbl:'Magma Pup',    goal:{hp:1800,time:66}, face:'🐲', next:['n23']},
+ {id:'n23',w:3, type:'challenge', x:66, y:9344, lbl:'Glasspeak',    goal:{score:2550,moves:16}, next:['n24']},
+ {id:'n24',w:3, type:'reward',    x:38, y:9232, lbl:'Power Bloom',   boon:1, next:['n25']},
+ {id:'n25',w:3, type:'challenge', x:58, y:9120, lbl:'Summit Steps', goal:{score:2750,moves:16}, next:['n26']},
+ {id:'n26',w:3, type:'battle',    x:50, y:8990, lbl:'Lantern King', goal:{hp:2200,time:72}, face:'🏮', next:['n27']},
  /* World 4 — Moonwell Depths */
- {id:'n27',w:4, type:'challenge', x:46, y:6420, lbl:'Tide Gate',     goal:{score:2900,moves:18}, next:['n28']},
- {id:'n28',w:4, type:'reward',    x:74, y:6315, lbl:'Power Bloom',    boon:2, next:['n29']},
- {id:'n29',w:4, type:'battle',    x:30, y:6210, lbl:'Glow Jelly',    goal:{hp:2000,time:68}, face:'🪼', next:['n30a','n30b']},
- {id:'n30a',w:4,type:'challenge', x:68, y:6105, lbl:'Kelp Spiral',   goal:{score:2950,moves:18}, next:['n31']},
- {id:'n30b',w:4,type:'reward',    x:20, y:6105, lbl:'Power Bloom',    boon:2, next:['n31']},
- {id:'n31',w:4, type:'challenge', x:46, y:6000, lbl:'Moonwell',      goal:{score:2900,moves:18}, next:['n32']},
- {id:'n32',w:4, type:'battle',    x:72, y:5895, lbl:'Ink Siren',     goal:{hp:2300,time:70}, face:'🦑', next:['n33']},
- {id:'n33',w:4, type:'challenge', x:28, y:5790, lbl:'Pearl Steps',   goal:{score:3050,moves:18}, next:['n34']},
- {id:'n34',w:4, type:'reward',    x:60, y:5690, lbl:'Power Bloom',    boon:2, next:['n35']},
- {id:'n35',w:4, type:'battle',    x:46, y:5590, lbl:'Dream Whale',   goal:{hp:2700,time:75}, face:'🐋', next:['n36']},
+ {id:'n27',w:4, type:'challenge', x:46, y:8820, lbl:'Tide Gate',     goal:{score:2900,moves:18}, next:['n28']},
+ {id:'n28',w:4, type:'reward',    x:74, y:8715, lbl:'Power Bloom',    boon:2, next:['n29']},
+ {id:'n29',w:4, type:'battle',    x:30, y:8610, lbl:'Glow Jelly',    goal:{hp:2000,time:68}, face:'🪼', next:['n30a','n30b']},
+ {id:'n30a',w:4,type:'challenge', x:68, y:8505, lbl:'Kelp Spiral',   goal:{score:2950,moves:18}, next:['n31']},
+ {id:'n30b',w:4,type:'reward',    x:20, y:8505, lbl:'Power Bloom',    boon:2, next:['n31']},
+ {id:'n31',w:4, type:'challenge', x:46, y:8400, lbl:'Moonwell',      goal:{score:2900,moves:18}, next:['n32']},
+ {id:'n32',w:4, type:'battle',    x:72, y:8295, lbl:'Ink Siren',     goal:{hp:2300,time:70}, face:'🦑', next:['n33']},
+ {id:'n33',w:4, type:'challenge', x:28, y:8190, lbl:'Pearl Steps',   goal:{score:3050,moves:18}, next:['n34']},
+ {id:'n34',w:4, type:'reward',    x:60, y:8090, lbl:'Power Bloom',    boon:2, next:['n35']},
+ {id:'n35',w:4, type:'battle',    x:46, y:7990, lbl:'Dream Whale',   goal:{hp:2700,time:75}, face:'🐋', next:['n36']},
  /* World 5 — Frostveil Tundra */
- {id:'n36',w:5, type:'challenge', x:50, y:5460, lbl:'Snowdrift Way', goal:{score:3100,moves:19}, next:['n37']},
- {id:'n37',w:5, type:'reward',    x:22, y:5358, lbl:'Power Bloom',    boon:2, next:['n38']},
- {id:'n38',w:5, type:'battle',    x:64, y:5256, lbl:'Frost Fox',     goal:{hp:2500,time:70}, face:'🦊', next:['n39a','n39b']},
- {id:'n39a',w:5,type:'challenge', x:30, y:5154, lbl:'Icicle Grove',  goal:{score:3200,moves:19}, next:['n40']},
- {id:'n39b',w:5,type:'reward',    x:76, y:5154, lbl:'Power Bloom',    boon:2, next:['n40']},
- {id:'n40',w:5, type:'challenge', x:50, y:5052, lbl:'Frozen Lake',   goal:{score:3150,moves:19}, next:['n41']},
- {id:'n41',w:5, type:'battle',    x:26, y:4950, lbl:'Blizzard Owl',  goal:{hp:2800,time:72}, face:'🦉', next:['n42']},
- {id:'n42',w:5, type:'challenge', x:68, y:4848, lbl:'Aurora Ridge',  goal:{score:3300,moves:19}, next:['n43']},
- {id:'n43',w:5, type:'reward',    x:40, y:4746, lbl:'Power Bloom',    boon:2, next:['n44']},
- {id:'n44',w:5, type:'battle',    x:54, y:4640, lbl:'Glacier Titan', goal:{hp:2900,time:75}, face:'🧊', next:['n45']},
+ {id:'n36',w:5, type:'challenge', x:50, y:7860, lbl:'Snowdrift Way', goal:{score:3100,moves:19}, next:['n37']},
+ {id:'n37',w:5, type:'reward',    x:22, y:7758, lbl:'Power Bloom',    boon:2, next:['n38']},
+ {id:'n38',w:5, type:'battle',    x:64, y:7656, lbl:'Frost Fox',     goal:{hp:2500,time:70}, face:'🦊', next:['n39a','n39b']},
+ {id:'n39a',w:5,type:'challenge', x:30, y:7554, lbl:'Icicle Grove',  goal:{score:3200,moves:19}, next:['n40']},
+ {id:'n39b',w:5,type:'reward',    x:76, y:7554, lbl:'Power Bloom',    boon:2, next:['n40']},
+ {id:'n40',w:5, type:'challenge', x:50, y:7452, lbl:'Frozen Lake',   goal:{score:3150,moves:19}, next:['n41']},
+ {id:'n41',w:5, type:'battle',    x:26, y:7350, lbl:'Blizzard Owl',  goal:{hp:2800,time:72}, face:'🦉', next:['n42']},
+ {id:'n42',w:5, type:'challenge', x:68, y:7248, lbl:'Aurora Ridge',  goal:{score:3300,moves:19}, next:['n43']},
+ {id:'n43',w:5, type:'reward',    x:40, y:7146, lbl:'Power Bloom',    boon:2, next:['n44']},
+ {id:'n44',w:5, type:'battle',    x:54, y:7040, lbl:'Glacier Titan', goal:{hp:2900,time:75}, face:'🧊', next:['n45']},
  /* World 6 — Sunspire Sanctum (finale) */
- {id:'n45',w:6, type:'challenge', x:46, y:4500, lbl:'Dawn Steps',     goal:{score:3400,moves:20}, next:['n46']},
- {id:'n46',w:6, type:'reward',    x:74, y:4398, lbl:'Power Bloom',     boon:2, next:['n47']},
- {id:'n47',w:6, type:'battle',    x:28, y:4296, lbl:'Solar Sprite',   goal:{hp:3200,time:74}, face:'✨', next:['n48a','n48b']},
- {id:'n48a',w:6,type:'challenge', x:66, y:4194, lbl:'Radiant Hall',   goal:{score:3450,moves:20}, next:['n49']},
- {id:'n48b',w:6,type:'reward',    x:18, y:4194, lbl:'Power Bloom',     boon:2, next:['n49']},
- {id:'n49',w:6, type:'challenge', x:46, y:4092, lbl:'Prism Court',    goal:{score:3250,moves:20}, next:['n50']},
- {id:'n50',w:6, type:'battle',    x:72, y:3990, lbl:'Comet Drake',    goal:{hp:3500,time:76}, face:'☄️', next:['n51']},
- {id:'n51',w:6, type:'challenge', x:28, y:3888, lbl:'Halo Walk',      goal:{score:3550,moves:20}, next:['n52']},
- {id:'n52',w:6, type:'reward',    x:58, y:3790, lbl:'Power Bloom',     boon:2, next:['n53']},
- {id:'n53',w:6, type:'battle',    x:46, y:3680,  lbl:'Sun Sovereign',  goal:{hp:3100,time:80}, face:'🌞', next:['n54']},
+ {id:'n45',w:6, type:'challenge', x:46, y:6900, lbl:'Dawn Steps',     goal:{score:3400,moves:20}, next:['n46']},
+ {id:'n46',w:6, type:'reward',    x:74, y:6798, lbl:'Power Bloom',     boon:2, next:['n47']},
+ {id:'n47',w:6, type:'battle',    x:28, y:6696, lbl:'Solar Sprite',   goal:{hp:3200,time:74}, face:'✨', next:['n48a','n48b']},
+ {id:'n48a',w:6,type:'challenge', x:66, y:6594, lbl:'Radiant Hall',   goal:{score:3450,moves:20}, next:['n49']},
+ {id:'n48b',w:6,type:'reward',    x:18, y:6594, lbl:'Power Bloom',     boon:2, next:['n49']},
+ {id:'n49',w:6, type:'challenge', x:46, y:6492, lbl:'Prism Court',    goal:{score:3250,moves:20}, next:['n50']},
+ {id:'n50',w:6, type:'battle',    x:72, y:6390, lbl:'Comet Drake',    goal:{hp:3500,time:76}, face:'☄️', next:['n51']},
+ {id:'n51',w:6, type:'challenge', x:28, y:6288, lbl:'Halo Walk',      goal:{score:3550,moves:20}, next:['n52']},
+ {id:'n52',w:6, type:'reward',    x:58, y:6190, lbl:'Power Bloom',     boon:2, next:['n53']},
+ {id:'n53',w:6, type:'battle',    x:46, y:6080,  lbl:'Sun Sovereign',  goal:{hp:3100,time:80}, face:'🌞', next:['n54']},
  /* World 7 — Tidewhisper Shores (2400–3600). Introduces ice & stone "clearing"
     levels to the campaign; seeds come from VALIDATED_SEEDS (bot win rate 55–90%). */
- {id:'n54', w:7, type:'challenge', x:50, y:3520, lbl:'Driftwood Cove',    goal:{score:3500,moves:20}, next:['n55']},
- {id:'n55', w:7, type:'challenge', x:24, y:3430, lbl:'Tidepool Steps',    obstacle:true, seed:209, diff:2, goal:{obstacles:true,moves:24}, next:['n56']},
- {id:'n56', w:7, type:'reward',    x:70, y:3340, lbl:'Power Bloom',       boon:2, next:['n57']},
- {id:'n57', w:7, type:'battle',    x:36, y:3250, lbl:'Reef Crab',         goal:{hp:3000,time:76}, face:'🦀', next:['n58a','n58b']},
- {id:'n58a',w:7, type:'challenge', x:72, y:3160, lbl:'Sea Glass Bay',     goal:{score:3600,moves:21}, next:['n59']},
- {id:'n58b',w:7, type:'reward',    x:18, y:3160, lbl:'Power Bloom',       boon:2, next:['n59']},
- {id:'n59', w:7, type:'challenge', x:46, y:3070, lbl:'Barnacle Rocks',    obstacle:true, seed:205, diff:2, goal:{obstacles:true,moves:24}, next:['n60']},
- {id:'n60', w:7, type:'challenge', x:74, y:2980, lbl:'Gull Point',        goal:{score:3650,moves:22}, next:['n61']},
- {id:'n61', w:7, type:'battle',    x:30, y:2890, lbl:'Shell Knight',      goal:{hp:3200,time:80}, face:'🐚', next:['n62']},
- {id:'n62', w:7, type:'reward',    x:64, y:2800, lbl:'Power Bloom',       boon:2, next:['n63']},
- {id:'n63', w:7, type:'challenge', x:28, y:2710, lbl:'Kelp Lagoon',       obstacle:true, seed:409, diff:4, goal:{obstacles:true,moves:26}, next:['n64']},
- {id:'n64', w:7, type:'challenge', x:66, y:2620, lbl:'Lighthouse Stair',  goal:{score:3700,moves:22}, next:['n65']},
- {id:'n65', w:7, type:'battle',    x:46, y:2480, lbl:'Tide Elder',        goal:{hp:3200,time:84}, face:'🐢', next:['n66']},
+ {id:'n54', w:7, type:'challenge', x:50, y:5920, lbl:'Driftwood Cove',    goal:{score:3500,moves:20}, next:['n55']},
+ {id:'n55', w:7, type:'challenge', x:24, y:5830, lbl:'Tidepool Steps',    obstacle:true, seed:209, diff:2, goal:{obstacles:true,moves:24}, next:['n56']},
+ {id:'n56', w:7, type:'reward',    x:70, y:5740, lbl:'Power Bloom',       boon:2, next:['n57']},
+ {id:'n57', w:7, type:'battle',    x:36, y:5650, lbl:'Reef Crab',         goal:{hp:3000,time:76}, face:'🦀', next:['n58a','n58b']},
+ {id:'n58a',w:7, type:'challenge', x:72, y:5560, lbl:'Sea Glass Bay',     goal:{score:3600,moves:21}, next:['n59']},
+ {id:'n58b',w:7, type:'reward',    x:18, y:5560, lbl:'Power Bloom',       boon:2, next:['n59']},
+ {id:'n59', w:7, type:'challenge', x:46, y:5470, lbl:'Barnacle Rocks',    obstacle:true, seed:205, diff:2, goal:{obstacles:true,moves:24}, next:['n60']},
+ {id:'n60', w:7, type:'challenge', x:74, y:5380, lbl:'Gull Point',        goal:{score:3650,moves:22}, next:['n61']},
+ {id:'n61', w:7, type:'battle',    x:30, y:5290, lbl:'Shell Knight',      goal:{hp:3200,time:80}, face:'🐚', next:['n62']},
+ {id:'n62', w:7, type:'reward',    x:64, y:5200, lbl:'Power Bloom',       boon:2, next:['n63']},
+ {id:'n63', w:7, type:'challenge', x:28, y:5110, lbl:'Kelp Lagoon',       obstacle:true, seed:409, diff:4, goal:{obstacles:true,moves:26}, next:['n64']},
+ {id:'n64', w:7, type:'challenge', x:66, y:5020, lbl:'Lighthouse Stair',  goal:{score:3700,moves:22}, next:['n65']},
+ {id:'n65', w:7, type:'battle',    x:46, y:4880, lbl:'Tide Elder',        goal:{hp:3200,time:84}, face:'🐢', next:['n66']},
  /* World 8 — Hollow Root Caverns (1200–2400) */
- {id:'n66', w:8, type:'challenge', x:52, y:2320, lbl:'Root Stair',        goal:{score:3750,moves:22}, next:['n67']},
- {id:'n67', w:8, type:'reward',    x:22, y:2230, lbl:'Power Bloom',       boon:2, next:['n68']},
- {id:'n68', w:8, type:'challenge', x:66, y:2140, lbl:'Crystal Pocket',    obstacle:true, seed:408, diff:4, goal:{obstacles:true,moves:26}, next:['n69']},
- {id:'n69', w:8, type:'battle',    x:32, y:2050, lbl:'Glow Grub',         goal:{hp:2900,time:78}, face:'🐛', next:['n70a','n70b']},
- {id:'n70a',w:8, type:'challenge', x:74, y:1960, lbl:'Echo Chamber',      goal:{score:3800,moves:22}, next:['n71']},
- {id:'n70b',w:8, type:'reward',    x:18, y:1960, lbl:'Power Bloom',       boon:2, next:['n71']},
- {id:'n71', w:8, type:'challenge', x:46, y:1870, lbl:'Stalactite Hall',   obstacle:true, seed:402, diff:4, goal:{obstacles:true,moves:26}, next:['n72']},
- {id:'n72', w:8, type:'battle',    x:26, y:1780, lbl:'Cave Skink',        goal:{hp:3100,time:82}, face:'🦎', next:['n73']},
- {id:'n73', w:8, type:'challenge', x:68, y:1690, lbl:'Mushroom Grotto',   goal:{score:3850,moves:23}, next:['n74']},
- {id:'n74', w:8, type:'challenge', x:36, y:1600, lbl:'Amber Vein',        obstacle:true, seed:602, diff:6, goal:{obstacles:true,moves:28}, next:['n75']},
- {id:'n75', w:8, type:'reward',    x:72, y:1510, lbl:'Power Bloom',       boon:2, next:['n76']},
- {id:'n76', w:8, type:'challenge', x:40, y:1420, lbl:'Deep Spring',       goal:{score:3900,moves:23}, next:['n77']},
- {id:'n77', w:8, type:'battle',    x:34, y:1280, lbl:'Root Wyrm',         goal:{hp:3600,time:88}, face:'🐉', next:['n78']},
+ {id:'n66', w:8, type:'challenge', x:52, y:4720, lbl:'Root Stair',        goal:{score:3750,moves:22}, next:['n67']},
+ {id:'n67', w:8, type:'reward',    x:22, y:4630, lbl:'Power Bloom',       boon:2, next:['n68']},
+ {id:'n68', w:8, type:'challenge', x:66, y:4540, lbl:'Crystal Pocket',    obstacle:true, seed:408, diff:4, goal:{obstacles:true,moves:26}, next:['n69']},
+ {id:'n69', w:8, type:'battle',    x:32, y:4450, lbl:'Glow Grub',         goal:{hp:2900,time:78}, face:'🐛', next:['n70a','n70b']},
+ {id:'n70a',w:8, type:'challenge', x:74, y:4360, lbl:'Echo Chamber',      goal:{score:3800,moves:22}, next:['n71']},
+ {id:'n70b',w:8, type:'reward',    x:18, y:4360, lbl:'Power Bloom',       boon:2, next:['n71']},
+ {id:'n71', w:8, type:'challenge', x:46, y:4270, lbl:'Stalactite Hall',   obstacle:true, seed:402, diff:4, goal:{obstacles:true,moves:26}, next:['n72']},
+ {id:'n72', w:8, type:'battle',    x:26, y:4180, lbl:'Cave Skink',        goal:{hp:3100,time:82}, face:'🦎', next:['n73']},
+ {id:'n73', w:8, type:'challenge', x:68, y:4090, lbl:'Mushroom Grotto',   goal:{score:3850,moves:23}, next:['n74']},
+ {id:'n74', w:8, type:'challenge', x:36, y:4000, lbl:'Amber Vein',        obstacle:true, seed:602, diff:6, goal:{obstacles:true,moves:28}, next:['n75']},
+ {id:'n75', w:8, type:'reward',    x:72, y:3910, lbl:'Power Bloom',       boon:2, next:['n76']},
+ {id:'n76', w:8, type:'challenge', x:40, y:3820, lbl:'Deep Spring',       goal:{score:3900,moves:23}, next:['n77']},
+ {id:'n77', w:8, type:'battle',    x:34, y:3680, lbl:'Root Wyrm',         goal:{hp:3600,time:88}, face:'🐉', next:['n78']},
  /* World 9 — Starfall Summit (0–1200, finale) */
- {id:'n78', w:9, type:'challenge', x:46, y:1110, lbl:'Meteor Meadow',     goal:{score:3950,moves:23}, next:['n79']},
- {id:'n79', w:9, type:'challenge', x:74, y:1020, lbl:'Stardust Field',    obstacle:true, seed:607, diff:6, goal:{obstacles:true,moves:28}, next:['n80']},
- {id:'n80', w:9, type:'reward',    x:24, y:930,  lbl:'Power Bloom',       boon:2, next:['n81']},
- {id:'n81', w:9, type:'battle',    x:60, y:840,  lbl:'Moon Moth',         goal:{hp:3100,time:82}, face:'🦋', next:['n82a','n82b']},
- {id:'n82a',w:9, type:'challenge', x:26, y:750,  lbl:'Nebula Bridge',     goal:{score:4000,moves:25}, next:['n83']},
- {id:'n82b',w:9, type:'reward',    x:78, y:750,  lbl:'Power Bloom',       boon:2, next:['n83']},
- {id:'n83', w:9, type:'challenge', x:50, y:660,  lbl:'Comet Trail',       obstacle:true, seed:612, diff:6, goal:{obstacles:true,moves:28}, next:['n84']},
- {id:'n84', w:9, type:'challenge', x:22, y:570,  lbl:'Constellation Walk',goal:{score:4050,moves:25}, next:['n85']},
- {id:'n85', w:9, type:'battle',    x:68, y:480,  lbl:'Comet Finch',       goal:{hp:3500,time:86}, face:'🐦', next:['n86']},
- {id:'n86', w:9, type:'challenge', x:34, y:390,  lbl:'Crater Garden',     obstacle:true, seed:803, diff:8, goal:{obstacles:true,moves:30}, next:['n87']},
- {id:'n87', w:9, type:'reward',    x:70, y:300,  lbl:'Power Bloom',       boon:2, next:['n88']},
- {id:'n88', w:9, type:'challenge', x:40, y:200,  lbl:'Zenith Steps',      goal:{score:4100,moves:25}, next:['n89']},
- {id:'n89', w:9, type:'battle',    x:46, y:60,   lbl:'Star Weaver',       goal:{hp:3800,time:92}, face:'🌟', next:['rift']},
- {id:'rift',w:9, type:'rift',      x:82, y:50,   lbl:'Endless Rift',      next:[]},
+ {id:'n78', w:9, type:'challenge', x:46, y:3510, lbl:'Meteor Meadow',     goal:{score:3950,moves:23}, next:['n79']},
+ {id:'n79', w:9, type:'challenge', x:74, y:3420, lbl:'Stardust Field',    obstacle:true, seed:607, diff:6, goal:{obstacles:true,moves:28}, next:['n80']},
+ {id:'n80', w:9, type:'reward',    x:24, y:3330,  lbl:'Power Bloom',       boon:2, next:['n81']},
+ {id:'n81', w:9, type:'battle',    x:60, y:3240,  lbl:'Moon Moth',         goal:{hp:3100,time:82}, face:'🦋', next:['n82a','n82b']},
+ {id:'n82a',w:9, type:'challenge', x:26, y:3150,  lbl:'Nebula Bridge',     goal:{score:4000,moves:25}, next:['n83']},
+ {id:'n82b',w:9, type:'reward',    x:78, y:3150,  lbl:'Power Bloom',       boon:2, next:['n83']},
+ {id:'n83', w:9, type:'challenge', x:50, y:3060,  lbl:'Comet Trail',       obstacle:true, seed:612, diff:6, goal:{obstacles:true,moves:28}, next:['n84']},
+ {id:'n84', w:9, type:'challenge', x:22, y:2970,  lbl:'Constellation Walk',goal:{score:4050,moves:25}, next:['n85']},
+ {id:'n85', w:9, type:'battle',    x:68, y:2880,  lbl:'Comet Finch',       goal:{hp:3500,time:86}, face:'🐦', next:['n86']},
+ {id:'n86', w:9, type:'challenge', x:34, y:2790,  lbl:'Crater Garden',     obstacle:true, seed:803, diff:8, goal:{obstacles:true,moves:30}, next:['n87']},
+ {id:'n87', w:9, type:'reward',    x:70, y:2700,  lbl:'Power Bloom',       boon:2, next:['n88']},
+ {id:'n88', w:9, type:'challenge', x:40, y:2600,  lbl:'Zenith Steps',      goal:{score:4100,moves:25}, next:['n89']},
+ {id:'n89', w:9, type:'battle',    x:46, y:2460,   lbl:'Star Weaver',       goal:{hp:3800,time:92}, face:'🌟', next:['n90','rift']},
+ /* World 10 — Petalfall Terraces (1200–2400). Introduces "gather" levels: collect
+    gems of the shown colors. Soothing to plan, never a race. */
+ {id:'n90', w:10,type:'challenge', x:52, y:2320, lbl:'Blossom Gate',      goal:{score:4150,moves:25}, next:['n91']},
+ {id:'n91', w:10,type:'challenge', x:24, y:2230, lbl:'Petal Basket',      gather:true, goal:{gather:[[0,34],[2,34]],moves:22}, next:['n92']},
+ {id:'n92', w:10,type:'reward',    x:70, y:2140, lbl:'Power Bloom',       boon:2, next:['n93']},
+ {id:'n93', w:10,type:'battle',    x:36, y:2050, lbl:'Koi Spirit',        goal:{hp:3300,time:84}, face:'🐟', next:['n94a','n94b']},
+ {id:'n94a',w:10,type:'challenge', x:72, y:1960, lbl:'Stepping Stones',   obstacle:true, seed:404, diff:4, goal:{obstacles:true,moves:26}, next:['n95']},
+ {id:'n94b',w:10,type:'reward',    x:18, y:1960, lbl:'Power Bloom',       boon:2, next:['n95']},
+ {id:'n95', w:10,type:'challenge', x:46, y:1870, lbl:'Moonbridge',        goal:{score:3950,moves:25}, next:['n96']},
+ {id:'n96', w:10,type:'challenge', x:74, y:1780, lbl:'Tea Garden',        gather:true, goal:{gather:[[1,38],[3,38],[4,38]],moves:24}, next:['n97']},
+ {id:'n97', w:10,type:'battle',    x:30, y:1690, lbl:'Petal Peacock',     goal:{hp:3500,time:88}, face:'🦚', next:['n98']},
+ {id:'n98', w:10,type:'challenge', x:64, y:1600, lbl:'Lantern Canal',     obstacle:true, seed:603, diff:6, goal:{obstacles:true,moves:28}, next:['n99']},
+ {id:'n99', w:10,type:'reward',    x:28, y:1510, lbl:'Power Bloom',       boon:2, next:['n100']},
+ {id:'n100',w:10,type:'challenge', x:60, y:1420, lbl:'Wisteria Walk',     goal:{score:4250,moves:26}, next:['n101']},
+ {id:'n101',w:10,type:'battle',    x:44, y:1280, lbl:'Blossom Tiger',     goal:{hp:3900,time:96}, face:'🐯', next:['n102']},
+ /* World 11 — Windchime Heights (0–1200, sky finale) */
+ {id:'n102',w:11,type:'challenge', x:50, y:1110, lbl:'Cloud Harbor',      goal:{score:4250,moves:26}, next:['n103']},
+ {id:'n103',w:11,type:'challenge', x:22, y:1020, lbl:'Chime Market',      gather:true, goal:{gather:[[3,41],[1,41]],moves:23}, next:['n104']},
+ {id:'n104',w:11,type:'reward',    x:72, y:930,  lbl:'Power Bloom',       boon:2, next:['n105']},
+ {id:'n105',w:11,type:'battle',    x:34, y:840,  lbl:'Wind Kite',         goal:{hp:3400,time:86}, face:'🪁', next:['n106a','n106b']},
+ {id:'n106a',w:11,type:'challenge',x:74, y:750,  lbl:'Sky Loom',          obstacle:true, seed:804, diff:8, goal:{obstacles:true,moves:30}, next:['n107']},
+ {id:'n106b',w:11,type:'reward',   x:20, y:750,  lbl:'Power Bloom',       boon:2, next:['n107']},
+ {id:'n107',w:11,type:'challenge', x:48, y:660,  lbl:'Rainbow Orchard',   gather:true, goal:{gather:[[0,41],[2,41],[4,41]],moves:25}, next:['n108']},
+ {id:'n108',w:11,type:'challenge', x:24, y:570,  lbl:'Floating Isles',    goal:{score:4300,moves:26}, next:['n109']},
+ {id:'n109',w:11,type:'battle',    x:66, y:480,  lbl:'Thunder Ram',       goal:{hp:3600,time:90}, face:'🐏', next:['n110']},
+ {id:'n110',w:11,type:'challenge', x:34, y:390,  lbl:'Aurora Bridge',     obstacle:true, seed:807, diff:8, goal:{obstacles:true,moves:30}, next:['n111']},
+ {id:'n111',w:11,type:'reward',    x:70, y:300,  lbl:'Power Bloom',       boon:2, next:['n112']},
+ {id:'n112',w:11,type:'challenge', x:58, y:200,  lbl:'Dawn Terrace',      goal:{score:4350,moves:26}, next:['n113']},
+ {id:'n113',w:11,type:'battle',    x:44, y:70,   lbl:'Aurora Stag',       goal:{hp:4000,time:100}, face:'🦌', next:[]},
+ {id:'rift',w:9, type:'rift',      x:82, y:2450,   lbl:'Endless Rift',      next:[]},
 ];
 const nodeById=id=>NODES.find(n=>n.id===id);
 
@@ -1196,7 +1325,7 @@ const VALIDATED_SEEDS=[{"seed":201,"diff":2,"moves":22,"wr":55},{"seed":202,"dif
 
 function genRiftLevel(){
   const k=state.riftLevel;                       /* difficulty index */
-  const w=1+(k%9);                               /* cycle world themes/music */
+  const w=1+(k%11);                              /* cycle world themes/music */
   const name=RIFT_ADJ[rnd(RIFT_ADJ.length)]+' '+RIFT_NOUN[rnd(RIFT_NOUN.length)];
   /* validator-calibrated: 5-color boards score ~190/mv, 6-color deal ~85 dmg/mv.
      Targets start at ~0.76x capacity and creep past 1.0x — endless modes are
@@ -1249,6 +1378,37 @@ function mapDecor(W){
   const comet=(x,y,len,ang)=>{ const a=ang*Math.PI/180; p.push(`<line x1="${x}" y1="${y}" x2="${x-Math.cos(a)*len}" y2="${y-Math.sin(a)*len}" stroke="#FFE9A8" stroke-width="3" stroke-linecap="round" opacity=".55"/><circle cx="${x}" cy="${y}" r="5" fill="#FFF6D8"/>`); };
   const planet=(x,y,r,fill,ring)=>p.push(`<g opacity=".9"><circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/><ellipse cx="${x}" cy="${y}" rx="${r*1.7}" ry="${r*.45}" fill="none" stroke="${ring}" stroke-width="4" transform="rotate(-18 ${x} ${y})"/></g>`);
 
+  /* new decor helpers for worlds 10–11 */
+  const blossom=(x,y,s)=>p.push(`<g opacity=".92"><path d="M${x} ${y+30*s} q${-4*s} ${-18*s} ${2*s} ${-34*s}" stroke="#5A3A2E" stroke-width="${6*s}" fill="none" stroke-linecap="round"/><ellipse cx="${x}" cy="${y-8*s}" rx="${22*s}" ry="${17*s}" fill="#FFB7D5"/><ellipse cx="${x-14*s}" cy="${y}" rx="${12*s}" ry="${10*s}" fill="#FF9AC4"/><ellipse cx="${x+15*s}" cy="${y-2*s}" rx="${13*s}" ry="${10*s}" fill="#FFC9E0"/><circle cx="${x-6*s}" cy="${y-14*s}" r="${3*s}" fill="#FFF0F6"/><circle cx="${x+8*s}" cy="${y-6*s}" r="${2.5*s}" fill="#FFF0F6"/></g>`);
+  const petal=(x,y,s,rot)=>p.push(`<ellipse cx="${x}" cy="${y}" rx="${5*s}" ry="${2.6*s}" fill="#FFD1E6" opacity=".75" transform="rotate(${rot} ${x} ${y})"/>`);
+  const stepstone=(x,y,s)=>p.push(`<ellipse cx="${x}" cy="${y}" rx="${16*s}" ry="${7*s}" fill="#8E7A9E" opacity=".75"/><ellipse cx="${x-4*s}" cy="${y-2*s}" rx="${7*s}" ry="${2.5*s}" fill="#FFFFFF" opacity=".25"/>`);
+  const archbridge=(x,y,w)=>p.push(`<g opacity=".85"><path d="M${x-w} ${y} Q${x} ${y-w*.55} ${x+w} ${y}" stroke="#E0707A" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M${x-w*.7} ${y-w*.2} v14 M${x} ${y-w*.28} v16 M${x+w*.7} ${y-w*.2} v14" stroke="#E0707A" stroke-width="4" stroke-linecap="round"/></g>`);
+  const island=(x,y,s)=>p.push(`<g opacity=".9"><path d="M${x-34*s} ${y} Q${x} ${y-10*s} ${x+34*s} ${y} L${x+12*s} ${y+22*s} L${x} ${y+34*s} L${x-14*s} ${y+20*s} Z" fill="#7A6A9E"/><path d="M${x-34*s} ${y} Q${x} ${y-12*s} ${x+34*s} ${y} Q${x} ${y+6*s} ${x-34*s} ${y} Z" fill="#6FD6A8"/><circle cx="${x+10*s}" cy="${y-10*s}" r="${7*s}" fill="#4FB88E"/></g>`);
+  const chime=(x,y,s)=>{ let t=`<g opacity=".85"><line x1="${x-12*s}" y1="${y}" x2="${x+12*s}" y2="${y}" stroke="#FFE9A8" stroke-width="${2.5*s}" stroke-linecap="round"/>`;
+    [-9,-3,3,9].forEach((d,i)=>{ const h=(14+i*5)*s; t+=`<line x1="${x+d*s}" y1="${y}" x2="${x+d*s}" y2="${y+h}" stroke="#FFF6D8" stroke-width="${.8*s}"/><rect x="${x+d*s-1.6*s}" y="${y+h}" width="${3.2*s}" height="${10*s}" rx="${1.4*s}" fill="#BFE8FF"/>`; });
+    p.push(t+`</g>`); };
+  const kite=(x,y,s,fill)=>p.push(`<g opacity=".85"><path d="M${x} ${y-16*s} L${x+11*s} ${y} L${x} ${y+18*s} L${x-11*s} ${y} Z" fill="${fill}"/><path d="M${x} ${y+18*s} q${8*s} ${14*s} ${-2*s} ${26*s} q${-8*s} ${10*s} ${4*s} ${22*s}" stroke="#FFF6D8" stroke-width="${1.6*s}" fill="none"/></g>`);
+  const rainbowArc=(x,y,r)=>p.push(`<g fill="none" stroke-width="7" opacity=".32">${['#FF6B81','#FFC93C','#4FE0B0','#5AB6FF','#B57BFF'].map((c,i)=>`<path d="M${x-r+i*7} ${y} A${r-i*7} ${r-i*7} 0 0 1 ${x+r-i*7} ${y}" stroke="${c}"/>`).join('')}</g>`);
+
+  /* World 11 — Windchime Heights (0–1200) */
+  sun(W*.78,110,40);
+  rainbowArc(W*.32,420,120);
+  cloud(W*.16,160,1.2,.55); cloud(W*.6,300,1,.5); cloud(W*.9,520,1.1,.45); cloud(W*.2,720,1.3,.45); cloud(W*.74,960,1.1,.4);
+  island(W*.14,330,1.1); island(W*.88,640,1.3); island(W*.12,900,1); island(W*.86,1080,.9);
+  chime(W*.08,40,1.2); chime(W*.92,260,1.1); chime(W*.6,560,1); chime(W*.1,1040,1.2);
+  kite(W*.9,180,1.1,'#FF9AA8'); kite(W*.28,600,.9,'#9CDCFF'); kite(W*.7,850,1,'#FFE08A');
+  hill(1190,40,'#5E2E6E',.6);
+  /* World 10 — Petalfall Terraces (1200–2400) */
+  for(let i=0;i<40;i++){ const r=mulberry32(1000+i); petal(r()*W, 1220+r()*1160, .8+r()*.8, Math.round(r()*180)); }
+  blossom(W*.1,1330,1.2); blossom(W*.9,1480,1.4); blossom(W*.12,1760,1); blossom(W*.88,1900,1.2); blossom(W*.08,2180,1.3); blossom(W*.92,2300,1);
+  archbridge(W*.5,1330,70);
+  stepstone(W*.3,1550,1); stepstone(W*.38,1575,.8); stepstone(W*.46,1560,.9);
+  stepstone(W*.58,2100,1); stepstone(W*.66,2120,.8); stepstone(W*.74,2105,.9);
+  lantern(W*.2,1640); lantern(W*.8,1720); lantern(W*.26,2000); lantern(W*.84,2250);
+  hill(2390,40,'#0B0A2E',.7);
+
+  /* Worlds 1–9 keep their coordinates, shifted down under the sky worlds */
+  p.push(`<g transform="translate(0 2400)">`);
   /* World 9 — Starfall Summit (0–1200) */
   for(let i=0;i<34;i++){ const r=mulberry32(900+i); star(r()*W, 30+r()*1000, .5+r()*1.1, .35+r()*.6); }
   comet(W*.72,120,110,35); comet(W*.22,330,90,25); comet(W*.6,640,130,40); comet(W*.3,880,80,30);
@@ -1308,13 +1468,14 @@ function mapDecor(W){
   tree(W*.88,5300,1.3,'#2E7D5B'); tree(W*.14,5100,1.1,'#1E5C4E');
   shroom(W*.3,5640,'#FF6B81'); shroom(W*.78,5490,'#B57BFF'); shroom(W*.55,5180,'#FF6B81'); shroom(W*.82,5080,'#FFC93C');
   p.push('</g>');
+  p.push('</g>');
   return p.join('');
 }
 
 function buildMap(){
   const inner=$('#map-inner'), svg=$('#map-svg'), deco=$('#map-deco'), wrap=$('#nodes');
   wrap.innerHTML=''; svg.innerHTML='';
-  const W=inner.clientWidth||390, H=9480;
+  const W=inner.clientWidth||390, H=11880;
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
   deco.setAttribute('viewBox',`0 0 ${W} ${H}`);
   deco.innerHTML=mapDecor(W);
@@ -1342,12 +1503,12 @@ function buildMap(){
     }
     if(done)el.classList.add('done'); else if(open)el.classList.add('current'); else el.classList.add('locked');
     el.style.left=n.x+'%'; el.style.top=n.y+'px';
-    el.innerHTML=`<span class="lbl">${n.lbl}</span>${done?'✔️':(n.type==='battle'?'⚔️':n.type==='reward'?'🎁':n.obstacle?'🧊':'🧩')}`;
+    el.innerHTML=`<span class="lbl">${n.lbl}</span>${done?'✔️':(n.type==='battle'?'⚔️':n.type==='reward'?'🎁':n.obstacle?'🧊':n.gather?'🧺':'🧩')}`;
     if(done&&n.type!=='reward'&&state.stars[n.id]) el.innerHTML+=`<span class="starsrow">${'⭐'.repeat(state.stars[n.id])}</span>`;
     el.onclick=()=>tapNode(n);
     wrap.appendChild(el);
   }
-  const tags=[[9465,'🌿 WILLOW MEADOW'],[8545,'☁️ CLOUDLINE ISLES'],[7625,'🏮 EMBER LANTERN PEAKS'],[6465,'🌙 MOONWELL DEPTHS'],[5505,'❄️ FROSTVEIL TUNDRA'],[4545,'🌞 SUNSPIRE SANCTUM'],[3585,'🐚 TIDEWHISPER SHORES'],[2385,'🍄 HOLLOW ROOT CAVERNS'],[1185,'🌠 STARFALL SUMMIT']];
+  const tags=[[11865,'🌿 WILLOW MEADOW'],[10945,'☁️ CLOUDLINE ISLES'],[10025,'🏮 EMBER LANTERN PEAKS'],[8865,'🌙 MOONWELL DEPTHS'],[7905,'❄️ FROSTVEIL TUNDRA'],[6945,'🌞 SUNSPIRE SANCTUM'],[5985,'🐚 TIDEWHISPER SHORES'],[4785,'🍄 HOLLOW ROOT CAVERNS'],[3585,'🌠 STARFALL SUMMIT'],[2385,'🌸 PETALFALL TERRACES'],[1185,'🎐 WINDCHIME HEIGHTS']];
   for(const [y,txt] of tags){ const t=document.createElement('div'); t.className='worldtag'; t.style.top=(y-14)+'px'; t.textContent=txt; wrap.appendChild(t); }
   const cur=NODES.filter(n=>state.unlocked.has(n.id)&&!state.completed.has(n.id))[0]||NODES[NODES.length-1];
   Snd.calmScale=WORLD_SCALES[cur.w];
@@ -1411,6 +1572,14 @@ function refreshHUD(){
     else dg.textContent=`🌿 Today's gentle goal: clear ${tgt} levels (${done}/${tgt})`;
     fill.style.width=Math.min(100,done/tgt*100)+'%';
   }
+  const tb=$('#tb-text');
+  if(tb){
+    const T=refreshTrials(), n=T.list.filter(t=>t.done).length, all=n===T.list.length;
+    tb.textContent=all?(T.chest?'Today\'s Trials: all done 🌿':'Today\'s Trials: chest ready! 🎁')
+      :`Today's Trials · ${n}/${T.list.length}`+(dailyCleared()?'':' · Trial of the Day');
+    $('#tb-dots').textContent=T.list.map(t=>t.done?'●':'○').join('');
+    $('#trial-bar').classList.toggle('ready',all&&!T.chest);
+  }
 }
 function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),1900); }
 function confetti(n){
@@ -1449,14 +1618,15 @@ function startLevel(n,boost){
     clearInterval(G.timer); G.timer=setInterval(battleTick,1000);
     Snd.startMusic('battle');
   }else{ G.moves=n.goal.moves+(boost?3:0); $('#moves-left').textContent=G.moves;
-    $('#goal-text').textContent=n.zen?'':(n.goal.obstacles?'Break every block!':'Score '+n.goal.score); clearInterval(G.timer);
+    $('#goal-text').textContent=n.zen?'':(n.goal.obstacles?'Break every block!':n.goal.gather?'Gather':'Score '+n.goal.score); clearInterval(G.timer);
     Snd.startMusic('calm');
   }
   if(boost) setTimeout(()=>toast('🌿 A little extra room today — you have got this.'),900);
-  updateGoalUI(); buildBoard();
+  buildBoard(); updateGoalUI();
   /* level intro banner */
   $('#li-name').textContent=n.lbl;
-  $('#li-goal').textContent=n.zen?'Nothing to win. Nothing to lose. Just match.':(battle?`Defeat it in ${G.time} seconds!`:(n.goal.obstacles?`Break all ${G.obstTotal} ice & stone blocks in ${n.goal.moves} moves`:(n.tiny?`A one-minute win: score ${n.goal.score}`:`Score ${n.goal.score} in ${n.goal.moves} moves`)));
+  const li_goal=n.zen?'Nothing to win. Nothing to lose. Just match.':(battle?`Defeat it in ${G.time} seconds!`:(n.goal.obstacles?`Break all ${G.obstTotal} ice & stone blocks in ${G.moves} moves`:(n.goal.gather?`Gather ${gatherChips(G.gather,true)} in ${G.moves} moves`:(n.tiny?`A one-minute win: score ${n.goal.score}`:`Score ${n.goal.score} in ${G.moves} moves`))));
+  $('#li-goal').innerHTML=li_goal;
   const li=$('#lvl-intro'); li.classList.remove('show'); void li.offsetWidth; li.classList.add('show');
   clearTimeout(li._h); li._h=setTimeout(()=>li.classList.remove('show'),1700);
   scheduleHint();
@@ -1464,12 +1634,17 @@ function startLevel(n,boost){
   if(n.id==='n1'){ setTimeout(()=>tutStep('swap'),1900); }
   if(n.id==='n3'){ setTimeout(()=>tutStep('powerups'),1900); }
   if(n.obstacle&&!n.rift){ setTimeout(()=>tutStep('obstacles'),1900); }
+  if(n.goal&&n.goal.gather){ setTimeout(()=>tutStep('gather'),1900); }
 }
 function battleTick(){
   if(G.over)return;
   G.time--; $('#time-left').textContent=G.time;
   if(G.time<=10){ $('#timer-pill').classList.add('low'); Snd.tick(); }
   if(G.time<=0) endLevel(false);
+}
+/* little gem icons + counters for gather goals (uses the equipped skin) */
+function gatherChips(list,intro){
+  return list.map(g=>`<span class="gchip${!intro&&g.got>=g.need?' done':''}">${gemSVG(g.t)}${intro?g.need:(g.got>=g.need?'✓':Math.max(0,g.need-g.got))}</span>`).join(' ');
 }
 const ZEN_STAGES=[[0,'🌱'],[1500,'🌿'],[5000,'🪴'],[12000,'🌷'],[25000,'🌳'],[60000,'✨🌳']];
 function zenStage(total){ let s=ZEN_STAGES[0]; for(const st of ZEN_STAGES){ if(total>=st[0]) s=st; } return s; }
@@ -1489,6 +1664,11 @@ function updateGoalUI(){
     $('#goal-fill').style.width=(100-pct)+'%';
   }else if(G.level.goal.obstacles){
     $('#goal-fill').style.width=(G.obstTotal?100*(G.obstTotal-Math.max(0,G.obst))/G.obstTotal:0)+'%';
+    $('#moves-left').textContent=G.moves;
+  }else if(G.level.goal.gather&&G.gather){
+    const need=G.gather.reduce((a,g)=>a+g.need,0), got=G.gather.reduce((a,g)=>a+Math.min(g.got,g.need),0);
+    $('#goal-text').innerHTML=gatherChips(G.gather);
+    $('#goal-fill').style.width=(100*got/need)+'%';
     $('#moves-left').textContent=G.moves;
   }else{
     $('#goal-fill').style.width=Math.min(100,G.score/G.level.goal.score*100)+'%';
@@ -1513,6 +1693,8 @@ function buildBoard(){
     }
   }
   G.obst=0; G.obstTotal=0;
+  /* gather goal: per-color counters [{t, need, got}] */
+  G.gather=(G.level&&G.level.goal&&G.level.goal.gather)?G.level.goal.gather.map(([t,n])=>({t,need:n,got:0})):null;
   if(G.level&&G.level.obstacle){
     const lay=genObstacleLayout(G.level.seed,G.level.diff||0);
     for(const k of lay.stone) placeStone(Math.floor(k/SIZE),k%SIZE);
@@ -1817,12 +1999,19 @@ async function resolve(first){
     if(chain>=2){ comboText(chain); if(chain>=3) shakeApp(); }
     const f=[...clear][0];
     if(f!==undefined) floatScore(Math.floor(f/SIZE),f%SIZE,'+'+gained+(chain>1?'  x'+chain:''));
+    const cleared=[0,0,0,0,0,0];
     for(const k of clear){ const r=Math.floor(k/SIZE),c=k%SIZE;
-      if(G.grid[r][c]>=0) burst(r,c,G.grid[r][c]);
+      if(G.grid[r][c]>=0){ burst(r,c,G.grid[r][c]); cleared[G.grid[r][c]]++; }
       const el=G.els[r][c]; if(el){ el.classList.add('pop'); setTimeout(()=>el.remove(),300); }
       G.els[r][c]=null; G.grid[r][c]=-1; G.spec[r][c]=null;
     }
-    for(const s of runs.spawns){ if(G.grid[s.r][s.c]>=0){ setSpec(s.r,s.c,s.kind); Snd.chime(); } }
+    let made=0;
+    for(const s of runs.spawns){ if(G.grid[s.r][s.c]>=0){ setSpec(s.r,s.c,s.kind); Snd.chime(); made++; } }
+    if(G.gather) for(const g of G.gather) g.got+=cleared[g.t];
+    /* daily trials listen to what happens on the board */
+    trialEvent('score',gained); if(made) trialEvent('special',made); if(broke) trialEvent('blocks',broke);
+    if(chain>=3) trialEvent('chain',1);
+    cleared.forEach((n,t)=>{ if(n) trialEvent('gem'+t,n); });
     updateGoalUI();
     /* full-intensity detonations get a longer beat so the blast can be seen */
     await sleep(pace(240)+(dets.length?Math.round(320*fx()):0));
@@ -1925,6 +2114,7 @@ async function useHammer(r,c){
 }
 
 /* ---------- WIN / LOSE ---------- */
+function gatherDone(){ return !!G.gather&&G.gather.every(g=>g.got>=g.need); }
 function checkEnd(){
   if(G.over)return;
   const n=G.level;
@@ -1932,6 +2122,7 @@ function checkEnd(){
   if(n.type==='battle'){ if(G.hp<=0)return endLevel(true); }
   else{
     if(n.goal.obstacles){ if(G.obst<=0)return endLevel(true); }
+    else if(n.goal.gather){ if(gatherDone())return endLevel(true); }
     else if(G.score>=n.goal.score)return endLevel(true);
     if(G.moves<=0)return endLevel(false);
   }
@@ -1948,23 +2139,29 @@ function endLevel(win){
     const gs=gentleStreak();
     /* coin-free rewards: spins + power-ups, all small consumables */
     const gained=[];
-    if(!G.level.tiny){ state.spins+=1; gained.push('+1 🎟 wish'); }
+    const dailyFirst=!!G.level.daily&&!dailyCleared();   /* replays of the daily are just for fun */
+    if(!G.level.tiny&&(!G.level.daily||dailyFirst)){ state.spins+=1; gained.push('+1 🎟 wish'); }
+    if(dailyFirst){ state.dailyClearDay=dayKey(); gained.push('+1 '+randomPw()+' +1 '+randomPw()+' (Trial of the Day)'); }
     if(G.level.rift||G.level.type==='battle') gained.push('+1 '+randomPw());   // tougher levels drop a power-up
     if(gs>=3) gained.push('+1 '+randomPw()+' (streak)');                       // rewards showing up, kindly
     if(state.plus) gained.push('+1 '+randomPw()+' 🕊️');                        // Plus perk
     if(G.level.rift){ state.riftLevel++; }
-    else if(!G.level.tiny) completeNode(G.level);
+    else if(!G.level.tiny&&!G.level.daily) completeNode(G.level);
     bumpDailyGoal();
+    trialEvent('clear',1);
+    if(G.level.type==='battle') trialEvent('battle',1);
+    if(G.level.tiny) trialEvent('tiny',1);
+    if(G.level.daily) trialEvent('daily',1);
     const stars=G.level.type==='battle'
       ? (G.time>=25?3:G.time>=10?2:1)
       : (G.moves>=6?3:G.moves>=2?2:1);
-    if(!G.level.rift && !G.level.tiny && stars>(state.stars[G.level.id]||0)) state.stars[G.level.id]=stars;
+    if(!G.level.rift && !G.level.tiny && !G.level.daily && stars>(state.stars[G.level.id]||0)) state.stars[G.level.id]=stars;
     openModal('win',{gained,stars,streak:gs,
       enc:nextEncouragement({struggled:struggled,battle:G.level.type==='battle'})});
   }else{
     Snd.lose();
     state.failCounts[G.level.id]=(state.failCounts[G.level.id]||0)+1;
-    if(!state.plus && !G.level.tiny) state.lives=Math.max(0,state.lives-1);   /* tiny wins are always free */
+    if(!state.plus && !G.level.tiny && !G.level.daily) state.lives=Math.max(0,state.lives-1);   /* tiny wins & the daily trial are always free */
     openModal('lose');
   }
   saveState(); refreshHUD();
@@ -2082,10 +2279,12 @@ function openModal(kind,data={}){
     const iv=setInterval(()=>{ secs--; if(secs>0){ btn.textContent='Take a breath… '+secs; }
       else{ clearInterval(iv); btn.disabled=false; btn.textContent='Continue ▶'; } },1000);
   }else if(kind==='lose'){
+    const free=G.level.tiny||G.level.daily;
     const comfortLine=state.plus
       ? 'Comfort mode: no life lost. Rest, breathe, retry whenever.'
+      : free ? 'No life lost — this one is always free.'
       : `−1 life. You have <b>${state.lives} ❤️</b> left.`;
-    const canPlay=state.plus||state.lives>0||G.level.tiny||goalPlayFree();
+    const canPlay=state.plus||state.lives>0||free||goalPlayFree();
     const boost=boostEligible()&&canPlay;
     m.innerHTML=`<h2>So close! 💔</h2>
       <p>${comfortLine}<br>${canPlay?'Take a breath and try again — you have got this.':'Out of lives for today.'}</p>
@@ -2193,6 +2392,37 @@ function openModal(kind,data={}){
       <div class="btnrow">
       <button class="btn alt sm" onclick="window.open('https://theresilientpathbook.com','_blank')">📖 About the book</button>
       <button class="btn alt sm" onclick="closeModal()">Close</button></div>`;
+  }else if(kind==='trials'){
+    const T=refreshTrials(), d=todaysDaily(), dd=dailyCleared();
+    const rows=T.list.map((t,i)=>`<div class="trow ${t.done?'done':''}">
+        <span class="t-ic">${t.done?'✅':trialIcon(t)}</span>
+        <span class="t-body"><b>${trialText(t)}</b>
+          <small>${t.done?'Done — '+REWARD_LABEL[t.rw]+' received':'Reward: '+REWARD_LABEL[t.rw]+' · '+t.got.toLocaleString()+' / '+t.need.toLocaleString()}</small>
+          <div class="t-bar"><div style="width:${Math.round(100*t.got/t.need)}%"></div></div></span>
+        ${(!t.done&&!T.swapped)?`<button class="t-swap" onclick="swapTrial(${i})" title="Swap for a different trial">⇄ Swap</button>`:''}
+      </div>`).join('');
+    const all=T.list.every(t=>t.done);
+    m.innerHTML=`<h2>📜 Today's Trials</h2>
+      <p style="margin-bottom:12px">Fresh each day, made just for today. Nothing carries over and nothing is lost if you rest — tomorrow simply brings new ones.</p>
+      <div class="trow daily-card"><span class="t-ic">${dd?'✅':'📜'}</span>
+        <span class="t-body"><b>Trial of the Day: ${d.lbl.replace('📜 ','')}</b><small>${dailyGoalLine(d)}<br>${dd?'Cleared today — replay any time, just for fun.':'Always free — no life needed. First clear: +1 🎟 & 2 power-ups.'}</small></span>
+        <button class="btn ${dd?'alt':'grn'} sm" onclick="startDaily()">${dd?'Replay':'Play'}</button></div>
+      ${rows}
+      ${all?(T.chest?`<p style="color:var(--mint);margin:6px 0 12px">🎁 Chest opened — every trial done today. Lovely work. 🌿</p>`
+        :`<div class="btnrow" style="margin:6px 0 12px"><button class="btn plus" onclick="openTrialChest()">🎁 Open the trial chest</button></div>`)
+        :`<p style="font-size:12.5px;margin:6px 0 12px">Finish all three to open a bonus chest. ${T.swapped?'You\u2019ve used today\u2019s swap.':'You can swap one trial today if it doesn\u2019t suit how you feel.'}</p>`}
+      ${state.trialDays?`<p style="font-size:12px;opacity:.85;margin-bottom:12px">Days you've opened the chest: ${state.trialDays} — every one counts, no streak to keep.</p>`:''}
+      <div class="btnrow"><button class="btn alt sm" onclick="closeModal()">Close</button></div>`;
+  }else if(kind==='games'){
+    const M=refreshMinis();
+    const cards=MINI_ORDER.map(k=>{ const g=MINIS[k], best=M.best[k];
+      return `<button class="gamecard" onclick="openMini('${k}')"><span class="g-ic">${g.ic}</span>
+        <span><b>${g.name}</b><small>${g.how}</small>
+        <div class="g-gift">${M.done[k]?'✓ Today\u2019s gift collected':'🎁 Today\u2019s gift: '+REWARD_LABEL[g.rw]}${best!=null?' · Best: '+best:''}</div></span></button>`; }).join('');
+    m.innerHTML=`<h2>🎲 Quiet Games</h2>
+      <p style="margin-bottom:12px">Little side games for a softer moment. No lives, no timers, no way to lose.</p>
+      ${cards}
+      <div class="btnrow"><button class="btn alt sm" onclick="closeModal()">Close</button></div>`;
   }else if(kind==='stretch'){
     m.innerHTML=`<h2>🌿 A gentle check-in</h2>
       <p>You've been playing for a little while. This is your reminder that it's a good moment to change position, stretch, or rest your hands.<br><br>No rush — the path will be right here when you come back.</p>
@@ -2434,6 +2664,7 @@ async function spin(){
   spinning=true;
   if(free){ state.freeSpinDay=new Date().toDateString(); toast('🎁 Free daily wish!'); }
   else state.spins--;
+  trialEvent('wish',1);
   saveState(); refreshHUD(); refreshSpinBtn();
   $('#machine').classList.add('spinning'); $('#machine').classList.remove('jackpot');
   $('#slot-result').textContent='✨ The lantern glows… ✨';
@@ -2583,9 +2814,9 @@ const BREATH_PATTERNS=[
 ];
 function nextBreathIdx(){ const i=(state.breathIdx||0)%BREATH_PATTERNS.length;
   state.breathIdx=(i+1)%BREATH_PATTERNS.length; saveState(); return i; }
-let brT=null, brIv=null, brRound=0, brPat=null, brTimed=false, brEndAt=0;
+let brT=null, brIv=null, brRound=0, brPat=null, brTimed=false, brEndAt=0, brStart=0;
 function brOpen(title){
-  Snd.ensure(); clearTimeout(brT); clearInterval(brIv);
+  Snd.ensure(); clearTimeout(brT); clearInterval(brIv); brStart=Date.now();
   $('#breathe').classList.add('show');
   $('#br-title').textContent=title||'';
   $('#br-phase').textContent=''; $('#br-count').textContent='';
@@ -2624,7 +2855,9 @@ function brFinish(head,sub){
   buzz('LIGHT'); if(!state.muted) Snd.chime();
   brT=setTimeout(stopBreathe,1700);
 }
-function stopBreathe(){ clearTimeout(brT); clearInterval(brIv); $('#breathe').classList.remove('show'); }
+function stopBreathe(){ clearTimeout(brT); clearInterval(brIv); $('#breathe').classList.remove('show');
+  if(brStart&&Date.now()-brStart>=20000) trialEvent('breathe',1);   /* a real pause counts toward today's trials */
+  brStart=0; }
 /* meditate on the encouragement itself: the quote sits centre-stage for ~25s
    with slow prompts underneath — skippable at any moment */
 const MED_PROMPTS=['Read the words slowly, twice.','Notice your breath — no need to change it.','Where do these words land for you today?','Let them settle. Nothing to solve.'];
@@ -2664,6 +2897,303 @@ function startTiny(){
     lbl:'✨ Tiny Win',goal:{score:1000,moves:10}});
 }
 
+/* ---------- DAILY TRIALS (autogenerated each day, rest-friendly) ----------
+   Each calendar day seeds a fresh set of three small trials plus one "Trial of
+   the Day" level. Everything is generated on the device from the date, so it
+   works offline with nothing to download. Anti-FOMO by design: nothing carries
+   over, nothing expires into a penalty, and skipping a day costs nothing —
+   tomorrow simply brings new trials. One free swap per day for any trial that
+   doesn't suit how your body feels today.
+   Tuning: TRIAL_POOL needs [early, later] (later = World 5+), rewards are small
+   consumables only (see grantReward). */
+function dayKey(d){ d=d||new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+/* FNV-1a + a murmur3 finalizer, so neighboring dates get unrelated seeds */
+function hashStr(str){ let h=2166136261; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); }
+  h^=h>>>16; h=Math.imul(h,0x85ebca6b); h^=h>>>13; h=Math.imul(h,0xc2b2ae35); h^=h>>>16; return h>>>0; }
+function gemChip(t){ return `<span class="gchip">${gemSVG(t)}</span>`; }
+const TRIAL_POOL=[
+ {id:'clear',   ev:'clear',    n:[2,3],       ic:'🧩', txt:n=>`Clear ${n} levels (any kind)`},
+ {id:'battle',  ev:'battle',   n:[1,1],       ic:'⚔️', txt:()=>'Win a boss battle'},
+ {id:'special', ev:'special',  n:[3,5],       ic:'⚡', txt:n=>`Create ${n} special gems`},
+ {id:'chain',   ev:'chain',    n:[1,2],       ic:'🌊', txt:n=>n>1?`Set off ${n} cascades of 3 or more`:'Set off a cascade of 3 or more'},
+ {id:'score',   ev:'score',    n:[5000,9000], ic:'⭐', txt:n=>`Score ${n.toLocaleString()} points in total`},
+ {id:'gem',     ev:'gem',      n:[40,70],     ic:'💎', txt:(n,t)=>`Match ${n} ${gemChip(t)} gems`},
+ {id:'blocks',  ev:'blocks',   n:[8,14],      ic:'🧊', txt:n=>`Break ${n} ice or stone blocks`, gate:()=>furthestWorld()>=7},
+ {id:'mini',    ev:'minigame', n:[1,2],       ic:'🎲', txt:n=>n>1?`Finish ${n} Quiet Games`:'Finish a Quiet Game'},
+ {id:'breathe', ev:'breathe',  n:[1,1],       ic:'🫁', txt:()=>'Take a breathing break (20s or more)'},
+ {id:'zen',     ev:'zen',      n:[800,1500],  ic:'🪴', txt:n=>`Grow your Zen Garden by ${n.toLocaleString()}`},
+ {id:'tiny',    ev:'tiny',     n:[1,1],       ic:'✨', txt:()=>'Clear a Tiny Win'},
+ {id:'wish',    ev:'wish',     n:[1,1],       ic:'🏮', txt:()=>'Make a wish at the Lantern'},
+];
+const REWARD_LABEL={pw:'1 power-up',spin:'1 🎟 wish',life:'1 ❤️ life',all:'🔨🌀⏳ +1 each'};
+/* small consumables only — nothing hoardable, nothing pay-to-win */
+function grantReward(kind){
+  if(kind==='spin'){ state.spins+=1; return '+1 🎟 wish'; }
+  if(kind==='life'){ if(state.plus) return '+1 '+randomPw()+' 🕊️'; state.lives+=1; return '+1 ❤️'; }
+  if(kind==='all'){ grantAllPw(1); return '+1 🔨🌀⏳'; }
+  return '+1 '+randomPw();
+}
+function trialTier(){ return furthestWorld()>=5?1:0; }
+function makeTrial(t,pick){
+  const arg=t.id==='gem'?pick(5):null;
+  return {id:t.id, ev:t.id==='gem'?'gem'+arg:t.ev, arg, need:t.n[trialTier()], got:0, done:false,
+    rw:['pw','pw','spin','life'][pick(4)]};
+}
+function trialPool(){ return TRIAL_POOL.filter(t=>!t.gate||t.gate()); }
+function genTrials(day){
+  const rng=mulberry32(hashStr('trials:'+day)), pick=n=>Math.floor(rng()*n);
+  const pool=trialPool(), list=[];
+  while(list.length<3&&pool.length) list.push(makeTrial(pool.splice(pick(pool.length),1)[0],pick));
+  return list;
+}
+function refreshTrials(){
+  const day=dayKey();
+  if(!state.trials||state.trials.day!==day)
+    state.trials={day,list:genTrials(day),swapped:false,chest:false};
+  return state.trials;
+}
+function trialText(t){ const def=TRIAL_POOL.find(d=>d.id===t.id); return def?def.txt(t.need,t.arg):t.id; }
+function trialIcon(t){ const def=TRIAL_POOL.find(d=>d.id===t.id); return def?def.ic:'📜'; }
+/* the game reports what happened; matching trials tick up and pay out on completion */
+function trialEvent(ev,amt){
+  const T=refreshTrials();
+  for(const t of T.list){
+    if(t.done||t.ev!==ev) continue;
+    t.got=Math.min(t.need,t.got+(amt||1));
+    if(t.got>=t.need){
+      t.done=true; const g=grantReward(t.rw);
+      setTimeout(()=>toast('📜 Trial complete! '+g),450);
+      Snd.chime(); saveState(); refreshHUD();
+    }
+  }
+}
+function trialsDoneCount(){ return refreshTrials().list.filter(t=>t.done).length; }
+function swapTrial(i){
+  const T=refreshTrials(), t=T.list[i];
+  if(!t||t.done||T.swapped) return;
+  const rng=mulberry32(hashStr('swap:'+T.day+':'+i)), pick=n=>Math.floor(rng()*n);
+  const pool=trialPool().filter(d=>!T.list.some(x=>x.id===d.id));
+  if(!pool.length) return toast('Nothing else to swap to today');
+  T.list[i]=makeTrial(pool[pick(pool.length)],pick); T.swapped=true;
+  Snd.swap(); saveState(); openModal('trials'); refreshHUD();
+}
+function openTrialChest(){
+  const T=refreshTrials();
+  if(T.chest||T.list.some(t=>!t.done)) return;
+  T.chest=true; state.trialDays=(state.trialDays||0)+1;
+  grantAllPw(1); state.spins+=1;
+  Snd.jackpot(); confetti(70); buzz('MEDIUM');
+  saveState(); refreshHUD(); openModal('trials');
+  toast('🎁 Trial chest! +1 of every power-up & +1 🎟 wish');
+}
+
+/* ---------- TRIAL OF THE DAY (a seeded daily level) ----------
+   One level per date, generated from the same seed on every visit that day,
+   themed from a world you've already reached. Always free: no life to start,
+   no life lost. The first clear each day pays a small bonus; replays are just
+   for fun. Goal sizes sit inside the validator's comfort band
+   (node level-validator.js daily 40). */
+const DAILY_ADJ=['Quiet','Golden','Gentle','Misty','Silver','Blooming','Drifting','Glowing','Hushed','Sunlit','Velvet','Dreaming'];
+const DAILY_NOUN=['Meadow','Harbor','Grove','Terrace','Lagoon','Orchard','Canopy','Hollow','Garden','Shore','Brook','Glade'];
+const DAILY_FACES=['🦉','🦊','🐢','🦋','🐋','🦌','🐙','🦚','🦔','🐝'];
+function genDailyLevel(day){
+  day=day||dayKey();
+  const rng=mulberry32(hashStr('daily:'+day)), pick=n=>Math.floor(rng()*n);
+  const fw=furthestWorld(), w=1+pick(fw);
+  const lbl='📜 The '+DAILY_ADJ[pick(DAILY_ADJ.length)]+' '+DAILY_NOUN[pick(DAILY_NOUN.length)];
+  const base={id:'daily:'+day,daily:true,w,types:5,lbl,next:[]};
+  const kinds=['score','gather','gather','battle'].concat(fw>=7?['obstacle']:[]);
+  const k=kinds[pick(kinds.length)];
+  if(k==='battle') return Object.assign(base,{type:'battle',types:6,face:DAILY_FACES[pick(DAILY_FACES.length)],
+    goal:{hp:2600+100*pick(5),time:84}});
+  if(k==='obstacle'){ const easy=VALIDATED_SEEDS.filter(s=>s.wr>=75), sd=easy[pick(easy.length)];
+    return Object.assign(base,{type:'challenge',obstacle:true,seed:sd.seed,diff:sd.diff,goal:{obstacles:true,moves:sd.moves+4}}); }
+  if(k==='gather'){ const cols=[0,1,2,3,4], n=2+pick(2), g=[];
+    for(let i=0;i<n;i++) g.push([cols.splice(pick(cols.length),1)[0], n===2?32:30]);
+    return Object.assign(base,{type:'challenge',gather:true,goal:{gather:g,moves:22}}); }
+  const moves=18+pick(4);
+  return Object.assign(base,{type:'challenge',goal:{score:Math.round(moves*125/50)*50,moves}});
+}
+function dailyCleared(){ return state.dailyClearDay===dayKey(); }
+/* cached per day so the level never changes under you mid-day */
+function todaysDaily(){ const id='daily:'+dayKey();
+  if(!state.dailyLv||state.dailyLv.id!==id){ state.dailyLv=genDailyLevel(); saveState(); }
+  return state.dailyLv; }
+function startDaily(){ Snd.ensure(); closeModal(); startLevel(todaysDaily()); }
+function dailyGoalLine(n){
+  if(n.type==='battle') return `${n.face} Boss battle — ${n.goal.hp.toLocaleString()} HP`;
+  if(n.goal.obstacles) return '🧊 Break every ice & stone block';
+  if(n.goal.gather) return 'Gather '+n.goal.gather.map(([t,c])=>`${gemChip(t)}${c}`).join(' ')+` in ${n.goal.moves} moves`;
+  return `⭐ Score ${n.goal.score.toLocaleString()} in ${n.goal.moves} moves`;
+}
+
+/* ---------- QUIET GAMES (minigames) ----------
+   Small side games for when the match-3 board is too much. No lives, no
+   timers, no fail state — a wrong tap just gently shows the way again. The
+   first finish of each game per day pays a small reward; after that they're
+   simply there to enjoy. Tap-only by nature, so they suit sore hands. */
+const MINIS={
+  memory:{name:'Memory Garden', ic:'🌷', rw:'pw',
+    how:'Turn over two tiles at a time to find the matching pairs. Take as many tries as you like.'},
+  echo:{name:'Firefly Echo', ic:'🎶', rw:'spin',
+    how:'Watch the lanterns glow, then tap them back in the same order. Missed one? The fireflies just show you again.'},
+  lights:{name:'Lantern Lights', ic:'🏮', rw:'pw',
+    how:'Tapping a lantern flips it and its neighbors. Light every lantern. Stuck? Ask for a hint — there is no wrong way.'},
+};
+const MINI_ORDER=['memory','echo','lights'];
+function refreshMinis(){
+  if(!state.minis) state.minis={day:null,done:{},best:{}};
+  const day=dayKey();
+  if(state.minis.day!==day){ state.minis.day=day; state.minis.done={}; }
+  return state.minis;
+}
+let MG=null;   /* the running minigame */
+function openMini(k){
+  Snd.ensure(); closeModal(); refreshMinis();
+  if(MG) MG.dead=true; clearTimeout(echoT);
+  const m=MINIS[k]; MG={k,busy:false};
+  show('#mini-screen'); Snd.startMusic('calm');
+  $('#mini-title').textContent=m.ic+' '+m.name;
+  $('#mini-how').textContent=m.how;
+  $('#mini-status').textContent=''; $('#mini-actions').innerHTML='';
+  if(k==='memory') memoryStart(); else if(k==='echo') echoStart(); else lightsStart();
+}
+function exitMini(){ if(MG) MG.dead=true; MG=null; clearTimeout(echoT); show('#map-screen'); buildMap(); refreshHUD(); }
+/* a game finished: reward once per day, then a friendly card */
+function miniFinished(k,scoreLine,best){
+  const M=refreshMinis(), first=!M.done[k];
+  let gain='';
+  if(first){ M.done[k]=true; gain=grantReward(MINIS[k].rw); }
+  if(best!=null){ const lowerBetter=k!=='echo', prev=M.best[k];
+    if(prev==null||(lowerBetter?best<prev:best>prev)) M.best[k]=best;
+    scoreLine+=` <small>Personal best: ${M.best[k]}${lowerBetter?(k==='memory'?' tries':' taps'):' lanterns'}.</small>`; }
+  trialEvent('minigame',1);
+  saveState(); refreshHUD(); Snd.fanfare(); confetti(40); buzz('LIGHT');
+  const m=MINIS[k];
+  $('#modal-veil').classList.add('show');
+  $('#modal').innerHTML=`<h2>${m.ic} Lovely.</h2>
+    <p>${scoreLine}${first?`<br><b style="color:var(--mint)">Today's gift: ${gain}</b>`:'<br><small>Today’s gift is already yours — play on just for the calm of it.</small>'}</p>
+    <div class="btnrow">
+    <button class="btn grn" onclick="openMini('${k}')">↻ Play again</button>
+    <button class="btn alt sm" onclick="openModal('games')">🎲 Other Quiet Games</button>
+    <button class="btn alt sm" onclick="closeModal();exitMini()">🗺 Back to map</button></div>`;
+}
+
+/* --- Memory Garden: 4×4 tiles, 8 pairs --- */
+const MEM_FACES=['🌸','🌿','🍄','🐚','🌙','⭐','🪷','🦋','🍃','🌻','🐞','🫐'];
+function memoryStart(){
+  const faces=[...MEM_FACES].sort(()=>Math.random()-.5).slice(0,8);
+  const deck=[...faces,...faces].sort(()=>Math.random()-.5);
+  Object.assign(MG,{deck,open:[],found:0,tries:0});
+  const area=$('#mini-area'); area.innerHTML='';
+  const grid=document.createElement('div'); grid.className='mem-grid';
+  deck.forEach((f,i)=>{ const b=document.createElement('button'); b.className='mem-tile';
+    b.innerHTML=`<span class="mem-face">${f}</span>`; b.onclick=()=>memoryTap(i,b); grid.appendChild(b); });
+  area.appendChild(grid); memoryStatus();
+}
+function memoryStatus(){ $('#mini-status').textContent=`Pairs found: ${MG.found} / 8 · Tries: ${MG.tries}`; }
+function memoryTap(i,b){
+  if(!MG||MG.busy||b.classList.contains('up')) return;
+  b.classList.add('up'); Snd.tone(523+MG.open.length*131,.12,'sine',.12); MG.open.push([i,b]);
+  if(MG.open.length<2) return;
+  MG.tries++; const [[i1,b1],[i2,b2]]=MG.open; MG.open=[];
+  if(MG.deck[i1]===MG.deck[i2]){
+    b1.classList.add('found'); b2.classList.add('found'); MG.found++; Snd.chime(); memoryStatus();
+    if(MG.found===8) setTimeout(()=>MG&&miniFinished('memory',`All 8 pairs in ${MG.tries} tries.`,MG.tries),600);
+  }else{
+    MG.busy=true; memoryStatus();
+    setTimeout(()=>{ if(!MG) return; b1.classList.remove('up'); b2.classList.remove('up'); MG.busy=false; },pace(900));
+  }
+}
+
+/* --- Firefly Echo: repeat a growing sequence; five lanterns to finish --- */
+const ECHO_PADS=[['#FF9AA8',392],['#FFE08A',440],['#7AFFE0',523],['#9CDCFF',587]];
+const ECHO_GOAL=5;
+let echoT=null;
+function echoStart(){
+  Object.assign(MG,{seq:[],pos:0,listening:false,round:0});
+  const area=$('#mini-area'); area.innerHTML='';
+  const grid=document.createElement('div'); grid.className='echo-grid';
+  ECHO_PADS.forEach(([col],i)=>{ const b=document.createElement('button'); b.className='echo-pad';
+    b.style.setProperty('--pad',col); b.innerHTML=['🌸','🌙','🍃','💧'][i]; b.onclick=()=>echoTap(i); grid.appendChild(b); });
+  area.appendChild(grid);
+  $('#mini-actions').innerHTML=`<button class="btn alt sm" onclick="echoReplay()">👀 Show me again</button>`;
+  echoNext();
+}
+function echoGlow(i){ const b=document.querySelectorAll('.echo-pad')[i]; if(!b) return;
+  b.classList.add('glow'); Snd.tone(ECHO_PADS[i][1],.45,'sine',.2); buzz('LIGHT');
+  setTimeout(()=>b.classList.remove('glow'),pace(420)); }
+function echoPlay(){
+  if(!MG||MG.k!=='echo') return;
+  MG.listening=false; MG.pos=0; clearTimeout(echoT);
+  $('#mini-status').textContent=`Watch the lanterns… (${MG.seq.length} of ${ECHO_GOAL})`;
+  let j=0; const step=()=>{ if(!MG||MG.dead) return;
+    if(j<MG.seq.length){ echoGlow(MG.seq[j++]); echoT=setTimeout(step,pace(750)); }
+    else{ MG.listening=true; $('#mini-status').textContent=`Your turn — tap them back (${MG.seq.length} of ${ECHO_GOAL})`; } };
+  echoT=setTimeout(step,pace(700));
+}
+function echoNext(){ MG.seq.push(Math.floor(Math.random()*ECHO_PADS.length)); echoPlay(); }
+function echoReplay(){ if(MG&&MG.k==='echo') echoPlay(); }
+function echoTap(i){
+  if(!MG||!MG.listening) return;
+  echoGlow(i);
+  if(i!==MG.seq[MG.pos]){ MG.listening=false; $('#mini-status').textContent='No worries — here it is again 🌿'; echoT=setTimeout(echoPlay,900); return; }
+  MG.pos++;
+  if(MG.pos<MG.seq.length) return;
+  MG.listening=false;
+  if(MG.seq.length>=ECHO_GOAL){
+    const len=MG.seq.length;
+    $('#mini-status').textContent='Beautiful — keep going for fun, or rest here.';
+    $('#mini-actions').innerHTML=`<button class="btn grn sm" onclick="echoMore()">🎶 One more lantern</button><button class="btn alt sm" onclick="echoDone()">🌿 That's enough</button>`;
+    MG.len=len; if(!MG.finishedOnce){ MG.finishedOnce=true; Snd.chime(); }
+    return;
+  }
+  Snd.chime(); echoT=setTimeout(echoNext,700);
+}
+function echoMore(){ $('#mini-actions').innerHTML=`<button class="btn alt sm" onclick="echoReplay()">👀 Show me again</button><button class="btn alt sm" onclick="echoDone()">🌿 That's enough</button>`; echoNext(); }
+function echoDone(){ if(!MG) return; const len=MG.len||MG.seq.length-1; miniFinished('echo',`You echoed ${len} lanterns in a row.`,len); }
+
+/* --- Lantern Lights: "lights out" in reverse, always solvable ---
+   The puzzle is built by pressing random lanterns on a fully lit board. Presses
+   commute and undo themselves, so (generator presses XOR player presses) is
+   always an exact solution — which is what the hint reveals. */
+const LL=4;
+function lightsStart(){
+  const lit=new Array(LL*LL).fill(true), gen=new Set();
+  const n=4+Math.floor(Math.random()*3);
+  while(gen.size<n) gen.add(Math.floor(Math.random()*LL*LL));
+  for(const k of gen) lightsFlip(lit,k);
+  Object.assign(MG,{lit,sol:gen,taps:0});
+  const area=$('#mini-area'); area.innerHTML='';
+  const grid=document.createElement('div'); grid.className='ll-grid';
+  for(let k=0;k<LL*LL;k++){ const b=document.createElement('button'); b.className='ll-cell';
+    b.innerHTML='<span>🏮</span>'; b.onclick=()=>lightsTap(k); grid.appendChild(b); }
+  area.appendChild(grid);
+  $('#mini-actions').innerHTML=`<button class="btn alt sm" onclick="lightsHint()">💡 Hint</button><button class="btn alt sm" onclick="openMini('lights')">↻ New puzzle</button>`;
+  lightsDraw();
+}
+function lightsFlip(lit,k){ const r=Math.floor(k/LL), c=k%LL;
+  for(const [dr,dc] of [[0,0],[1,0],[-1,0],[0,1],[0,-1]]){ const rr=r+dr, cc=c+dc;
+    if(rr>=0&&rr<LL&&cc>=0&&cc<LL) lit[rr*LL+cc]=!lit[rr*LL+cc]; } }
+function lightsDraw(){
+  const cells=document.querySelectorAll('.ll-cell');
+  cells.forEach((b,k)=>{ b.classList.toggle('on',MG.lit[k]); b.classList.remove('hint'); });
+  $('#mini-status').textContent=`Lanterns lit: ${MG.lit.filter(Boolean).length} / ${LL*LL} · Taps: ${MG.taps}`;
+}
+function lightsTap(k){
+  if(!MG||MG.k!=='lights'||MG.busy) return;
+  lightsFlip(MG.lit,k); MG.taps++;
+  if(MG.sol.has(k)) MG.sol.delete(k); else MG.sol.add(k);
+  Snd.tone(440+(k%LL)*55,.1,'triangle',.12); lightsDraw();
+  if(MG.lit.every(Boolean)){ MG.busy=true; setTimeout(()=>MG&&miniFinished('lights',`Every lantern glows — ${MG.taps} taps.`,MG.taps),500); }
+}
+function lightsHint(){
+  if(!MG||MG.k!=='lights'||!MG.sol.size) return;
+  const k=[...MG.sol][0], b=document.querySelectorAll('.ll-cell')[k];
+  if(b){ b.classList.add('hint'); Snd.chime(); }
+}
+
 /* ---------- PAUSE (freezes battle timers; the path waits) ---------- */
 let pausedBattle=false;
 function pauseGame(){
@@ -2677,7 +3207,7 @@ function resumeGame(){
   pausedBattle=false;
 }
 function exitLevel(){
-  if(G.level&&G.level.zen){ state.zenTotal+=G.score; }   /* the garden remembers */
+  if(G.level&&G.level.zen&&!G.over){ state.zenTotal+=G.score; trialEvent('zen',G.score); }   /* the garden remembers */
   clearInterval(G.timer); G.over=true; pausedBattle=false;
   saveState();
   $('#battle-flash').classList.remove('on');
@@ -2685,7 +3215,7 @@ function exitLevel(){
 }
 /* leave a level straight to the title screen (from the pause menu) */
 function exitToTitle(){
-  if(G.level&&G.level.zen){ state.zenTotal+=G.score; }   /* the garden remembers */
+  if(G.level&&G.level.zen&&!G.over){ state.zenTotal+=G.score; trialEvent('zen',G.score); }   /* the garden remembers */
   clearInterval(G.timer); G.over=true; pausedBattle=false;
   saveState();
   $('#battle-flash').classList.remove('on');
@@ -2711,6 +3241,10 @@ $('#btn-pause').onclick=()=>{ pauseGame(); };
 $('#btn-zen').onclick=()=>{ startZen(); };
 $('#btn-tiny').onclick=()=>{ startTiny(); };
 $('#btn-calmcorner').onclick=()=>{ Snd.ensure(); openModal('calm'); };
+$('#btn-games').onclick=()=>{ Snd.ensure(); openModal('games'); };
+$('#trial-bar').onclick=()=>{ Snd.ensure(); openModal('trials'); };
+$('#btn-mini-back').onclick=()=>{ exitMini(); };
+$('#btn-mini-list').onclick=()=>{ openModal('games'); };
 $('#btn-more-title').onclick=()=>{ openModal('more'); };
 $('#br-exit').onclick=()=>{ stopBreathe(); };
 /* auto-pause battles when the app loses focus (calls, naps, life) */
