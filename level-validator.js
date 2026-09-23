@@ -9,6 +9,9 @@
                                            candidate seeds, simulate each,
                                            print the VALIDATED_SEEDS array
                                            to embed in soothe-quest.html
+     node level-validator.js daily [runs]  Trial of the Day generator: sample
+                                           upcoming dates at several progress
+                                           points and check each daily level
 
    The validator loads the REAL engine out of soothe-quest.html (no
    duplicated rules), stubs DOM/audio, and simulates playthroughs with
@@ -19,8 +22,8 @@
 const fs=require('fs');
 const path=require('path');
 
-const MODE=(process.argv[2]==='seeds')?'seeds':'sweep';
-const RUNS=parseInt((MODE==='seeds'?process.argv[3]:process.argv[2])||(MODE==='seeds'?'20':'40'),10);
+const MODE=(process.argv[2]==='seeds'||process.argv[2]==='daily')?process.argv[2]:'sweep';
+const RUNS=parseInt((MODE!=='sweep'?process.argv[3]:process.argv[2])||(MODE==='seeds'?'20':'40'),10);
 const MOVE_SECONDS=2.0;
 const BAND=[0.60,0.90];
 const SEED_BAND=[0.55,0.90];
@@ -49,7 +52,7 @@ toast=()=>{}; confetti=()=>{}; comboText=()=>{}; shakeApp=()=>{};
 floatScore=()=>{}; burst=()=>{}; scheduleHint=()=>{}; hitEnemy=()=>{};
 for(const f of ['ringFX','blastFX','flashCell','shockwave','sparkle','glowCell','rumble','haptic','tutStep'])
   if(typeof globalThis[f]==='function'||typeof eval('typeof '+f)==='string'){ try{ eval(f+'=()=>{}'); }catch(e){} }
-openModal=()=>{}; refreshHUD=()=>{}; buildMap=()=>{};
+openModal=()=>{}; refreshHUD=()=>{}; buildMap=()=>{}; trialEvent=()=>{}; saveState=()=>{};
 let lastWin=null;
 const realEnd=endLevel;
 endLevel=(w)=>{ lastWin=w; realEnd(w); };
@@ -93,6 +96,10 @@ function candidates(smart){
         if(G.level.goal&&G.level.goal.obstacles){
           for(const k of runs.cells) v+=4*nearObst(Math.floor(k/SIZE),k%SIZE);
         }
+        if(G.gather){   /* gather goals: prefer colors that are still needed */
+          for(const k of runs.cells){ const t=G.grid[Math.floor(k/SIZE)][k%SIZE];
+            if(G.gather.some(g=>g.t===t&&g.got<g.need)) v+=2; }
+        }
         if(smart){
           for(const sp of runs.spawns) v+=(sp.kind==='rain'?14:sp.kind==='bomb'?9:7);
           for(const k of runs.cells){ const rr=Math.floor(k/SIZE),cc=k%SIZE;
@@ -128,6 +135,12 @@ async function playOne(level,smart){
   }
   return {win:lastWin===true, score:G.score};
 }
+function goalStr(lv){
+  return lv.type==='battle'?(lv.goal.hp+'hp/'+lv.goal.time+'s')
+    :lv.goal.obstacles?('blocks/'+lv.goal.moves+'mv')
+    :lv.goal.gather?(lv.goal.gather.map(g=>g[1]).join('+')+'g/'+lv.goal.moves+'mv')
+    :(lv.goal.score+'/'+lv.goal.moves+'mv');
+}
 
 async function validate(level,smart){
   let wins=0; const scores=[];
@@ -162,12 +175,29 @@ if('${MODE}'==='seeds'){
   console.log('');
   console.log('kept '+kept.length+' seeds. Paste into soothe-quest.html:');
   console.log('const VALIDATED_SEEDS='+JSON.stringify(kept)+';');
+}else if('${MODE}'==='daily'){
+  /* ============ TRIAL OF THE DAY ============
+     sample 12 dates at three progress points (World 1 / 6 / 11) */
+  console.log('TRIAL OF THE DAY — '+${RUNS}+' smart-bot runs per generated level');
+  console.log(pad('date',12)+pad('fw',4)+pad('level',26)+pad('type',10)+pad('goal',18)+pad('smart',8)+'verdict');
+  const unlockTo=w=>{ state.unlocked=new Set(NODES.filter(n=>n.w<=w).map(n=>n.id)); };
+  for(const fw of [1,6,11]){
+    unlockTo(fw);
+    for(let i=0;i<12;i++){
+      const d=new Date(2026,0,1+i*5);
+      const lv=genDailyLevel(dayKey(d));
+      const sm=await validate(lv,true);
+      const ok=sm.wr>=${BAND[0]};
+      console.log(pad(dayKey(d),12)+pad(fw,4)+pad(lv.lbl.replace('📜 ',''),26)+pad(lv.type+(lv.gather?'/g':lv.obstacle?'/o':''),10)+pad(goalStr(lv),18)+pad(Math.round(sm.wr*100)+'%',8)+(ok?'PASS':'TOO HARD'));
+    }
+  }
 }else{
   /* ============ REGRESSION SWEEP ============ */
   const ALL=process.argv.includes('all');
   const ids=ALL?NODES.filter(n=>n.type==='challenge'||n.type==='battle').map(n=>n.id)
     :['n1','n4','n6','n12','n16','n17','n23','n26','n31','n35','n40','n44','n49','n53',
-      /* worlds 7–9 */ 'n54','n55','n57','n60','n61','n63','n65','n66','n68','n69','n72','n74','n76','n77','n78','n79','n81','n84','n85','n86','n88','n89'];
+      /* worlds 7–9 */ 'n54','n55','n57','n60','n61','n63','n65','n66','n68','n69','n72','n74','n76','n77','n78','n79','n81','n84','n85','n86','n88','n89',
+      /* worlds 10–11 */ 'n90','n91','n93','n94a','n95','n96','n97','n98','n100','n101','n102','n103','n105','n106a','n107','n108','n109','n110','n112','n113'];
   const only=(process.env.IDS||'').split(',').filter(Boolean);   /* IDS=n54,n55 node level-validator.js 20 */
   const sample=(only.length?only:ids).map(id=>nodeById(id));
   if(!only.length){
@@ -183,8 +213,7 @@ if('${MODE}'==='seeds'){
   for(const lv of sample){
     const g=process.env.SMART_ONLY?{wr:0}:await validate(lv,false);   /* SMART_ONLY=1 halves runtime */
     const s=await validate(lv,true);
-    const goal=lv.type==='battle'?(lv.goal.hp+'hp/'+lv.goal.time+'s')
-      :(lv.goal.obstacles?('blocks/'+lv.goal.moves+'mv'):(lv.goal.score+'/'+lv.goal.moves+'mv'));
+    const goal=goalStr(lv);
     let verdict='PASS';
     if(s.wr<${BAND[0]}) verdict='TOO HARD';
     else if(s.wr>${BAND[1]}&&g.wr>${BAND[1]}) verdict='very easy (fine for early game)';
@@ -193,6 +222,7 @@ if('${MODE}'==='seeds'){
   console.log('');
   console.log('done.');
 }
+process.exit(0);   /* the game's session timers would otherwise keep node alive */
 })().catch(e=>{console.error(e);process.exit(1)});
 `;
 eval(js+harness);

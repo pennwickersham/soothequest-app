@@ -339,6 +339,59 @@ now** — the panel detects Android UAs and shows "coming soon" instead of a
 dead end. When the Play Store version ships, update that string (search
 for `droid` in the modal) and ideally deep-link both stores.
 
+### 16. Gather levels (`goal.gather`, `gatherChips()`, `gatherDone()`)
+A soothing goal type: collect N gems of each shown color in M moves, e.g.
+`goal:{gather:[[0,34],[2,34]],moves:22}` (color index, count). Counters live in
+`G.gather` (set up in `buildBoard()`), tick in `resolve()`, and render as live
+gem icons (current skin) in the goal bar. First appears at Petalfall Terraces
+with a one-time coach-mark (`tutStep('gather')`). Tuned with the validator,
+whose smart bot now prefers still-needed colors.
+
+### 17. Worlds 10–11 (Petalfall Terraces, Windchime Heights)
+26 nodes (`n90`–`n113`) above the Star Weaver, which now branches to both the
+Rift and `n90`. The whole map was shifted down 2400px (node `y`, zone tops,
+world tags, decor via `translate(0 2400)`), so the sky worlds sit at 0–2400.
+Existing saves that cleared `n89` get `n90` unlocked in `loadState()`. All
+campaign levels in these worlds sweep at a 60–80% smart-bot win rate.
+
+### 18. Today's Trials (`refreshTrials()`, `trialEvent(ev,n)`, `openModal('trials')`)
+Three tasks a day, generated from the date string (`hashStr` → `mulberry32`),
+drawn from `TRIAL_POOL` (clear levels, create specials, match a color, break
+blocks, finish a Quiet Game, take a breathing break, grow the Zen Garden, make
+a wish…). Needs step up from World 5 (`trialTier()`). The game reports events
+through `trialEvent()` from `resolve()`, `endLevel()`, `spin()`,
+`stopBreathe()`, `exitLevel()` and `miniFinished()`; a finished task pays a
+small consumable at once (`grantReward()`), and finishing all three opens a
+bonus chest. One free swap per day. Anti-FOMO: nothing carries over, and there
+is no streak — `trialDays` is a lifetime count that never resets.
+- *Server time:* like the other daily systems, `dayKey()` should come from a
+  trusted clock once one exists.
+
+### 19. Trial of the Day (`genDailyLevel()`, `todaysDaily()`, `startDaily()`)
+One seeded level per date (score, gather, battle, or — from World 7 — an
+easy validated obstacle seed), themed from a world the player has reached.
+Cached in `state.dailyLv` so it never changes mid-day. Always free (no life
+to start or lose). The first clear each day pays +1 wish and 2 power-ups;
+replays pay nothing (so it can't be farmed for wishes). Check generator
+changes with `node level-validator.js daily 30`.
+
+### 20. Quiet Games (`openMini(k)`, `#mini-screen`)
+Minigames for when the board is too much, all tap-only with no lives, no
+timers, and no fail state:
+- **Memory Garden** — 4×4 pairs; mismatches just turn back over.
+- **Firefly Echo** — repeat a growing sequence of glowing, tone-matched
+  lanterns; a wrong tap replays the sequence. Finishes at 5, can continue.
+- **Lantern Lights** — lights-out, built by pressing random cells on a lit
+  board, so it's always solvable; the hint shows a cell from (generator
+  presses XOR player presses), which is an exact solution.
+The first finish of each game per day pays a gift (`MINIS[k].rw`); personal
+bests are kept in `state.minis.best`.
+
+### Map layout fix
+`#map-scroll` had `margin-top:-66px`, which slid the map over the sanctuary
+row so Zen Garden / Tiny Win / Calm Corner couldn't be tapped. It now sits
+below the header.
+
 ### Design guardrails for future content (please keep)
 - **Anti-FOMO seasonal events only:** returning yearly content, no expiring
   rewards, no limited-time pressure. "Nothing punishes you for resting" is
@@ -358,6 +411,9 @@ zenTotal                       // Zen Garden lifetime growth (sync this!)
 ambient                        // session soundscape choice
 a11y{ bigGems, shapes, calm, tapOnly }       // accessibility toggles
 tut{}                          // tutorial coach-marks already shown
+trials{ day, list[], swapped, chest }  trialDays   // Today's Trials
+dailyClearDay  dailyLv         // Trial of the Day (bonus-once + cached level)
+minis{ day, done{}, best{} }   // Quiet Games daily gift + personal bests
 ```
 Remember the existing Sets (`completed`, `unlocked`, `ownedSkins`) and objects
 (`stars`, `tut`) still need custom serialization — Sets don't `JSON.stringify`
@@ -389,6 +445,9 @@ directly.
 Any change to matching rules, specials, scoring, or level goals →
 `node level-validator.js 50`. It loads the engine straight out of the HTML
 (never duplicate rules into the bot — we caught a divergence bug doing that).
+
+Trial of the Day generator changes → `node level-validator.js daily 30`
+(samples dates at World 1 / 6 / 11 progress).
 
 New obstacle layouts → `node level-validator.js seeds 20`, paste the printed
 `VALIDATED_SEEDS` array into the HTML. Only in-band (55-90%) seeds ship.
