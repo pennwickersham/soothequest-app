@@ -45,7 +45,8 @@ this order — search for the `/* ---------- SECTION ---------- */` banners:
 7. **WELLBEING** — `gentleStreak()`/`markPlayDay()` (rest-friendly streak),
    `boostEligible()`/`retryLevel()` (adaptive gentle boost), `checkSession()`
    (stretch reminder), daily-goal helpers, `applyA11y()` (accessibility).
-8. **LEVELS** — `NODES` array (54 campaign levels, 6 worlds, branch paths) +
+8. **LEVELS** — `NODES` array (194 map nodes — 146 playable levels plus Power
+   Blooms — across 16 worlds, branch paths) +
    `genRiftLevel()` (procedural endless mode) + `genObstacleLayout(seed,diff)`
    (deterministic layouts via mulberry32) + `VALIDATED_SEEDS` (bot-approved
    layout seeds).
@@ -386,6 +387,17 @@ timers, and no fail state:
   presses XOR player presses), which is an exact solution.
 The first finish of each game per day pays a gift (`MINIS[k].rw`); personal
 bests are kept in `state.minis.best`.
+
+### 21. Worlds 12–16 (Honeybee Hollows → Cloudsong Sanctuary)
+Worlds 12–13 (`n114`–`n138`) and 14–16 (`n139`–`n177`: Dawnmist Pinewood,
+Lotus Springs, Cloudsong Sanctuary) follow the worlds 10–11 pattern: each
+batch shifts the whole map down (node `y`, zone tops, world tags, decor via
+`translate(0 …)`) so the newest worlds sit at the top. Saves that cleared the
+previous finale get the next world opened in `loadState()` (`n113`→`n114`,
+`n138`→`n139`). Every campaign level is free to play — Soothe Plus only adds
+comfort perks, it never locks levels. New levels are swept at n=300 and sit at
+a 60–80% smart-bot win rate; obstacle levels reuse seeds from
+`VALIDATED_SEEDS` with a few extra moves.
 
 ### Map layout fix
 `#map-scroll` had `margin-top:-66px`, which slid the map over the sanctuary

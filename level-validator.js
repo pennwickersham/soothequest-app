@@ -177,11 +177,11 @@ if('${MODE}'==='seeds'){
   console.log('const VALIDATED_SEEDS='+JSON.stringify(kept)+';');
 }else if('${MODE}'==='daily'){
   /* ============ TRIAL OF THE DAY ============
-     sample 12 dates at three progress points (World 1 / 6 / 11) */
+     sample 12 dates at four progress points (World 1 / 6 / 11 / 16) */
   console.log('TRIAL OF THE DAY — '+${RUNS}+' smart-bot runs per generated level');
   console.log(pad('date',12)+pad('fw',4)+pad('level',26)+pad('type',10)+pad('goal',18)+pad('smart',8)+'verdict');
   const unlockTo=w=>{ state.unlocked=new Set(NODES.filter(n=>n.w<=w).map(n=>n.id)); };
-  for(const fw of [1,6,11]){
+  for(const fw of [1,6,11,16]){
     unlockTo(fw);
     for(let i=0;i<12;i++){
       const d=new Date(2026,0,1+i*5);
@@ -197,7 +197,10 @@ if('${MODE}'==='seeds'){
   const ids=ALL?NODES.filter(n=>n.type==='challenge'||n.type==='battle').map(n=>n.id)
     :['n1','n4','n6','n12','n16','n17','n23','n26','n31','n35','n40','n44','n49','n53',
       /* worlds 7–9 */ 'n54','n55','n57','n60','n61','n63','n65','n66','n68','n69','n72','n74','n76','n77','n78','n79','n81','n84','n85','n86','n88','n89',
-      /* worlds 10–11 */ 'n90','n91','n93','n94a','n95','n96','n97','n98','n100','n101','n102','n103','n105','n106a','n107','n108','n109','n110','n112','n113'];
+      /* worlds 10–11 */ 'n90','n91','n93','n94a','n95','n96','n97','n98','n100','n101','n102','n103','n105','n106a','n107','n108','n109','n110','n112','n113',
+      /* worlds 12–13 */ 'n114','n115','n117','n118a','n125','n126','n127','n129','n133','n135','n138',
+      /* worlds 14–16 */ 'n139','n140','n142','n143a','n145','n147','n148','n151','n152','n153','n156a','n158','n160','n161','n164',
+                         'n165','n166','n168','n169a','n171','n172','n173','n174','n176','n177'];
   const only=(process.env.IDS||'').split(',').filter(Boolean);   /* IDS=n54,n55 node level-validator.js 20 */
   const sample=(only.length?only:ids).map(id=>nodeById(id));
   if(!only.length){

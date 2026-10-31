@@ -25,8 +25,8 @@ These are product rules, not features to be optimized away later:
 
 ## What's in the game
 
-- **Campaign** — 11 worlds on one scrolling map, from Willow Meadow up to
-  Windchime Heights, with score, boss-battle, ice-and-stone, and gather goals
+- **Campaign** — 16 worlds on one scrolling map, from Willow Meadow up to
+  Cloudsong Sanctuary, with score, boss-battle, ice-and-stone, and gather goals
   (collect gems of the colors shown). The Endless Rift opens after the Star
   Weaver.
 - **Today's Trials** — three small tasks generated on the device from the date,
