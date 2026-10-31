@@ -399,6 +399,15 @@ comfort perks, it never locks levels. New levels are swept at n=300 and sit at
 a 60–80% smart-bot win rate; obstacle levels reuse seeds from
 `VALIDATED_SEEDS` with a few extra moves.
 
+### 22. Store review prompt (`maybeAskForReview()`)
+Calls the OS review sheet through **@capacitor-community/in-app-review**
+(Google Play In-App Review / `SKStoreReviewController`). No custom dialog, no
+reward, nothing on the web. It runs only from the win card's Continue button,
+on the map with no modal, coach-mark or breathing overlay open, after at least
+5 cleared levels, never on the first launch (`state.launches`), and at most once
+every 7 days (`state.reviewAskedAt`, saved with the rest of the state). The OS
+decides whether it actually appears; the attempt is recorded either way.
+
 ### Map layout fix
 `#map-scroll` had `margin-top:-66px`, which slid the map over the sanctuary
 row so Zen Garden / Tiny Win / Calm Corner couldn't be tapped. It now sits
@@ -425,6 +434,7 @@ a11y{ bigGems, shapes, calm, tapOnly }       // accessibility toggles
 tut{}                          // tutorial coach-marks already shown
 trials{ day, list[], swapped, chest }  trialDays   // Today's Trials
 dailyClearDay  dailyLv         // Trial of the Day (bonus-once + cached level)
+launches  reviewAskedAt         // store review prompt: first-launch guard + 7-day throttle
 minis{ day, done{}, best{} }   // Quiet Games daily gift + personal bests
 ```
 Remember the existing Sets (`completed`, `unlocked`, `ownedSkins`) and objects

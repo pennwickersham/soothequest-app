@@ -808,6 +808,8 @@ const state={
   dailyClearDay:null,    // date the Trial of the Day was first cleared (bonus once per day)
   dailyLv:null,          // today's cached Trial of the Day level
   minis:null,            // Quiet Games {day, done:{game:true}, best:{game:n}}
+  launches:0,            // app opens, so the review prompt never comes on the first one
+  reviewAskedAt:0,       // last time we asked the OS to show its review prompt (ms)
 };
 function dailyRefill(){ const today=new Date().toDateString();
   if(today!==state.lastRefillDay){ state.lastRefillDay=today; state.lives=Math.max(state.lives,state.maxFree); } }
@@ -830,7 +832,8 @@ function saveState(){
     ambient:state.ambient,a11y:state.a11y,audio:state.audio,
     breathIdx:state.breathIdx,
     trials:state.trials,trialDays:state.trialDays,dailyClearDay:state.dailyClearDay,
-    dailyLv:state.dailyLv,minis:state.minis
+    dailyLv:state.dailyLv,minis:state.minis,
+    launches:state.launches,reviewAskedAt:state.reviewAskedAt
   }));}catch(e){}
 }
 function loadState(){
@@ -2426,7 +2429,7 @@ function openModal(kind,data={}){
         <button class="btn grn sm" onclick="startBreathe(30,nextBreathIdx())">🫁 Guided breathing · 30s</button>
         <button class="btn alt sm" onclick="startQuoteMeditation('${e.id}',25)">🧘 Sit with this quote · 25s</button>
       </div>
-      <div class="btnrow"><button class="btn" id="win-continue" disabled onclick="closeModal();show('#map-screen');buildMap();Snd.startMusic('calm')">Take a breath…</button>
+      <div class="btnrow"><button class="btn" id="win-continue" disabled onclick="closeModal();show('#map-screen');buildMap();Snd.startMusic('calm');maybeAskForReview()">Take a breath…</button>
       <button class="btn alt sm" onclick="closeModal();show('#slot-screen');refreshSpinBtn();Snd.startMusic('calm')">🏮 Make a wish</button></div>`;
     /* hold the Continue button briefly so the message is read, not skipped */
     const btn=$('#win-continue'); let secs=4;
@@ -2938,6 +2941,37 @@ function importBackupFile(file){
   rd.readAsText(file);
 }
 
+/* ---------- STORE REVIEW PROMPT ----------
+   Asks the OS for its own review sheet — Google Play In-App Review on Android,
+   SKStoreReviewController on iOS — through @capacitor-community/in-app-review.
+   We never draw our own "rate us" dialog (Apple forbids it), never on the web,
+   and never tie it to a reward. At most once every 7 days, not on the first
+   launch, only after a few cleared levels, and only from the map right after
+   the player taps Continue on a win card — never mid-level or over a
+   purchase screen. The OS may still decide not to show it; we record the
+   attempt either way so we never nag. */
+const REVIEW_MIN_LEVELS=5, REVIEW_GAP_MS=7*24*60*60*1000;
+function maybeAskForReview(){
+  try{
+    const C=window.Capacitor;
+    if(!C||!C.isNativePlatform||!C.isNativePlatform()) return;          /* web: do nothing */
+    const R=C.Plugins&&C.Plugins.InAppReview;
+    if(!R||!R.requestReview) return;
+    if((state.launches||0)<2) return;                                   /* not on first launch */
+    const cleared=NODES.filter(n=>n.type!=='reward'&&n.type!=='rift'&&state.completed.has(n.id)).length;
+    if(cleared<REVIEW_MIN_LEVELS) return;
+    const now=Date.now();
+    if(state.reviewAskedAt&&now-state.reviewAskedAt<REVIEW_GAP_MS) return;
+    setTimeout(()=>{
+      /* only if the player is still resting on the map with nothing open */
+      if(!$('#map-screen').classList.contains('active')) return;
+      if(['#modal-veil','#tut-veil','#breathe'].some(id=>{ const el=$(id); return el&&el.classList.contains('show'); })) return;
+      state.reviewAskedAt=Date.now(); saveState();
+      Promise.resolve(R.requestReview()).catch(()=>{});
+    },900);
+  }catch(e){}
+}
+
 /* ---------- GENTLE HAPTICS ----------
    Uses the Capacitor Haptics plugin when running natively, the vibration API
    on the web. Guides the breathing exercise so it works with eyes closed.
@@ -3440,6 +3474,7 @@ for(let i=0;i<8;i++){ const f=document.createElement('div'); f.className='firefl
   $('#app').appendChild(f); }
 const hadSave=!!localStorage.getItem(STORAGE_KEY);
 loadState();
+state.launches=(state.launches||0)+1; saveState();   /* the review prompt waits past the first launch */
 /* first run: if the device asks for reduced motion, start with Softer effects on */
 if(!hadSave){ try{ if(matchMedia('(prefers-reduced-motion: reduce)').matches){ state.a11y.fx=15; state.a11y.color=80; } }catch(e){} }
 /* re-apply after the save loads — applyA11y() above only ran with defaults,
