@@ -16,17 +16,33 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    // Release signing values come from keystore.properties at the repo root (git-ignored;
+    // copy keystore.properties.example) or from environment variables, never from this file.
+    // Without them, release builds come out unsigned instead of failing.
+    def signingProps = new Properties()
+    def signingPropsFile = [rootProject.file('../keystore.properties'), rootProject.file('keystore.properties')].find { it.exists() }
+    if (signingPropsFile) {
+        signingPropsFile.withInputStream { signingProps.load(it) }
+    }
+    def signingValue = { String key, String env -> signingProps.getProperty(key) ?: System.getenv(env) }
+    def releaseStoreFile = signingValue('storeFile', 'SQ_KEYSTORE_FILE')
+    def releaseStorePassword = signingValue('storePassword', 'SQ_KEYSTORE_PASSWORD')
+
     signingConfigs {
         release {
-            storeFile file('soothe-quest-release.keystore')
-            storePassword 'SootheQuest2026'
-            keyAlias 'soothe-quest'
-            keyPassword 'SootheQuest2026'
+            if (releaseStoreFile && releaseStorePassword) {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias signingValue('keyAlias', 'SQ_KEY_ALIAS') ?: 'soothe-quest'
+                keyPassword signingValue('keyPassword', 'SQ_KEY_PASSWORD') ?: releaseStorePassword
+            }
         }
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            if (releaseStoreFile && releaseStorePassword) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

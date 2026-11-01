@@ -25,3 +25,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Release signing: the credential that lets someone publish as you. See README.
+keystore.properties
+*.keystore
+*.jks
+android/local.properties

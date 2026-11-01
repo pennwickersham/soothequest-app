@@ -65,8 +65,9 @@ only in the native apps.
 
 ## Release signing (Android)
 
-The release keystore and its passwords are **not** in this repository, and
-must never be committed. Together they are the credential that lets someone
+The release keystore and its passwords must never be committed. They were
+committed until the `10-31-26-updates` branch and are still in the git history,
+so treat them as exposed: see `SECURITY-CLEANUP.md`. Together they are the credential that lets someone
 publish an update that Google Play accepts as genuinely yours.
 
 To build a signed release:
