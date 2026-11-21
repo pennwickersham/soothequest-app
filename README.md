@@ -25,16 +25,23 @@ These are product rules, not features to be optimized away later:
 
 ## What's in the game
 
-- **Campaign** — 16 worlds on one scrolling map, from Willow Meadow up to
-  Cloudsong Sanctuary, with score, boss-battle, ice-and-stone, and gather goals
-  (collect gems of the colors shown). The Endless Rift opens after the Star
+- **Campaign** — 18 worlds on one scrolling map, from Willow Meadow up to
+  Lantern Harbor. Goals include score, boss battles, ice and stone (some ice
+  is thick and takes two hits), gather (collect the colors shown), moss (tidy
+  every mossy cell), and lanterns (clear beneath them until they reach the
+  bottom). Later levels combine goals. The Endless Rift opens after the Star
   Weaver.
+- **Mastery challenges** (optional, off by default, in Comfort & Access) — any
+  cleared level can be replayed with a twist: moss, lanterns, or thicker ice.
+  Always free; the first clear of each earns a ✦ mark, and marks unlock two
+  gem skins.
 - **Today's Trials** — three small tasks generated on the device from the date,
   plus a seeded *Trial of the Day* level that never costs a life. Rewards are
   small consumables. Nothing carries over and resting costs nothing; one trial
   can be swapped each day.
-- **Quiet Games** — Memory Garden, Firefly Echo, and Lantern Lights: tap-only
-  minigames with no lives, no timers, and no way to lose. The first finish of
+- **Quiet Games** — Memory Garden, Firefly Echo, Lantern Lights, Sliding
+  Stones, Word Bloom, and Star Paths: tap-only minigames with no lives, no
+  timers, and no way to lose. The first finish of
   each per day pays a small gift.
 - **Sanctuary** — Zen Garden, Tiny Wins, and the Calm Corner (guided breathing,
   ambient sound, Comfort Journal).
