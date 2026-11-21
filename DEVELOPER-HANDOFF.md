@@ -413,6 +413,54 @@ decides whether it actually appears; the attempt is recorded either way.
 row so Zen Garden / Tiny Win / Calm Corner couldn't be tapped. It now sits
 below the header.
 
+### 23. Moss, lanterns & thick ice (`goal.moss`, `goal.drops`, node `thick`)
+Three new board layers, all puzzles rather than pressure (none spread, chase,
+or time out):
+- **Moss** — `goal:{moss:N}` grows N cells of moss under the gems
+  (`genMossLayout`, seeded by the level id, never under stone). Clearing a gem
+  on moss tidies that cell (`clearMoss`), +20 points.
+- **Lanterns** — `goal:{drops:N}`. Lanterns are grid value `LANTERN` (-3):
+  they can be swapped but not matched, aren't hit by specials, hammers, or
+  shuffles, and fall with gravity. One reaching the bottom row is collected in
+  `collectDrops()` (run after every settle in `resolve()`), and a replacement
+  enters at the top until N have spawned. At most two are on the board at once.
+- **Thick ice** — node `thick:0..1` marks that fraction of an obstacle
+  layout's ice as two-layer (`G.ice=2`). It's drawn after the base layout, so
+  validated seeds keep their shape. `G.obstTotal` counts layers.
+Goals can now be stacked (`goalsMet()` / `extraGoalsMet()`), e.g.
+`goal:{score:3000,moss:16,moves:24}`. The goal bar then shows one chip per
+remaining goal (`goalParts()`), and the intro reads from `goalSentence()`.
+Coach-marks: `moss`, `drops`, `thick`.
+
+### 24. Worlds 17–18 (Fernlight Glen, Lantern Harbor)
+26 nodes (`n178`–`n201`) above the Cloud Whale. The map was shifted down
+2400px again: worlds 17–18 are drawn by `mapDecorTop()`, and everything below
+by `mapDecor()` wrapped in `translate(0 2400)`. Saves that cleared `n177` get
+`n178` unlocked on load. All 20 playable levels sweep at a 64–87% smart-bot
+win rate. Two daily-trial tasks (`moss`, `drops`) unlock once a player
+reaches these worlds.
+
+### 25. Mastery challenges (`state.masteryOn`, `genMasteryLevel()`, `openModal('mastery')`)
+Opt-in extra complexity, toggled in Comfort & Access (off by default). With it
+on, cleared challenges and battles show ◇ (or ✦ once mastered) on the map, and
+tapping one offers its Mastery variant. Each variant is the same level plus
+one twist picked from its id: moss (+5 moves, or +18s and 8 moss for
+battles), two lanterns (+10 moves), or thicker ice on obstacle levels
+(+5 moves). Mastery runs never cost a life. The first clear of each sets
+`state.mastered[id]` and pays +1 wish and a power-up; replays pay nothing.
+✦ marks unlock the Moonlit Glass (8) and Evergreen Lanterns (25) skins
+(`skinOwned()`). Check twist sizes with `node level-validator.js mastery 30`.
+
+### 26. Three more Quiet Games
+- **Sliding Stones** (`slide`) — 3×3 sliding puzzle, shuffled by sliding from
+  the solved board, so it's always solvable. A "peek" shows the finished
+  board; the personal best is the fewest moves.
+- **Word Bloom** (`bloom`) — unscramble three calm words from `BLOOM_WORDS`.
+  A wrong word just returns the letters; hints are free and keep the correct
+  prefix.
+- **Star Paths** (`stars`) — tap numbered stars in order to draw three of the
+  `CONSTELLATIONS`. The next star always glows, and a wrong tap only pulses it.
+
 ### Design guardrails for future content (please keep)
 - **Anti-FOMO seasonal events only:** returning yearly content, no expiring
   rewards, no limited-time pressure. "Nothing punishes you for resting" is
@@ -436,6 +484,7 @@ trials{ day, list[], swapped, chest }  trialDays   // Today's Trials
 dailyClearDay  dailyLv         // Trial of the Day (bonus-once + cached level)
 launches  reviewAskedAt         // store review prompt: first-launch guard + 7-day throttle
 minis{ day, done{}, best{} }   // Quiet Games daily gift + personal bests
+masteryOn  mastered{}          // Mastery challenges toggle + ✦ marks per node id
 ```
 Remember the existing Sets (`completed`, `unlocked`, `ownedSkins`) and objects
 (`stars`, `tut`) still need custom serialization — Sets don't `JSON.stringify`
@@ -470,6 +519,10 @@ Any change to matching rules, specials, scoring, or level goals →
 
 Trial of the Day generator changes → `node level-validator.js daily 30`
 (samples dates at World 1 / 6 / 11 progress).
+
+Mastery twist changes → `node level-validator.js mastery 30` (every 6th
+campaign level, or `IDS=n54,n61`). New level shapes can be tried before they
+are on the map with `LEVELS_JSON='[{...}]' node level-validator.js 30`.
 
 New obstacle layouts → `node level-validator.js seeds 20`, paste the printed
 `VALIDATED_SEEDS` array into the HTML. Only in-band (55-90%) seeds ship.

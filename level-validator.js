@@ -9,6 +9,8 @@
                                            candidate seeds, simulate each,
                                            print the VALIDATED_SEEDS array
                                            to embed in soothe-quest.html
+     node level-validator.js mastery [runs] Mastery variants: every 6th campaign
+                                           challenge/battle with its twist
      node level-validator.js daily [runs]  Trial of the Day generator: sample
                                            upcoming dates at several progress
                                            points and check each daily level
@@ -22,7 +24,7 @@
 const fs=require('fs');
 const path=require('path');
 
-const MODE=(process.argv[2]==='seeds'||process.argv[2]==='daily')?process.argv[2]:'sweep';
+const MODE=['seeds','daily','mastery'].includes(process.argv[2])?process.argv[2]:'sweep';
 const RUNS=parseInt((MODE!=='sweep'?process.argv[3]:process.argv[2])||(MODE==='seeds'?'20':'40'),10);
 const MOVE_SECONDS=2.0;
 const BAND=[0.60,0.90];
@@ -96,6 +98,13 @@ function candidates(smart){
         if(G.level.goal&&G.level.goal.obstacles){
           for(const k of runs.cells) v+=4*nearObst(Math.floor(k/SIZE),k%SIZE);
         }
+        if(G.moss&&G.mossLeft>0){   /* moss: prefer matches on mossy cells */
+          for(const k of runs.cells) if(G.moss[Math.floor(k/SIZE)][k%SIZE]) v+=3;
+        }
+        if(G.level.goal&&G.level.goal.drops){   /* lanterns: clear the cells beneath them */
+          for(const k of runs.cells){ const rr=Math.floor(k/SIZE),cc=k%SIZE;
+            for(let up=rr-1;up>=0;up--) if(G.grid[up][cc]===LANTERN){ v+=3; break; } }
+        }
         if(G.gather){   /* gather goals: prefer colors that are still needed */
           for(const k of runs.cells){ const t=G.grid[Math.floor(k/SIZE)][k%SIZE];
             if(G.gather.some(g=>g.t===t&&g.got<g.need)) v+=2; }
@@ -107,6 +116,8 @@ function candidates(smart){
         }
       }
       G.grid[r2][c2]=G.grid[r1][c1]; G.grid[r1][c1]=a;
+      if(v>0&&r2===r1+1&&G.grid[r1][c1]===LANTERN) v+=6;
+      if(v>0&&r2===r1+1&&G.grid[r2][c2]===LANTERN) v-=4;
     }
     if(v>0) list.push({r1,c1,r2,c2,v});
   };
@@ -139,7 +150,9 @@ function goalStr(lv){
   return lv.type==='battle'?(lv.goal.hp+'hp/'+lv.goal.time+'s')
     :lv.goal.obstacles?('blocks/'+lv.goal.moves+'mv')
     :lv.goal.gather?(lv.goal.gather.map(g=>g[1]).join('+')+'g/'+lv.goal.moves+'mv')
-    :(lv.goal.score+'/'+lv.goal.moves+'mv');
+    :lv.goal.drops&&!lv.goal.score&&!lv.goal.moss?(lv.goal.drops+'🏮/'+lv.goal.moves+'mv')
+    :lv.goal.moss&&!lv.goal.score?(lv.goal.moss+'moss'+(lv.goal.drops?'+'+lv.goal.drops+'🏮':'')+'/'+lv.goal.moves+'mv')
+    :(lv.goal.score+(lv.goal.moss?'+'+lv.goal.moss+'moss':'')+(lv.goal.drops?'+'+lv.goal.drops+'🏮':'')+'/'+lv.goal.moves+'mv');
 }
 
 async function validate(level,smart){
@@ -175,6 +188,17 @@ if('${MODE}'==='seeds'){
   console.log('');
   console.log('kept '+kept.length+' seeds. Paste into soothe-quest.html:');
   console.log('const VALIDATED_SEEDS='+JSON.stringify(kept)+';');
+}else if('${MODE}'==='mastery'){
+  /* ============ MASTERY VARIANTS ============ */
+  console.log('MASTERY VARIANTS — '+${RUNS}+' smart-bot runs each (band floor '+(${BAND[0]}*100)+'%)');
+  const pool=NODES.filter(n=>n.type==='challenge'||n.type==='battle');
+  const pickIds=(process.env.IDS||'').split(',').filter(Boolean);
+  const list=pickIds.length?pickIds.map(nodeById):pool.filter((n,i)=>i%6===0);
+  for(const n of list){
+    const lv=genMasteryLevel(n);
+    const sm=await validate(lv,true);
+    console.log(pad(n.id,7)+pad(lv.lbl,28)+pad(lv.twist,7)+pad(goalStr(lv),28)+pad(Math.round(sm.wr*100)+'%',7)+(sm.wr>=${BAND[0]}?'PASS':'TOO HARD'));
+  }
 }else if('${MODE}'==='daily'){
   /* ============ TRIAL OF THE DAY ============
      sample 12 dates at four progress points (World 1 / 6 / 11 / 16) */
@@ -200,10 +224,13 @@ if('${MODE}'==='seeds'){
       /* worlds 10–11 */ 'n90','n91','n93','n94a','n95','n96','n97','n98','n100','n101','n102','n103','n105','n106a','n107','n108','n109','n110','n112','n113',
       /* worlds 12–13 */ 'n114','n115','n117','n118a','n125','n126','n127','n129','n133','n135','n138',
       /* worlds 14–16 */ 'n139','n140','n142','n143a','n145','n147','n148','n151','n152','n153','n156a','n158','n160','n161','n164',
-                         'n165','n166','n168','n169a','n171','n172','n173','n174','n176','n177'];
+                         'n165','n166','n168','n169a','n171','n172','n173','n174','n176','n177',
+      /* worlds 17–18 */ 'n178','n179','n181','n182a','n183','n184','n185','n186','n188','n189','n190','n191','n193','n194a','n195','n196','n197','n198','n200','n201'];
   const only=(process.env.IDS||'').split(',').filter(Boolean);   /* IDS=n54,n55 node level-validator.js 20 */
-  const sample=(only.length?only:ids).map(id=>nodeById(id));
-  if(!only.length){
+  /* LEVELS_JSON='[{...level...}]' tries shapes that aren't on the map yet */
+  const adhoc=process.env.LEVELS_JSON?JSON.parse(process.env.LEVELS_JSON).map(l=>Object.assign({next:[]},l)):null;
+  const sample=adhoc||(only.length?only:ids).map(id=>nodeById(id));
+  if(!only.length&&!adhoc){
     state.riftLevel=0; sample.push(genRiftLevel());
     state.riftLevel=5; sample.push(genRiftLevel());
     state.riftLevel=9; sample.push(genRiftLevel());
