@@ -829,7 +829,7 @@ const rnd=n=>Math.floor(Math.random()*n);
 /* ---------- STATE ---------- */
 const state={
   lives:5, maxFree:5,
-  lastRefillDay:new Date().toDateString(),
+  lastRefillDay:new Date(0).toDateString(),   /* trusted epoch until the server clock syncs */
   powerups:{hammer:1,shuffle:1,time:1},
   spins:1,               // Lantern spin tickets — earned by clearing levels
   completed:new Set(), unlocked:new Set(['n1']),
@@ -857,9 +857,75 @@ const state={
   launches:0,            // app opens, so the review prompt never comes on the first one
   reviewAskedAt:0,       // last time we asked the OS to show its review prompt (ms)
 };
-function dailyRefill(){ const today=new Date().toDateString();
+
+/* ---------- SESSION CLOCK ----------
+   Daily systems use a trusted clock only. At launch we ask where the player is
+   (for a timezone) and then ask for an authoritative Unix time. Until that
+   succeeds, appNow() stays frozen at the last trusted stamp (or the last trusted
+   day from the save), so changing the device clock cannot manufacture a new day.
+   Once synced, performance.now() advances the stamp in-session. No daily reward
+   is ever granted from an untrusted device clock. No player data is sent. */
+const TZ_URL='https://ipapi.co/json/';
+const TIME_URL='https://time.now/developer/api/time?timezone=';
+const TZ_KEY='soothe-quest-tz', TIME_KEY='soothe-quest-time';
+const FETCH_TIMEOUT=4000;
+let timeAnchor=null, perfAnchor=0, timeSource='local';
+let cachedTimeMs=0, cachedWallMs=0, lastSyncPerf=-Infinity;
+try{
+  const t=JSON.parse(localStorage.getItem(TIME_KEY)||'null');
+  if(t&&Number.isFinite(t.ms)&&Number.isFinite(t.wall)){ cachedTimeMs=t.ms; cachedWallMs=t.wall; }
+}catch(e){}
+function appNow(){
+  if(timeAnchor!==null) return timeAnchor+(performance.now()-perfAnchor);
+  if(cachedTimeMs>0) return cachedTimeMs;              /* frozen — never Date.now() */
+  const saved=Date.parse(state.lastRefillDay||'');
+  if(Number.isFinite(saved)) return saved;             /* last trusted day from the save */
+  return Date.parse('Thu Jan 01 1970')||0;             /* fresh install, no trusted time */
+}
+function clockDate(d){ return (d===undefined||d===null)?new Date(appNow()):new Date(d); }
+function todayStr(d){ return clockDate(d).toDateString(); }
+function dayKey(d){ const dt=clockDate(d);
+  return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0'); }
+async function fetchJson(url){
+  const ctrl=typeof AbortController==='function'?new AbortController():null;
+  const timer=ctrl?setTimeout(()=>ctrl.abort(),FETCH_TIMEOUT):0;
+  try{
+    const r=await fetch(url,{cache:'no-store',signal:ctrl?ctrl.signal:undefined});
+    if(!r.ok) return null;
+    return await r.json();
+  }catch(e){ return null; }
+  finally{ if(timer) clearTimeout(timer); }
+}
+async function syncTime(){
+  if(typeof fetch!=='function') return;
+  const at=performance.now();
+  if(at-lastSyncPerf<5*60*1000) return;   /* don't hammer the free APIs on resume */
+  lastSyncPerf=at;
+  let tz='';
+  const ip=await fetchJson(TZ_URL);
+  if(ip&&!ip.error&&ip.timezone) tz=ip.timezone;
+  if(!tz){ try{ tz=localStorage.getItem(TZ_KEY)||''; }catch(e){} }
+  if(!tz){ try{ tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''; }catch(e){} }
+  if(!tz) tz='UTC';
+  try{ localStorage.setItem(TZ_KEY,tz); }catch(e){}
+  let j=null;
+  for(const zone of [...new Set([tz,'UTC'])]){
+    const candidate=await fetchJson(TIME_URL+encodeURIComponent(zone));
+    if(candidate&&(candidate.utc_datetime||candidate.unixtime)){ j=candidate; break; }
+  }
+  if(!j) return;
+  let ms=Date.parse(j.utc_datetime);
+  if(!Number.isFinite(ms)) ms=Number(j.unixtime)*1000;
+  if(!Number.isFinite(ms)||ms<=0) return;
+  timeAnchor=ms; perfAnchor=performance.now(); timeSource='server';
+  cachedTimeMs=ms; cachedWallMs=Date.now();
+  try{ localStorage.setItem(TIME_KEY,JSON.stringify({ms:cachedTimeMs,wall:cachedWallMs})); }catch(e){}
+  /* a fresh authoritative day can change what is due */
+  dailyRefill(); refreshDailyGoal(); refreshTrials(); refreshMinis(); markPlayDay();
+  refreshSpinBtn(); refreshHUD(); saveState();
+}
+function dailyRefill(){ const today=todayStr();
   if(today!==state.lastRefillDay){ state.lastRefillDay=today; state.lives=Math.max(state.lives,state.maxFree); } }
-dailyRefill();
 
 /* ---------- PERSISTENCE (localStorage) ---------- */
 const STORAGE_KEY='soothe-quest-save';
@@ -908,8 +974,33 @@ function loadState(){
     if(state.completed.has('n138')&&!state.unlocked.has('n139')) state.unlocked.add('n139');
     /* v5 content: Fernlight Glen + Lantern Harbor sit above the Cloud Whale. */
     if(state.completed.has('n177')&&!state.unlocked.has('n178')) state.unlocked.add('n178');
-    dailyRefill();
   }catch(e){}
+}
+
+/* ---------- MID-LEVEL RESUME ----------
+   A separate key keeps the main save schema small. Only logical board data is
+   stored — DOM nodes, timers and selection are rebuilt on restore. */
+const RESUME_KEY='soothe-quest-resume', RESUME_V=1;
+let resumePending=false;
+function saveResume(){
+  if(!G.level||G.over||G.busy||resumePending) return;
+  try{
+    localStorage.setItem(RESUME_KEY,JSON.stringify({
+      v:RESUME_V, savedAt:Date.now(), level:G.level, boost:!!G.boosted, types:G.types,
+      grid:G.grid, spec:G.spec, ice:G.ice, moss:G.moss,
+      mossLeft:G.mossLeft, mossTotal:G.mossTotal, obst:G.obst, obstTotal:G.obstTotal,
+      gather:G.gather, dropsGot:G.dropsGot, dropsSpawned:G.dropsSpawned, dropQueue:G.dropQueue,
+      score:G.score, moves:G.moves, time:G.time, hp:G.hp
+    }));
+  }catch(e){}
+}
+function clearResume(){ resumePending=false; try{ localStorage.removeItem(RESUME_KEY); }catch(e){} }
+function loadResume(){
+  try{
+    const s=JSON.parse(localStorage.getItem(RESUME_KEY)||'null');
+    if(!s||s.v!==RESUME_V||!s.level||!Array.isArray(s.grid)||s.grid.length!==8) return null;
+    return s;
+  }catch(e){ return null; }
 }
 
 /* ---------- REST-FRIENDLY STREAK ----------
@@ -918,7 +1009,7 @@ function loadState(){
    you came back when you were able to. This mirrors the book's pacing message:
    consistency over heroics, progress not perfection. */
 function markPlayDay(){
-  const today=new Date().toDateString();
+  const today=todayStr();
   if(state.lastPlayDay===today) return;         // already counted today
   state.lastPlayDay=today;
   state.playDays.push(today);
@@ -939,7 +1030,7 @@ function gentleStreak(){
 }
 /* ---------- DAILY GENTLE GOAL ---------- */
 function refreshDailyGoal(){
-  const today=new Date().toDateString();
+  const today=todayStr();
   if(state.dailyGoalDay!==today){ state.dailyGoalDay=today; state.dailyGoalDone=0; }
 }
 function bumpDailyGoal(){
@@ -1968,11 +2059,14 @@ const SIZE=8;
 function randType(){ return rnd(G.types||5); }
 const G={ level:null, grid:[], els:[], spec:[], ice:[], moss:null, mossEls:null, mossLeft:0, mossTotal:0, dropsGot:0, dropsSpawned:0, dropQueue:0, lastSwap:null, obst:0, obstTotal:0, cell:0, busy:false, score:0, moves:0, time:0, hp:0, timer:null, sel:null, armed:null, over:false };
 
-function startLevel(n,boost){
+function startLevel(n,boost,snap){
   G.level=n; G.score=0; G.over=false; G.sel=null; G.armed=null; G.busy=false;
   G.types=(n.types!=null)?n.types:((n.w>=4&&n.type==='battle')?6:5);   /* data-tuned: 6 colors halves scoring, so only battles use it */
   /* gentle boost: after repeated losses, a little extra room on request */
   G.boosted=!!boost;
+  if(!snap) clearResume();
+  if(snap){ G.score=snap.score||0; G.moves=snap.moves||0; G.time=snap.time||0; G.hp=snap.hp||0;
+    G.types=snap.types||G.types; G.boosted=!!snap.boost; }
   show('#game-screen'); refreshHUD();
   $('#game-screen').className='screen active w'+n.w;
   const battle=n.type==='battle';
@@ -1983,37 +2077,40 @@ function startLevel(n,boost){
   $('#pw-time').disabled=!battle;
   $('#timer-pill').classList.remove('low');
   Snd.calmScale=WORLD_SCALES[n.w];
-  if(battle){ G.time=n.goal.time+(state.plus?15:0)+(boost?10:0)+(gentleClock()?15:0); G.hp=n.goal.hp;   /* gentle clock: explicit toggle, or implied by low intensity */ $('#time-left').textContent=G.time;
+  if(battle){ if(!snap){ G.time=n.goal.time+(state.plus?15:0)+(boost?10:0)+(gentleClock()?15:0); G.hp=n.goal.hp; }   /* gentle clock: explicit toggle, or implied by low intensity */ $('#time-left').textContent=G.time;
     $('#enemy-face').textContent=n.face; $('#enemy-bar-fill').style.width='100%';
     $('#goal-text').textContent='Enemy'; $('#goal-fill').style.width='0%';
     clearInterval(G.timer); G.timer=setInterval(battleTick,1000);
     Snd.startMusic('battle');
-  }else{ G.moves=n.goal.moves+(boost?3:0); $('#moves-left').textContent=G.moves;
+  }else{ if(!snap) G.moves=n.goal.moves+(boost?3:0); $('#moves-left').textContent=G.moves;
     $('#goal-text').textContent=n.zen?'':(n.goal.obstacles?'Break every block!':n.goal.gather?'Gather':'Score '+n.goal.score); clearInterval(G.timer);
     Snd.startMusic('calm');
   }
   if(boost) setTimeout(()=>toast('🌿 A little extra room today — you have got this.'),900);
-  buildBoard(); updateGoalUI();
-  /* level intro banner */
-  $('#li-name').textContent=n.lbl;
-  const li_goal=n.zen?'Nothing to win. Nothing to lose. Just match.':(battle?`Defeat it in ${G.time} seconds!`:(n.goal.obstacles?`Break all ${G.obstTotal} ice & stone blocks in ${G.moves} moves`:(n.goal.gather?`Gather ${gatherChips(G.gather,true)} in ${G.moves} moves`:(n.tiny?`A one-minute win: score ${n.goal.score}`:`Score ${n.goal.score} in ${G.moves} moves`))));
-  $('#li-goal').innerHTML=(n.goal&&(n.goal.moss||n.goal.drops))?goalSentence(n):li_goal;
-  const li=$('#lvl-intro'); li.classList.remove('show'); void li.offsetWidth; li.classList.add('show');
-  clearTimeout(li._h); li._h=setTimeout(()=>li.classList.remove('show'),1700);
+  buildBoard(snap); updateGoalUI();
+  if(!snap){
+    /* level intro banner + first-time coaching (skip when picking up a saved game) */
+    $('#li-name').textContent=n.lbl;
+    const li_goal=n.zen?'Nothing to win. Nothing to lose. Just match.':(battle?`Defeat it in ${G.time} seconds!`:(n.goal.obstacles?`Break all ${G.obstTotal} ice & stone blocks in ${G.moves} moves`:(n.goal.gather?`Gather ${gatherChips(G.gather,true)} in ${G.moves} moves`:(n.tiny?`A one-minute win: score ${n.goal.score}`:`Score ${n.goal.score} in ${G.moves} moves`))));
+    $('#li-goal').innerHTML=(n.goal&&(n.goal.moss||n.goal.drops))?goalSentence(n):li_goal;
+    const li=$('#lvl-intro'); li.classList.remove('show'); void li.offsetWidth; li.classList.add('show');
+    clearTimeout(li._h); li._h=setTimeout(()=>li.classList.remove('show'),1700);
+    if(n.id==='n1'){ setTimeout(()=>tutStep('swap'),1900); }
+    if(n.id==='n3'){ setTimeout(()=>tutStep('powerups'),1900); }
+    if(n.obstacle&&!n.rift){ setTimeout(()=>tutStep('obstacles'),1900); }
+    if(n.goal&&n.goal.gather){ setTimeout(()=>tutStep('gather'),1900); }
+    if(n.goal&&n.goal.moss){ setTimeout(()=>tutStep('moss'),1900); }
+    if(n.goal&&n.goal.drops){ setTimeout(()=>tutStep('drops'),1900); }
+    if(n.thick){ setTimeout(()=>tutStep('thick'),1900); }
+  }
   scheduleHint();
-  /* first-time coaching: intro swap on level 1, powerups reminder shortly after */
-  if(n.id==='n1'){ setTimeout(()=>tutStep('swap'),1900); }
-  if(n.id==='n3'){ setTimeout(()=>tutStep('powerups'),1900); }
-  if(n.obstacle&&!n.rift){ setTimeout(()=>tutStep('obstacles'),1900); }
-  if(n.goal&&n.goal.gather){ setTimeout(()=>tutStep('gather'),1900); }
-  if(n.goal&&n.goal.moss){ setTimeout(()=>tutStep('moss'),1900); }
-  if(n.goal&&n.goal.drops){ setTimeout(()=>tutStep('drops'),1900); }
-  if(n.thick){ setTimeout(()=>tutStep('thick'),1900); }
+  if(snap&&battle) pauseGame();   /* never drop the player into a running clock */
 }
 function battleTick(){
   if(G.over)return;
   G.time--; $('#time-left').textContent=G.time;
   if(G.time<=10){ $('#timer-pill').classList.add('low'); Snd.tick(); }
+  if(G.time>0&&G.time%10===0) saveResume();
   if(G.time<=0) endLevel(false);
 }
 /* little gem icons + counters for gather goals (uses the equipped skin) */
@@ -2084,43 +2181,74 @@ function boardMetrics(){
   G.cell=Math.floor(s/SIZE);
   const b=$('#board'); b.style.width=b.style.height=(G.cell*SIZE)+'px';
 }
-function buildBoard(){
+function buildBoard(snap){
   boardMetrics();
   const b=$('#board'); b.innerHTML=''; G.grid=[]; G.els=[]; G.spec=[]; G.ice=[]; G.lastSwap=null;
-  for(let r=0;r<SIZE;r++){ G.grid[r]=[]; G.els[r]=[]; G.spec[r]=[]; G.ice[r]=[];
-    for(let c=0;c<SIZE;c++){
-      G.spec[r][c]=null; G.ice[r][c]=0;
-      let t; do{t=randType();}
-      while((c>=2&&G.grid[r][c-1]===t&&G.grid[r][c-2]===t)||(r>=2&&G.grid[r-1][c]===t&&G.grid[r-2][c]===t));
-      G.grid[r][c]=t; G.els[r][c]=makeGem(r,c,t,true);
+  for(let r=0;r<SIZE;r++){ G.grid[r]=[]; G.els[r]=[]; G.spec[r]=[]; G.ice[r]=[]; }
+  if(snap){
+    /* restore: rebuild the DOM from the saved logical board */
+    G.grid=snap.grid.map(row=>row.slice());
+    G.spec=snap.spec.map(row=>row.slice());
+    G.ice=snap.ice.map(row=>row.slice());
+    G.moss=snap.moss?snap.moss.map(row=>row.slice()):[];
+    G.mossEls=[]; G.mossLeft=snap.mossLeft||0; G.mossTotal=snap.mossTotal||0;
+    G.obst=snap.obst||0; G.obstTotal=snap.obstTotal||0;
+    G.gather=snap.gather||null;
+    G.dropsGot=snap.dropsGot||0; G.dropsSpawned=snap.dropsSpawned||0; G.dropQueue=snap.dropQueue||0;
+    for(let r=0;r<SIZE;r++){
+      G.mossEls[r]=[];
+      for(let c=0;c<SIZE;c++){
+        const v=G.grid[r][c];
+        if(v===-2) placeStone(r,c);
+        else if(v===LANTERN) G.els[r][c]=makeLantern(r,c,true);
+        else {
+          const el=G.els[r][c]=makeGem(r,c,v,true);
+          if(G.spec[r][c]&&v>=0){ el.innerHTML=gemMarkup(v,G.spec[r][c]); el.classList.add('special'); }
+        }
+        if(G.ice[r][c]) applyIce(r,c,G.ice[r][c]);
+        if(G.moss[r][c]){
+          const d=document.createElement('div'); d.className='mosscell';
+          d.style.width=d.style.height=G.cell+'px'; d.style.transform=pos(r,c);
+          b.appendChild(d); G.mossEls[r][c]=d;
+        }
+      }
     }
-  }
-  G.obst=0; G.obstTotal=0;
-  /* gather goal: per-color counters [{t, need, got}] */
-  G.gather=(G.level&&G.level.goal&&G.level.goal.gather)?G.level.goal.gather.map(([t,n])=>({t,need:n,got:0})):null;
-  if(G.level&&G.level.obstacle){
-    const lay=genObstacleLayout(G.level.seed,G.level.diff||0,G.level.thick||0);
-    for(const k of lay.stone) placeStone(Math.floor(k/SIZE),k%SIZE);
-    let layers=0;
-    for(const k of lay.ice){ const r=Math.floor(k/SIZE),c=k%SIZE; if(G.grid[r][c]>=0){ const l=lay.thick.has(k)?2:1; applyIce(r,c,l); layers+=l; } }
-    G.obst=G.obstTotal=lay.stone.length+layers;
-  }
-  /* moss: a soft layer under the gems (never under stone) */
-  G.moss=[]; G.mossEls=[]; G.mossLeft=0; G.mossTotal=0;
-  for(let r=0;r<SIZE;r++){ G.moss[r]=new Array(SIZE).fill(0); G.mossEls[r]=new Array(SIZE).fill(null); }
-  if(G.level&&G.level.goal&&G.level.goal.moss){
-    for(const k of genMossLayout(hashStr('moss:'+G.level.id),G.level.goal.moss)){
-      const r=Math.floor(k/SIZE), c=k%SIZE; if(G.grid[r][c]!==-2) placeMoss(r,c); }
-  }
-  /* lanterns: up to two on the board at a time, starting along the top row */
-  G.dropsGot=0; G.dropsSpawned=0; G.dropQueue=0;
-  if(G.level&&G.level.goal&&G.level.goal.drops){
-    const cols=[0,1,2,3,4,5,6,7].sort(()=>Math.random()-.5);
-    for(const c of cols){
-      if(G.dropsSpawned>=Math.min(2,G.level.goal.drops)) break;
-      if(G.grid[0][c]<0||(G.ice[0]&&G.ice[0][c]>0)) continue;
-      const old=G.els[0][c]; if(old) old.remove();
-      G.els[0][c]=makeLantern(0,c,true); G.dropsSpawned++;
+  } else {
+    for(let r=0;r<SIZE;r++){
+      for(let c=0;c<SIZE;c++){
+        G.spec[r][c]=null; G.ice[r][c]=0;
+        let t; do{t=randType();}
+        while((c>=2&&G.grid[r][c-1]===t&&G.grid[r][c-2]===t)||(r>=2&&G.grid[r-1][c]===t&&G.grid[r-2][c]===t));
+        G.grid[r][c]=t; G.els[r][c]=makeGem(r,c,t,true);
+      }
+    }
+    G.obst=0; G.obstTotal=0;
+    /* gather goal: per-color counters [{t, need, got}] */
+    G.gather=(G.level&&G.level.goal&&G.level.goal.gather)?G.level.goal.gather.map(([t,n])=>({t,need:n,got:0})):null;
+    if(G.level&&G.level.obstacle){
+      const lay=genObstacleLayout(G.level.seed,G.level.diff||0,G.level.thick||0);
+      for(const k of lay.stone) placeStone(Math.floor(k/SIZE),k%SIZE);
+      let layers=0;
+      for(const k of lay.ice){ const r=Math.floor(k/SIZE),c=k%SIZE; if(G.grid[r][c]>=0){ const l=lay.thick.has(k)?2:1; applyIce(r,c,l); layers+=l; } }
+      G.obst=G.obstTotal=lay.stone.length+layers;
+    }
+    /* moss: a soft layer under the gems (never under stone) */
+    G.moss=[]; G.mossEls=[]; G.mossLeft=0; G.mossTotal=0;
+    for(let r=0;r<SIZE;r++){ G.moss[r]=new Array(SIZE).fill(0); G.mossEls[r]=new Array(SIZE).fill(null); }
+    if(G.level&&G.level.goal&&G.level.goal.moss){
+      for(const k of genMossLayout(hashStr('moss:'+G.level.id),G.level.goal.moss)){
+        const r=Math.floor(k/SIZE), c=k%SIZE; if(G.grid[r][c]!==-2) placeMoss(r,c); }
+    }
+    /* lanterns: up to two on the board at a time, starting along the top row */
+    G.dropsGot=0; G.dropsSpawned=0; G.dropQueue=0;
+    if(G.level&&G.level.goal&&G.level.goal.drops){
+      const cols=[0,1,2,3,4,5,6,7].sort(()=>Math.random()-.5);
+      for(const c of cols){
+        if(G.dropsSpawned>=Math.min(2,G.level.goal.drops)) break;
+        if(G.grid[0][c]<0||(G.ice[0]&&G.ice[0][c]>0)) continue;
+        const old=G.els[0][c]; if(old) old.remove();
+        G.els[0][c]=makeLantern(0,c,true); G.dropsSpawned++;
+      }
     }
   }
   if(!hasMove()) shuffleBoard(false);
@@ -2174,6 +2302,12 @@ function onUp(e){
 }
 function deselect(){ if(G.sel){ const[r,c]=G.sel; G.els[r][c]&&G.els[r][c].classList.remove('sel'); G.sel=null; } }
 
+/* one safe point after every settled move: save the board, then check the goal */
+function afterMove(){
+  G.busy=false; scheduleHint();
+  resumePending=false; saveResume();
+  checkEnd();
+}
 async function trySwap(r1,c1,r2,c2){
   if(r2<0||r2>=SIZE||c2<0||c2>=SIZE||G.busy||G.over)return;
   if(!movable(r1,c1)||!movable(r2,c2)){
@@ -2238,7 +2372,7 @@ async function trySwap(r1,c1,r2,c2){
     shakeApp();
     await sleep(Math.round(300*fx()));   /* let the combo FX land before the clear */
     await resolve(cells);
-    G.busy=false; scheduleHint(); checkEnd(); return;
+    afterMove(); return;
   }
   /* rainbow + normal gem detonates instantly — no match needed (a lantern is not a color) */
   if((sp1==='rain'||sp2==='rain')&&G.grid[r1][c1]!==LANTERN&&G.grid[r2][c2]!==LANTERN){
@@ -2247,7 +2381,7 @@ async function trySwap(r1,c1,r2,c2){
     const orr=sp1==='rain'?r2:r1, occ=sp1==='rain'?c2:c1;
     G.grid[rr][rc]=G.grid[orr][occ];   /* rainbow adopts the swapped color */
     await resolve(new Set([rr*SIZE+rc]));
-    G.busy=false; scheduleHint(); checkEnd(); return;
+    afterMove(); return;
   }
   G.lastSwap={r:r1,c:c1,r2:r2,c2:c2};
   const m=findRuns();
@@ -2261,9 +2395,7 @@ async function trySwap(r1,c1,r2,c2){
   }
   if(G.level.type!=='battle'&&!G.level.zen){ G.moves--; }
   await resolve(m);
-  G.busy=false;
-  scheduleHint();
-  checkEnd();
+  afterMove();
 }
 function swapCells(r1,c1,r2,c2){
   const t=G.grid[r1][c1]; G.grid[r1][c1]=G.grid[r2][c2]; G.grid[r2][c2]=t;
@@ -2529,14 +2661,14 @@ $('#pw-hammer').onclick=()=>{ if(G.busy||G.over)return;
   G.armed='hammer'; armUI(); toast('🔨 Tap a gem to smash it'); };
 $('#pw-shuffle').onclick=async()=>{ if(G.busy||G.over)return;
   if(state.powerups.shuffle<=0)return toast('No shuffles — visit the Wishing Lantern! 🏮');
-  state.powerups.shuffle--; saveState(); refreshHUD(); Snd.swap(); G.busy=true; shuffleBoard(true); await sleep(350); G.busy=false; };
+  state.powerups.shuffle--; saveState(); refreshHUD(); Snd.swap(); G.busy=true; shuffleBoard(true); await sleep(350); G.busy=false; saveResume(); };
 $('#pw-time').onclick=()=>{ if(G.over||!G.level||G.level.type!=='battle')return;
   if(state.powerups.time<=0)return toast('No time boosts — visit the Wishing Lantern! 🏮');
   state.powerups.time--; saveState(); G.time+=10; $('#time-left').textContent=G.time; refreshHUD(); Snd.chime(); toast('⏳ +10 seconds!'); };
 function armUI(){ $('#pw-hammer').classList.toggle('armed',G.armed==='hammer'); }
 async function useHammer(r,c){
   G.armed=null; armUI(); state.powerups.hammer--; saveState(); refreshHUD(); Snd.boom(); G.busy=true;
-  const s=new Set([r*SIZE+c]); await resolve(s); G.busy=false; checkEnd();
+  const s=new Set([r*SIZE+c]); await resolve(s); afterMove();
 }
 
 /* ---------- WIN / LOSE ---------- */
@@ -2564,7 +2696,7 @@ function checkEnd(){
   }
 }
 function endLevel(win){
-  if(G.over)return; G.over=true; clearInterval(G.timer); clearTimeout(hintTimer);
+  if(G.over)return; G.over=true; clearInterval(G.timer); clearTimeout(hintTimer); clearResume();
   $('#battle-flash').classList.remove('on');
   Snd.stopMusic();
   markPlayDay();
@@ -2649,6 +2781,31 @@ const ENCOURAGEMENTS=[
   {id:'informed-self', text:"Never underestimate the power of informed self-management.", cite:'The Resilient Path — Author\u2019s Introduction', tags:["empowerment"]},
   {id:'respect-not-push', text:"Respect your pain, and still find safe ways to keep moving.", cite:'The Resilient Path — Ch. 5', tags:["movement", "pacing"]},
 ];
+
+/* The author's canonical copy lives in GitHub. Fetch it once on app start so
+   quote edits need no code change or rebuild. The array above stays as an
+   offline fallback — nothing about the player is sent to GitHub. */
+const ENCOURAGEMENTS_URL='https://raw.githubusercontent.com/pennwickersham/soothequest-app/main/encouragements.json';
+const BUILTIN_ENCOURAGEMENTS=ENCOURAGEMENTS.slice();  /* keeps saved journal ids resolvable */
+async function loadEncouragements(){
+  try{
+    const r=await fetch(ENCOURAGEMENTS_URL,{cache:'no-store'});
+    if(!r.ok) return;
+    const j=await r.json();
+    const list=Array.isArray(j.messages)?j.messages:[];
+    /* strip angle brackets: quote text is interpolated into innerHTML on the win card */
+    const safe=s=>String(s==null?'':s).replace(/[<>]/g,'');
+    const remote=list.filter(e=>e&&e.enabled!==false&&e.id&&e.text).map(e=>({
+      id:safe(e.id), text:safe(e.text),
+      cite:safe(e.citation||e.cite||j.default_citation||''),
+      tags:Array.isArray(e.tags)?e.tags.map(safe):[]
+    }));
+    if(!remote.length) return;   /* bad payload: keep what we already have */
+    ENCOURAGEMENTS.length=0; ENCOURAGEMENTS.push(...remote);
+  }catch(e){ /* offline or blocked — the built-in quotes still work */ }
+}
+loadEncouragements();
+
 /* context-aware encouragement: a self-compassion line after a struggle,
    an empowerment line after a battle, gentle variety otherwise */
 let recentEnc=[];
@@ -2667,7 +2824,7 @@ function nextEncouragement(ctx){
   recentEnc.push(e.id); if(recentEnc.length>8) recentEnc.shift();
   return e;
 }
-function encById(id){ return ENCOURAGEMENTS.find(e=>e.id===id); }
+function encById(id){ return ENCOURAGEMENTS.find(e=>e.id===id)||BUILTIN_ENCOURAGEMENTS.find(e=>e.id===id); }
 function isSaved(id){ return state.saved.includes(id); }
 function toggleSave(id){
   if(isSaved(id)) state.saved=state.saved.filter(x=>x!==id);
@@ -3106,7 +3263,7 @@ function weightedSym(){
   const r=Math.random();
   if(r<.18)return'🎟'; if(r<.40)return'🌀'; if(r<.62)return'🔨'; if(r<.82)return'⏳'; if(r<.93)return'❤️'; return'⭐';
 }
-function freeSpinAvailable(){ return state.freeSpinDay!==new Date().toDateString(); }
+function freeSpinAvailable(){ return state.freeSpinDay!==todayStr(); }
 function refreshSpinBtn(){
   $('#btn-spin').textContent=freeSpinAvailable()?'🎁 FREE DAILY WISH!'
     :(state.spins>0?`🏮 MAKE A WISH — 🎟 ${state.spins} left`:'🎟 Clear a level to earn a wish');
@@ -3116,7 +3273,7 @@ async function spin(){
   const free=freeSpinAvailable();
   if(!free&&state.spins<=0){ Snd.bad(); return toast('No wishes left — clear a level to earn one! 🎟'); }
   spinning=true;
-  if(free){ state.freeSpinDay=new Date().toDateString(); toast('🎁 Free daily wish!'); }
+  if(free){ state.freeSpinDay=todayStr(); toast('🎁 Free daily wish!'); }
   else state.spins--;
   trialEvent('wish',1);
   saveState(); refreshHUD(); refreshSpinBtn();
@@ -3391,8 +3548,6 @@ function startTiny(){
    doesn't suit how your body feels today.
    Tuning: TRIAL_POOL needs [early, later] (later = World 5+), rewards are small
    consumables only (see grantReward). */
-function dayKey(d){ d=d||new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 /* FNV-1a + a murmur3 finalizer, so neighboring dates get unrelated seeds */
 function hashStr(str){ let h=2166136261; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); }
   h^=h>>>16; h=Math.imul(h,0x85ebca6b); h^=h>>>13; h=Math.imul(h,0xc2b2ae35); h^=h>>>16; return h>>>0; }
@@ -3835,7 +3990,7 @@ function resumeGame(){
 }
 function exitLevel(){
   if(G.level&&G.level.zen&&!G.over){ state.zenTotal+=G.score; trialEvent('zen',G.score); }   /* the garden remembers */
-  clearInterval(G.timer); G.over=true; pausedBattle=false;
+  clearInterval(G.timer); G.over=true; pausedBattle=false; clearResume();
   saveState();
   $('#battle-flash').classList.remove('on');
   Snd.startMusic('calm'); show('#map-screen'); buildMap(); refreshHUD();
@@ -3843,7 +3998,7 @@ function exitLevel(){
 /* leave a level straight to the title screen (from the pause menu) */
 function exitToTitle(){
   if(G.level&&G.level.zen&&!G.over){ state.zenTotal+=G.score; trialEvent('zen',G.score); }   /* the garden remembers */
-  clearInterval(G.timer); G.over=true; pausedBattle=false;
+  clearInterval(G.timer); G.over=true; pausedBattle=false; clearResume();
   saveState();
   $('#battle-flash').classList.remove('on');
   Snd.stopMusic(); show('#title-screen'); refreshHUD();
@@ -3874,9 +4029,12 @@ $('#btn-mini-back').onclick=()=>{ exitMini(); };
 $('#btn-mini-list').onclick=()=>{ openModal('games'); };
 $('#btn-more-title').onclick=()=>{ openModal('more'); };
 $('#br-exit').onclick=()=>{ stopBreathe(); };
-/* auto-pause battles when the app loses focus (calls, naps, life) */
+/* auto-pause battles and bank the board when the app loses focus (calls, naps, life) */
 document.addEventListener('visibilitychange',()=>{
-  if(document.hidden&&G.level&&!G.over&&G.level.type==='battle'&&G.timer) pauseGame();
+  if(document.hidden){
+    if(G.level&&!G.over){ if(G.busy) resumePending=true; else saveResume(); }
+    if(G.level&&!G.over&&G.level.type==='battle'&&G.timer) pauseGame();
+  } else syncTime();
 });
 $('#btn-slots-nav').onclick=()=>{ show('#slot-screen'); refreshHUD(); refreshSpinBtn(); };
 $('#btn-home').onclick=()=>{ Snd.stopMusic(); show('#title-screen'); };
@@ -3922,6 +4080,25 @@ $('#btn-mute').textContent=state.muted?'🔇':'🔊';
 $('#btn-sound-title').textContent=state.muted?'🔇 Sound: Off':'🔊 Sound: On';
 $('#backup-file').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) importBackupFile(f); e.target.value=''; };
 loadState.__done=true; buildReels(); refreshHUD(); refreshSpinBtn();
+syncTime();
+/* pick up an interrupted level — the path waits for you */
+const _resume=loadResume();
+if(_resume){
+  try{ startLevel(_resume.level,_resume.boost,_resume);
+       toast('🌿 Welcome back — right where you left off.'); }
+  catch(e){ clearResume(); }
+}
+/* native backgrounding does not always fire visibilitychange */
+try{
+  if(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App){
+    window.Capacitor.Plugins.App.addListener('appStateChange',({isActive})=>{
+      if(!isActive){
+        if(G.level&&!G.over){ if(G.busy) resumePending=true; else saveResume(); }
+        if(G.level&&!G.over&&G.level.type==='battle'&&G.timer) pauseGame();
+      } else syncTime();
+    });
+  }
+}catch(e){}
 window.addEventListener('resize',()=>{ if($('#game-screen').classList.contains('active')&&!G.busy){ boardMetrics();
   for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){ const el=G.els[r]&&G.els[r][c]; if(el){ el.style.width=el.style.height=G.cell+'px'; el.style.transform=pos(r,c); } } } });
 </script>
